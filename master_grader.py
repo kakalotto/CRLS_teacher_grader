@@ -7,19 +7,25 @@ from helper_functions.generate_sheets_credential import generate_sheets_credenti
 
 # Pass these in as parameters
 fulltext_search = 'ESD'
+
+
 def doc_name_to_rubric_name(doc_name):
     import re
-    rubric_name = doc_name
-    rubric_name = re.sub(r'Hardware_',r'Hardware - ', rubric_name)
-    rubric_name = re.sub(r'ESD_Expansion_cards_cases_lab', r'ESD_cases_expansion_cards - rubric', rubric_name)
-    return rubric_name
-value_cells = ['B3', 'B4', 'B6', 'B7', 'B8', 'B10', 'B12', 'B14',  'F3', 'F4', 'F6', 'F7']
+    p_rubric_name = doc_name
+    p_rubric_name = re.sub(r'Hardware_',r'Hardware - ', rubric_name)
+    p_rubric_name = re.sub(r'ESD_Expansion_cards_cases_lab', r'ESD_cases_expansion_cards - rubric', rubric_name)
+    return p_rubric_name
+
+
+value_cells = ['B3', 'B4', 'B6', 'B7', 'B8', 'B9', 'B10', 'B12', 'B14',  'F3', 'F4', 'F6']
+sheet_name = 'Sheet1'
+
 
 def get_gdrive_cmd(*, fulltext_search='', mimetype=''):
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
-    gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-08-01T00:00:00\' and \'me\' in '\
-                   'owners '
+    gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-08-01T00:00:00\' and' \
+                   ' \'me\' in owners '
     if fulltext_search:
         gdrive_query += ' and fullText contains \'' + fulltext_search + '\'  '
     else:
@@ -44,7 +50,6 @@ print(c.out)
 # Download all the files
 lines = c.out.split('\n')
 for line in lines:
-    #print("line is this: " + line + "asdf")
     if line:
         columns = line.split()
         doc_id = columns[0]
@@ -52,9 +57,6 @@ for line in lines:
             continue
         print("doc id")
         print(doc_id)
-        # link = 'https://docs.google.com/document/d/' + doc_id
-        # print("link")
-        # print('aaa' + link + 'bbb')
         
         # From doc_name get rubric_name 
         match = re.search(r'.+? \s+ (.+?) doc', line, re.X | re.M | re.S)
@@ -90,12 +92,11 @@ for line in lines:
                     raise Exception("No match")
                 print("YE SYES VALUE " + str(value))
             print(value, value_cells[i])
-            range_name = 'Rubric' + '!' + value_cells[i]    
-            datapoint = { 'range': range_name,
-                          'values': [[value]]
+            range_name = sheet_name + '!' + value_cells[i]
+            datapoint = {'range': range_name,
+                         'values': [[value]]
             }
             datapoints.append(datapoint)
-#           ≈bprint(test)joijfdfdfdf
 
         body = {'valueInputOption': 'USER_ENTERED',
                 'data':datapoints}
