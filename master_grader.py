@@ -35,7 +35,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype=''):
     return p_gdrive_cmd
 
 
-def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric'):
+def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer=''):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential
@@ -70,15 +70,21 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name, mimetype='application/vnd.google-apps.spreadsheet')
             c = delegator.run(gdrive_cmd)
             lines2 = c.out.split('\n')
-            rubric_id = lines2[1].split()[0]
-            print("rubric_id")
-            print(rubric_id)
+            if lines2[1]:
+                rubric_id = lines2[1].split()[0]
 
+                print("rubric_id")
+                print(rubric_id)
+            else:
+                print("no rubric, have to skip")
+                continue
+            
             # Score?
             datapoints = []
-            tests = docs_feedback_hardware_esd_formfactors_cards(doc_id)
+#            tests = docs_feedback_hardware_esd_formfactors_cards(doc_id)
+            tests = scorer(doc_id)
             for i, test in enumerate(tests):
-                # print(test)
+                print(test['name'])
                 if test['pass'] is True:
                     value = '0'
                 else:
