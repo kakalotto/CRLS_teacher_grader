@@ -65,7 +65,10 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             rubric_name = doc_name_to_rubric_name(doc_name)
             print("doc name")
             print(doc_name)
+            match = re.search(r'-\s', doc_name, re.X| re.M | re.S)
+            if not match:
 
+                continue
             # From rubric_name get rubric_id
             gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name, mimetype='application/vnd.google-apps.spreadsheet')
             c = delegator.run(gdrive_cmd)
@@ -86,6 +89,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             for i, test in enumerate(tests):
                 print(test['name'])
                 if test['pass'] is True:
+                    print("this test passed")
                     value = '0'
                 else:
                     match = re.search(r'.+? \(([0-9]+) \s* point s* \)', test['name'], re.X | re.M | re.S)
