@@ -17,7 +17,7 @@ from CRLS_APCSP_autograder.app.hardware_esd_expansion_cards_cases import docs_fe
 # sheet_name = 'Sheet1'
 
 
-def get_gdrive_cmd(*, fulltext_search='', mimetype=''):
+def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext=''):
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
     gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-08-01T00:00:00\' and' \
@@ -30,19 +30,28 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype=''):
         gdrive_query += ' and mimeType = \'' + mimetype + "'" 
     else:
         gdrive_query += ' '
+    if extra_fulltext:
+        gdrive_query += ' and ' + extra_fulltext + ' '
     gdrive_query += ' " '
     p_gdrive_cmd = gdrive_list + gdrive_query
+    print("query is " + p_gdrive_cmd)
     return p_gdrive_cmd
 
 
-def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer=''):
+def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer='',
+                  extra_fulltext=''):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential
 
     service_sheets = generate_sheets_credential()
-
-    gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term, mimetype='application/vnd.google-apps.document')
+    if extra_fulltext and 0 == 1:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    mimetype='application/vnd.google-apps.document',
+                                    extra_fulltext=extra_fulltext)
+    else:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    mimetype='application/vnd.google-apps.document')
     print(gdrive_cmd)
     c = delegator.run(gdrive_cmd)
     print(c.out)
@@ -65,12 +74,22 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             rubric_name = doc_name_to_rubric_name(doc_name)
             print("doc name")
             print(doc_name)
+            print("rubric name")
+            print(rubric_name)
             match = re.search(r'-\s', doc_name, re.X| re.M | re.S)
             if not match:
 
                 continue
             # From rubric_name get rubric_id
-            gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name, mimetype='application/vnd.google-apps.spreadsheet')
+            if extra_fulltext:
+                gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name,
+                                            mimetype='application/vnd.google-apps.spreadsheet',
+                                            extra_fulltext=extra_fulltext)
+            else:
+                gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name,
+                                            mimetype='application/vnd.google-apps.spreadsheet')
+
+            print(gdrive_cmd)
             c = delegator.run(gdrive_cmd)
             lines2 = c.out.split('\n')
             if lines2[1]:

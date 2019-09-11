@@ -17,3 +17,4 @@ rubric_sheet_name = 'Sheet1'
 
 master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
               scorer=docs_feedback_hexadecimal_numbers_v3)
+
