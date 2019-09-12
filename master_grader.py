@@ -102,24 +102,16 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             tests = scorer(doc_id)
             match_counter = 0
             for i, test in enumerate(tests):
-                #print(test['name'])
-                print(test)
                 if test['pass'] is True:
-                    print("this test passed")
                     value = '0'
                 else:
                     match = re.search(r'.+? \(([0-9]+) \s* point s* \)', test['name'], re.X | re.M | re.S)
                     if match:
-                        print("oo oo match" + str(match.group(1)) + "ffff")
                         value = str(-1 * float(match.group(1)))
                     else:
                         raise Exception("No match couldn't find value of problem ")
-                # print("YE SYES VALUE " + str(value))
-                # print(value, value_cells[i])
                 if match_cells:
                     if 'match' in test:
-                        print("match is this:" + test['match'])
-
                         text_value = test['match']
                         range_name = sheet_name + '!' + match_cells[match_counter]
                         match_counter += 1

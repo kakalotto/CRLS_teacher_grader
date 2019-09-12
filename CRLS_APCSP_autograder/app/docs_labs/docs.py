@@ -151,7 +151,6 @@ def exact_answer(p_label, p_answers, p_text, *, points=0, required=1):
         # print("aaa text  {} answer {}".format(answer, p_text))
         if re.search(answer, p_text, re.X | re.M | re.S):
             passed += 1
-    #print("lala passed {} reqd {} ".format(passed, required))
     if passed >= required:
         p_test['pass'] = True
         p_test['points'] += points
