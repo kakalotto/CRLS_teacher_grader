@@ -207,7 +207,7 @@ def keyword_and_length(p_label, p_answers, p_text, *, search_string='', min_matc
         answer = answer.lower()
         # print("bbb answer {} string {}".format(answer, final_search_string))
         if re.search(answer, final_search_string, re.X | re.M | re.S):
-            print("lala found it!" + str(answer))
+            # print("lala found it!" + str(answer))
 
             found_matches += 1
     if found_matches < min_matches:

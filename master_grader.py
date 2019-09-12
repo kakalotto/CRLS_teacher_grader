@@ -39,18 +39,13 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext=''):
 
 
 def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer='',
-                  extra_fulltext='', match_cells=[]):
+                  rubric_extra_fulltext='', match_cells=[]):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential
 
     service_sheets = generate_sheets_credential()
-    if extra_fulltext and 0 == 1:
-        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
-                                    mimetype='application/vnd.google-apps.document',
-                                    extra_fulltext=extra_fulltext)
-    else:
-        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+    gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     mimetype='application/vnd.google-apps.document')
     print(gdrive_cmd)
     c = delegator.run(gdrive_cmd)
@@ -81,10 +76,10 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
 
                 continue
             # From rubric_name get rubric_id
-            if extra_fulltext:
+            if rubric_extra_fulltext:
                 gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name,
                                             mimetype='application/vnd.google-apps.spreadsheet',
-                                            extra_fulltext=extra_fulltext)
+                                            extra_fulltext=rubric_extra_fulltext)
             else:
                 gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name,
                                             mimetype='application/vnd.google-apps.spreadsheet')
@@ -105,8 +100,10 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             datapoints = []
 #            tests = docs_feedback_hardware_esd_formfactors_cards(doc_id)
             tests = scorer(doc_id)
+            match_counter = 0
             for i, test in enumerate(tests):
-                print(test['name'])
+                #print(test['name'])
+                print(test)
                 if test['pass'] is True:
                     print("this test passed")
                     value = '0'
@@ -119,9 +116,19 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         raise Exception("No match couldn't find value of problem ")
                 # print("YE SYES VALUE " + str(value))
                 # print(value, value_cells[i])
+                if match_cells:
+                    if 'match' in test:
+                        print("match is this:" + test['match'])
+
+                        text_value = test['match']
+                        range_name = sheet_name + '!' + match_cells[match_counter]
+                        match_counter += 1
+                        datapoint = {'range': range_name, 'values': [[text_value]]}
+                        datapoints.append(datapoint)
                 range_name = sheet_name + '!' + value_cells[i]
                 datapoint = {'range': range_name, 'values': [[value]]}
                 datapoints.append(datapoint)
 
             body = {'valueInputOption': 'USER_ENTERED', 'data': datapoints}
             result = service_sheets.spreadsheets().values().batchUpdate(spreadsheetId=rubric_id, body=body).execute()
+            print("match_counter" + str(match_counter))
