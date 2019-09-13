@@ -71,9 +71,9 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             print(doc_name)
             print("rubric name")
             print(rubric_name)
-            match = re.search(r'-\s', doc_name, re.X| re.M | re.S)
-            if not match:
 
+            match = re.search(r'-\s', doc_name, re.X | re.M | re.S)
+            if not match:
                 continue
             # From rubric_name get rubric_id
             if rubric_extra_fulltext:
