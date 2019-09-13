@@ -39,14 +39,20 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext=''):
 
 
 def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer='',
-                  rubric_extra_fulltext='', match_cells=[]):
+                  rubric_extra_fulltext='', lab_extra_fulltext='', match_cells=[]):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential
 
     service_sheets = generate_sheets_credential()
-    gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+    if lab_extra_fulltext:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    mimetype='application/vnd.google-apps.document',
+                                    extra_fulltext=lab_extra_fulltext)
+    else:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     mimetype='application/vnd.google-apps.document')
+
     print(gdrive_cmd)
     c = delegator.run(gdrive_cmd)
     print(c.out)
@@ -71,8 +77,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             print(doc_name)
             print("rubric name")
             print(rubric_name)
-
             match = re.search(r'-\s', doc_name, re.X | re.M | re.S)
+
             if not match:
                 continue
             # From rubric_name get rubric_id
@@ -86,6 +92,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
 
             print(gdrive_cmd)
             c = delegator.run(gdrive_cmd)
+            print(c)
             lines2 = c.out.split('\n')
             if lines2[1]:
                 rubric_id = lines2[1].split()[0]
@@ -118,6 +125,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         match_counter += 1
                         datapoint = {'range': range_name, 'values': [[text_value]]}
                         datapoints.append(datapoint)
+                print("a " + str(i))
                 range_name = sheet_name + '!' + value_cells[i]
                 datapoint = {'range': range_name, 'values': [[value]]}
                 datapoints.append(datapoint)
