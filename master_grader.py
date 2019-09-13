@@ -105,7 +105,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 if test['pass'] is True:
                     value = '0'
                 else:
-                    match = re.search(r'.+? \(([0-9]+) \s* point s* \)', test['name'], re.X | re.M | re.S)
+                    print(test['name'])
+                    match = re.search(r'.+? \(([0-9]+\.*[0-9]*) \s* point s* \)', test['name'], re.X | re.M | re.S)
                     if match:
                         value = str(-1 * float(match.group(1)))
                     else:
