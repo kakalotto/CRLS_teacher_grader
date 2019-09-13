@@ -21,5 +21,6 @@ match_cells = ['C17', 'C18', 'C19']
 master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
               scorer=docs_feedback_lossy_compression,
               rubric_extra_fulltext="not fullText contains 'Lossless_compression'",
+              lab_extra_fulltext="not fullText contains 'Reflection'",
               match_cells=match_cells)
 

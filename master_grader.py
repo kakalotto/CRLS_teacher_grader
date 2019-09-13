@@ -39,14 +39,20 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext=''):
 
 
 def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer='',
-                  rubric_extra_fulltext='', match_cells=[]):
+                  rubric_extra_fulltext='', lab_extra_fulltext='', match_cells=[]):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential
 
     service_sheets = generate_sheets_credential()
-    gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+    if lab_extra_fulltext:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    mimetype='application/vnd.google-apps.document',
+                                    extra_fulltext=lab_extra_fulltext)
+    else:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     mimetype='application/vnd.google-apps.document')
+
     print(gdrive_cmd)
     c = delegator.run(gdrive_cmd)
     print(c.out)

@@ -21,5 +21,7 @@ match_cells = ['C18', 'C19', 'C20', 'C21', 'C22', 'C23', 'C24', 'C25', 'C26', 'C
 #match_cells = ['A18', 'A18', 'A18', 'A18', 'H11', 'H13', 'H15', 'H16', 'H17']
 master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
               scorer=docs_feedback_lossless_compression,
+              lab_extra_fulltext="not fullText contains 'ogg'",
+              rubric_extra_fulltext="not fullText contains 'Lossy_compression'",
               match_cells=match_cells)
 
