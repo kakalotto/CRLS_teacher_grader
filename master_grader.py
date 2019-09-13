@@ -73,7 +73,6 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             print(rubric_name)
             match = re.search(r'-\s', doc_name, re.X| re.M | re.S)
             if not match:
-
                 continue
             # From rubric_name get rubric_id
             if rubric_extra_fulltext:
@@ -86,6 +85,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
 
             print(gdrive_cmd)
             c = delegator.run(gdrive_cmd)
+            print(c)
             lines2 = c.out.split('\n')
             if lines2[1]:
                 rubric_id = lines2[1].split()[0]
@@ -117,6 +117,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         match_counter += 1
                         datapoint = {'range': range_name, 'values': [[text_value]]}
                         datapoints.append(datapoint)
+                print("a " + str(i))
                 range_name = sheet_name + '!' + value_cells[i]
                 datapoint = {'range': range_name, 'values': [[value]]}
                 datapoints.append(datapoint)
