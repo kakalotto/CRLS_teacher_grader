@@ -5,11 +5,15 @@ def _var_dir():
     """
     import sys
     import os
+    import socket
 
     if sys.platform == 'darwin':
         var_dir = '/Users/dimmyfinster/PycharmProjects/CRLS_APCSP_autograder/var'  # This is Eric's home computer
     else:
-        var_dir = '/home/ewu/CRLS_APCSP_autograder/var'
+        if len(socket.gethostname()) > 25:
+            var_dir = '/app/var'  #assume heroku here
+        else:
+            var_dir = '/home/ewu/CRLS_APCSP_autograder/var'
     if os.path.isdir(var_dir) is False:
         raise Exception("Cannot find the var dir" + var_dir)
     return var_dir
@@ -22,7 +26,7 @@ def _var_filename(p_filename, p_test_num):
     :return: The var filename for the CRLS autograder
     """
     import re
-    from app.python_labs import YEAR
+    from CRLS_APCSP_autograder.app.python_labs import YEAR
 
     p_var_filename = re.sub(r'/tmp/', '', p_filename)
     p_var_filename = re.sub(YEAR + '_', '', p_var_filename)
@@ -109,15 +113,17 @@ def io_test(p_filename, p_string, p_test_num, *, points=0, occurrences=1):
                  "points": 0
                  }
 
-    p_string = p_string.replace(' ', r'\s')
-    p_string = p_string.replace('$', r'\$')
-    p_string = p_string.replace('.', r'\.')
-    p_string = p_string.replace('+', r'\+')
+    print("p_string")
+    print(p_string)
+    # p_string = p_string.replace(' ', r'\s')
+    # p_string = p_string.replace('$', r'\$')
+    # p_string = p_string.replace('.', r'\.')
+    # p_string = p_string.replace('+', r'\+')
 
-    # print("p_string")
-    # print(p_string)
-    # print("outfile_data")
-    # print(outfile_data)
+    print("p_string")
+    print(p_string)
+    print("outfile_data")
+    print(outfile_data)
     p_matches = len(re.findall(p_string, outfile_data, re.X | re.M | re.S))
 
     if p_matches < occurrences:

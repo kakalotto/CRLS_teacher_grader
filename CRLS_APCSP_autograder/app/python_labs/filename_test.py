@@ -7,7 +7,7 @@
 def filename_test(p_filename, p_lab):
 
     import re
-    from app.python_labs import YEAR
+    from CRLS_APCSP_autograder.app.python_labs import YEAR
 
     find_year = re.search(YEAR, p_filename)
     find_lab = re.search(p_lab, p_filename)

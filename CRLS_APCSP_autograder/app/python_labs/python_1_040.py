@@ -5,11 +5,11 @@ def statement_variables(p_filename_data, p_points):
     :param p_points: number of points this question is worth (int)
     :return: dictionary which contains the info of the test
     """
-    from app.python_labs.find_items import find_questions, find_string
+    from CRLS_APCSP_autograder.app.python_labs.find_items import find_questions, find_string
 
     p_test_find_six_questions = find_questions(p_filename_data, 5, 0)
     p_test_find_statement_variables = find_string(p_filename_data,
-                                                  r"[a-z0-9]{1,2} \s* = \s* input \( [^'\\\")]+ \) ", 3, 0)
+                                                  r"[a-z0-9]{1,2} \s* = \s* input \( [^'\\\")]+ \) ", 3, points=0)
 
     p_statement_variables = {"name": "Testing asks 6 question AND statements as variables. <br>" +
                                      "i.e. Checks that Genie put repeated strings into variables. "
