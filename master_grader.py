@@ -124,7 +124,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             skipped_tests = 0
             # print("xxx tests: {}".format(tests))
             for i, test in enumerate(tests):
-                print('xxx test : {}'.format(test))
+                # print('xxx test : {}'.format(test))
                 if 'name' in test:
                     if re.search(r'that \s file \s is \s named \s correctly', test['name'], re.X | re.S | re.M):
                         skipped_tests += 1
@@ -132,7 +132,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 if test['pass'] is True:
                     value = '0'
                 else:
-                    print(test['name'])
+                    # print(test['name'])
                     match = re.search(r'.+? \(([0-9]+\.*[0-9]*) \s* point s* \)', test['name'], re.X | re.M | re.S)
                     if match:
                         value = str(-1 * float(match.group(1)))
@@ -145,7 +145,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         match_counter += 1
                         datapoint = {'range': range_name, 'values': [[text_value]]}
                         datapoints.append(datapoint)
-                print("a " + str(i))
+                # print("a " + str(i))
                 range_name = sheet_name + '!' + value_cells[i - skipped_tests]
                 datapoint = {'range': range_name, 'values': [[value]]}
                 datapoints.append(datapoint)
