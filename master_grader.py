@@ -66,14 +66,21 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 if found_lab:
                     print("do this: " + str(columns[1]))
                     gdrive_cmd = 'gdrive download ' + str(doc_id)
+                    print("gddrive_cmd is this {}".format(gdrive_cmd))
                     c = delegator.run(gdrive_cmd)
                     if c.err:
                         raise Exception("Tried to download python file, failed.")
+                    found = 0
                     for key in names.keys():
                         if re.search(key, python_filename):
                             print("Do this one! {}".format(python_filename))
                             rubric_name = names[key] + python_rubric_suffix
                             print("Rubric name {}".format(rubric_name))
+                            found = 1
+                            break
+                    if found == 0:
+                        raise Exception("Could not find name {} ".format(python_filename))
+
                 else:
                     print('skip this: ' + str(columns[1]))
                     continue

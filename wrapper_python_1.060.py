@@ -1,8 +1,8 @@
 # Pass these in as parameters
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.python_1030 import docs_feedback_python_1030
+from CRLS_APCSP_autograder.app.python_1060 import feedback_1060
 
-fulltext_search = 'Python 1.030'
+fulltext_search = '.py'
 
 
 def doc_name_to_rubric_name(doc_name):
@@ -15,13 +15,9 @@ def doc_name_to_rubric_name(doc_name):
     return None
 
 
-value_cells = ['B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'B16', 'B17', 'B18',
-               'B19', 'B21', 'B22', 'F3', 'F4', 'F5', 'F6', ]
-rubric_sheet_name = 'Sheet1'
+value_cells = ['F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'B9', 'B4', ]
+rubric_sheet_name = ''
 
-match_cells = ['E27', 'E28']
-
-#match_cells = ['H7', 'H9', 'I6']
 master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-              scorer=docs_feedback_python_1030, match_cells=match_cells)
+              scorer=feedback_1060, python_lab_num='1.060', python_rubric_suffix=' - Python 1.060 Mad Libs - Rubric')
 
