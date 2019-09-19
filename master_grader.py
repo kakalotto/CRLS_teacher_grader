@@ -26,7 +26,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python
 
 def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer='',
                   rubric_extra_fulltext='', lab_extra_fulltext='', match_cells=[], python_lab_num='',
-                  python_rubric_suffix=''):
+                  python_rubric_suffix='', scratch_file=False):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential

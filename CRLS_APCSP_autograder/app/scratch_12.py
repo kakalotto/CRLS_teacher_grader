@@ -7,7 +7,7 @@ def docs_feedback_scratch_12(link):
     test1b3 = keyword_and_length('question 1 b3', ['say', 'seconds', 'time', 'text', 'bubble'], text,
                                  search_string=r'b\.aaa \s inlineobject\n .+? tabledata?\s* (.+?)tabledata',  points=1)
     test1c2 = exact_answer('question 1 c2', [r'c\.aaa \s inlineobject\ntabledata?\s*sound?'], text, points=1)
-    test1c3 = keyword_and_length('question 1 c3', ['play', 'sound', 'meow'], text,
+    test1c3 = keyword_and_length('question 1 c3', ['play', 'sound', 'meow', 'noise'], text,
                                  search_string=r'c\.aaa \s inlineobject\n .+? tabledata?\s* (.+?)tabledata',  points=1)
     test1d2 = exact_answer('question 1 d2', [r'd\.aaa \s inlineobject\ntabledata?\s*looks?'], text, points=1)
     test1d3 = keyword_and_length('question 1 d3', ['costume', 'switch', 'look'], text,
@@ -43,8 +43,8 @@ def docs_feedback_scratch_12(link):
                                               r'motion\scategory\sdo\?\s+you\smay\swant\sto\sgive\ssome\sexamples\sof\s'
                                               r'what\syou\scan\sdo\.\ntabledata (.+?) tabledata',
                                 points=4, min_matches=2)
-    test2b = keyword_and_length('question 2b', ['look', 'appearance', 'effect', 'talk', 'say', 'disappear',
-                                                'category', 'blocks',
+    test2b = keyword_and_length('question 2b', ['look', 'appear', 'effect', 'talk', 'say', 'disappear',
+                                                'category', 'blocks', 'costume',
                                                 'set', 'sprite'], text,
                                 search_string=r'tabledata\sb\.\swhat\sdo\sthe\sblocks\sin\sthe\s'
                                               r'looks\scategory\sdo\?\s+you\smay\swant\sto\sgive\ssome\sexamples\sof\s'
