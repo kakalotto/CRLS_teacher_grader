@@ -643,7 +643,7 @@ def arrange_blocks_v2(p_json):
     :return: scripts - dictionary of scripts.  Keys are block ID's of parent.  values are lists of individual blocks
     under the parent
     """
-    from app.scratch_labs.karel import build_karel_script
+    from CRLS_APCSP_autograder.app.scratch_labs.karel import build_karel_script
 
     scripts = {}
     repeat_scripts = {}

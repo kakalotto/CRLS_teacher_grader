@@ -25,5 +25,13 @@ names = {
     'AlejandroRuiz': 'ALEJANDRO RUIZ',
     'SekaiTullyCarr': 'Ulysses Tully Carr',
     'kaialm': 'Kai Alm',
-    'fletcherodonnel': "Fletcher O'Donnell"
-}
+    'fletcherodonnel': "Fletcher O'Donnell",
+    'justin-cori': 'JUSTIN-CORI AZEVEDO',
+    'tennesseefoster': 'TENNESSEE FOSTER',
+    'jimongreene': 'Jimon Greene',
+    'martyhe': 'Muen He',
+    'mohammedabdulmusawwirshapes': 'MOHAMMED MUSAWWIR',
+    'nobeltemam': 'Nobel Temam',
+    'andrewtheobald': 'Andrew Theobald',
+    'tayriwhitebullock': 'Tayri White-bullock',
+    }

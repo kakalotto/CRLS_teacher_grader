@@ -3,7 +3,7 @@ import os
 from name_dictionary import names
 
 
-def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python_lab=False, scratch_lab=True):
+def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python_lab=False, scratch_lab=False):
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
     gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-08-01T00:00:00\' and' \
@@ -28,7 +28,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python
 
 def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer='',
                   rubric_extra_fulltext='', lab_extra_fulltext='', match_cells=[], python_lab_num='',
-                  python_rubric_suffix='', scratch_file=False, scratch_lab_num=''):
+                  python_rubric_suffix='', scratch_file=False, scratch_lab_num='', scratch_rubric_suffix=''):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential
@@ -44,7 +44,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
     if python_lab_num:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     python_lab=True)
-    elif scratch_lab_num:
+    elif scratch_file:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     scratch_lab=True)
         gdrive_cmd += ' | grep ' + scratch_lab_num
@@ -109,12 +109,12 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                     gdrive_cmd = 'gdrive download ' + str(doc_id)
                     print("Running this : " + str(gdrive_cmd))
                     c = delegator.run(gdrive_cmd)
-                    if c.err:
-                        raise Exception("Tried to download scratch file, failed.")
+#                    if c.err:
+#                        raise Exception("Tried to download scratch file, failed. {} asdf".format(c.err))
                     for key in names.keys():
                         if re.search(key, scratch_filename):
                             print("Do this one! {}".format(scratch_filename))
-                            rubric_name = names[key] + python_rubric_suffix
+                            rubric_name = names[key] + scratch_rubric_suffix
                             print("Rubric name {}".format(rubric_name))
                 else:
                     print('skip this: ' + str(columns[1]))
@@ -133,7 +133,10 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 match = re.search(r'-\s', doc_name, re.X | re.M | re.S)
                 if not match:
                     continue
-            # From rubric_name get rubric_id
+            # From rubric_name get rubric_i
+
+            print("yesyesyes")
+
             if rubric_extra_fulltext:  # Doc file here with extra rubric text
                 gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name,
                                             mimetype='application/vnd.google-apps.spreadsheet',
@@ -142,7 +145,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name,
                                             mimetype='application/vnd.google-apps.spreadsheet')
 
-            print(gdrive_cmd)
+            print(' Running this to find rubric:\n ' + gdrive_cmd)
+            print("\n\n")
             c = delegator.run(gdrive_cmd)
             print(c)
             lines2 = c.out.split('\n')
@@ -161,6 +165,10 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             if python_lab_num: # python file
                 print("python file. filename is {}".format(python_filename))
                 tests = scorer(python_filename)
+            elif scratch_lab_num:
+                print("scratch file. filename is {}".format(scratch_filename))
+                tests = scorer(scratch_filename)
+
             else:  # doc here
                 tests = scorer(doc_id)
             match_counter = 0
