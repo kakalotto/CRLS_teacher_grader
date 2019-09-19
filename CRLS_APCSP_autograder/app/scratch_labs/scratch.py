@@ -6,8 +6,7 @@ def scratch_filename_test(p_filename, p_lab):
     :return: a test dictionary
     """
     import re
-    from CRLS_APCSP_autograder.app.python_labs import YEAR
-
+    YEAR='2019'
     find_year = re.search(YEAR, p_filename)
     find_lab = re.search(p_lab, p_filename)
     find_caps = re.search(r'[A-Z]', p_filename)

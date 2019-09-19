@@ -3,7 +3,7 @@ import os
 from name_dictionary import names
 
 
-def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python_lab=False):
+def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python_lab=False, scratch_lab=True):
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
     gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-08-01T00:00:00\' and' \
@@ -18,6 +18,8 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python
         gdrive_query += ' '
     if extra_fulltext:
         gdrive_query += ' and ' + extra_fulltext + ' '
+    if scratch_lab:
+        gdrive_query += ' and fullText contains \'sb3\'  '
     gdrive_query += ' " '
     p_gdrive_cmd = gdrive_list + gdrive_query
     print("query is " + p_gdrive_cmd)
@@ -26,7 +28,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python
 
 def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer='',
                   rubric_extra_fulltext='', lab_extra_fulltext='', match_cells=[], python_lab_num='',
-                  python_rubric_suffix='', scratch_file=False):
+                  python_rubric_suffix='', scratch_file=False, scratch_lab_num=''):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential
@@ -42,6 +44,11 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
     if python_lab_num:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     python_lab=True)
+    elif scratch_lab_num:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    scratch_lab=True)
+        gdrive_cmd += ' | grep ' + scratch_lab_num
+
     print(gdrive_cmd)
     c = delegator.run(gdrive_cmd)
     print(c.out)
@@ -77,6 +84,35 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 else:
                     print('skip this: ' + str(columns[1]))
                     continue
+            elif scratch_lab_num:
+                columns = line.split()
+                doc_id = columns[0]
+                if doc_id == 'Id':
+                    continue
+                print("doc id")
+                print(doc_id)
+
+                # from python lab, get rubric name
+                print("columns[1] " + str(columns[1]))
+                print("lab " + str(python_lab_num))
+                scratch_filename = columns[1]
+                found_lab = re.search(scratch_lab_num, scratch_filename)
+                if found_lab:
+                    print("do this: " + str(columns[1]))
+                    gdrive_cmd = 'gdrive download ' + str(doc_id)
+                    print("Running this : " + str(gdrive_cmd))
+                    c = delegator.run(gdrive_cmd)
+                    if c.err:
+                        raise Exception("Tried to download scratch file, failed.")
+                    for key in names.keys():
+                        if re.search(key, scratch_filename):
+                            print("Do this one! {}".format(scratch_filename))
+                            rubric_name = names[key] + python_rubric_suffix
+                            print("Rubric name {}".format(rubric_name))
+                else:
+                    print('skip this: ' + str(columns[1]))
+                    continue
+
             else:
                 # From doc_name get rubric_name
                 match = re.search(r'.+? \s+ (.+?) doc', line, re.X | re.M | re.S)
