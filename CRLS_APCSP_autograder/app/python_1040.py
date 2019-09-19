@@ -39,7 +39,7 @@ def feedback_1040(filename):
             # Check that there are 6 total questions (3 part 1, 3 part 2)
             test_find_six_questions = find_questions(filename_data, 6, 5)
             test_find_six_questions['name'] += " Checking that Genie asks at least 6 questions (you need 3 for" \
-                                               " part 1 and 3 for part 2). <br>"
+                                               " part 1 and 3 for part 2) (5 points). <br>"
             tests.append(test_find_six_questions)
 
             # Check that repeated questions put into variables.

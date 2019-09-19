@@ -13,7 +13,7 @@ def statement_variables(p_filename_data, p_points):
 
     p_statement_variables = {"name": "Testing asks 6 question AND statements as variables. <br>" +
                                      "i.e. Checks that Genie put repeated strings into variables. "
-                                     " (" + str(p_points) + ") <br>",
+                                     " (" + str(p_points) + " points) <br>",
                              "pass": True,
                              "pass_message": "<h5 style=\"color:green;\">Pass!</h5>"
                                              " Found 6 questions AND they were variables. <br> ",

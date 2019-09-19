@@ -59,8 +59,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
 
             if python_lab_num:
                 # from python lab, get rubric name
-                print("columns[1] " + str(columns[1]))
-                print("lab " + str(python_lab_num))
+#                print("columns[1] " + str(columns[1]))
+#                print("lab " + str(python_lab_num))
                 python_filename = columns[1]
                 found_lab = re.search(python_lab_num, python_filename)
                 if found_lab:
