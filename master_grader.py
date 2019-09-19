@@ -66,21 +66,28 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
 
             if python_lab_num:
                 # from python lab, get rubric name
-                print("columns[1] " + str(columns[1]))
-                print("lab " + str(python_lab_num))
+#                print("columns[1] " + str(columns[1]))
+#                print("lab " + str(python_lab_num))
                 python_filename = columns[1]
                 found_lab = re.search(python_lab_num, python_filename)
                 if found_lab:
                     print("do this: " + str(columns[1]))
                     gdrive_cmd = 'gdrive download ' + str(doc_id)
+                    print("gddrive_cmd is this {}".format(gdrive_cmd))
                     c = delegator.run(gdrive_cmd)
                     if c.err:
                         raise Exception("Tried to download python file, failed.")
+                    found = 0
                     for key in names.keys():
                         if re.search(key, python_filename):
                             print("Do this one! {}".format(python_filename))
                             rubric_name = names[key] + python_rubric_suffix
                             print("Rubric name {}".format(rubric_name))
+                            found = 1
+                            break
+                    if found == 0:
+                        raise Exception("Could not find name {} ".format(python_filename))
+
                 else:
                     print('skip this: ' + str(columns[1]))
                     continue
@@ -160,7 +167,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             skipped_tests = 0
             # print("xxx tests: {}".format(tests))
             for i, test in enumerate(tests):
-                print('xxx test : {}'.format(test))
+                # print('xxx test : {}'.format(test))
                 if 'name' in test:
                     if re.search(r'that \s file \s is \s named \s correctly', test['name'], re.X | re.S | re.M):
                         skipped_tests += 1
@@ -168,7 +175,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 if test['pass'] is True:
                     value = '0'
                 else:
-                    print(test['name'])
+                    # print(test['name'])
                     match = re.search(r'.+? \(([0-9]+\.*[0-9]*) \s* point s* \)', test['name'], re.X | re.M | re.S)
                     if match:
                         value = str(-1 * float(match.group(1)))
@@ -181,7 +188,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         match_counter += 1
                         datapoint = {'range': range_name, 'values': [[text_value]]}
                         datapoints.append(datapoint)
-                print("a " + str(i))
+                # print("a " + str(i))
                 range_name = sheet_name + '!' + value_cells[i - skipped_tests]
                 datapoint = {'range': range_name, 'values': [[value]]}
                 datapoints.append(datapoint)

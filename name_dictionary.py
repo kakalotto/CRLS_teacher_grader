@@ -1,7 +1,29 @@
 names = {
+    'oliviaalexander': 'OLIVIA ALEXANDER',
+    'estherck': 'Esther Cull-Kahn',
     'chloedw': 'CHLOE DUNCAN-WALD',
+    'rajkirpalani': 'Raj Kirpalani',
+    'charlesklineman': 'CHARLES KLINEMAN',
     'lilimacarthur': 'LILI MACARTHUR',
+    'isaacp': 'ISAAC PATTERSON',
+    'kathrynr': 'KATHRYN RAUH',
     'phoebetamaoki': 'PHOEBE TAMAOKI',
-
-
+    'anindita': 'ANINDITA TURNA',
+    'stef': 'Stefan Tzaprev',
+    'owen': 'OWEN VAN BEVER',
+    'jupiterwestbard': 'Jupiter Westbard',
+    'stella': 'STELLA ASTBURY',
+    'Ahmed': 'AHMED AYAD',
+    'josephfede': 'JOSEPH FEDE',
+    'michaelfrehywot': 'MICHAEL FREHYWOT',
+    'zetahaber': 'ZETA HABER',
+    'hassanhemet': 'HASSAN HEMET',
+    'ilincahirtopanu': 'Ilinca Hirtopanu',
+    'julianmassari': 'JULIAN MASSARI',
+    'ralphpaul': 'Ralph Allen Paul',
+    'abigailprice': 'ABIGAIL PRICE',
+    'AlejandroRuiz': 'ALEJANDRO RUIZ',
+    'SekaiTullyCarr': 'Ulysses Tully Carr',
+    'kaialm': 'Kai Alm',
+    'fletcherodonnel': "Fletcher O'Donnell"
 }
