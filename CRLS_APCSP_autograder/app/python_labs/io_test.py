@@ -26,8 +26,8 @@ def _var_filename(p_filename, p_test_num):
     :return: The var filename for the CRLS autograder
     """
     import re
-    from CRLS_APCSP_autograder.app.python_labs import YEAR
-
+#    from CRLS_APCSP_autograder.app.python_labs import YEAR
+    YEAR = '2019'
     p_var_filename = re.sub(r'/tmp/', '', p_filename)
     p_var_filename = re.sub(YEAR + '_', '', p_var_filename)
     p_var_filename = re.sub(r'.py', '.in', p_var_filename)

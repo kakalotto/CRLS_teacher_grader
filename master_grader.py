@@ -126,9 +126,10 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 doc_name = match.group(1)
                 doc_name = doc_name.rstrip()
                 rubric_name = doc_name_to_rubric_name(doc_name)
+#                rubric_extra_fulltext = rubric_name
                 print("doc name")
                 print(doc_name)
-                print("rubric name")
+                print("rubric name rubric extra")
                 print(rubric_name)
                 match = re.search(r'-\s', doc_name, re.X | re.M | re.S)
                 if not match:

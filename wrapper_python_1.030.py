@@ -11,8 +11,7 @@ def doc_name_to_rubric_name(doc_name):
     p_rubric_name = re.sub(r'1.030_Variables_TEALS',
                            r'Python 1.030 Variables - Rubric',
                            p_rubric_name)
-#    return p_rubric_name
-    return None
+    return p_rubric_name
 
 
 value_cells = ['B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'B16', 'B17', 'B18',
