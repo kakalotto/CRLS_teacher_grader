@@ -1,7 +1,7 @@
 def python_2_040(p_filename, p_filename_data):
 
     import re
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     match_obj_prize1 = re.search(r'prize1 \s* = \s* (\'|") ([a-zA-Z0-9!-\.\$\+\s]+) (\'|")',
                                  p_filename_data, re.X | re.M | re.S)
@@ -50,6 +50,12 @@ def python_2_040(p_filename, p_filename_data):
                                     "that",
                     "points": 0,
                     }
+
+    prize1 = prize1.replace(' ', '\s')
+    prize2 = prize2.replace(' ', '\s')
+    prize3 = prize3.replace(' ', '\s')
+    prize4 = prize4.replace(' ', '\s')
+      
     test_1 = io_test(p_filename, prize1, 1)
     test_2 = io_test(p_filename, prize2, 2)
     test_3 = io_test(p_filename, prize3, 3)
@@ -74,9 +80,10 @@ def python_2_040(p_filename, p_filename_data):
 
 
 if __name__ == "__main__":
-    from app.python_labs.read_file_contents import read_file_contents
-    print("yes")
-    filename = '/home/ewu/abc/2.040/2019_mayasater_2.040.py'
-    filename_data = read_file_contents(filename)
-    bbb = python_2_040(filename, filename_data)
-    print(bbb)
+#    from app.python_labs.read_file_contents import read_file_contents
+#    print("yes")
+#    filename = '/home/ewu/abc/2.040/2019_mayasater_2.040.py'
+#    filename_data = read_file_contents(filename)
+#    bbb = python_2_040(filename, filename_data)
+#    print(bbb)
+     print("yes")

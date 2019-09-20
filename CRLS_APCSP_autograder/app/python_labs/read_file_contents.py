@@ -10,5 +10,5 @@ def read_file_contents(p_filename):
 
 if __name__ == '__main__':
     print("yes")
-    asdf = read_file_contents('/tmp/abc.py')
-    print(asdf)
+#    asdf = read_file_contents('/tmp/abc.py')
+#    print(asdf)
