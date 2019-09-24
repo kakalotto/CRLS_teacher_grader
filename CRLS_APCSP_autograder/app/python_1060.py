@@ -61,10 +61,10 @@ def feedback_1060(filename):
             tests.append(test_puncts)
 
             # Test second 4 inputs for correct spacing
-            test_io_spacing = io_test_find_all(filename, [r'(\^ | \s+ ) a2 (\s+ | \? | \. | , | !)',
-                                                          r'(\^ | \s+ ) a3 (\s+ | \? | \. | , | !)',
-                                                          r'(\^ | \s+ ) b1 (\s+ | \? | \. | , | !)',
-                                                          r'(\^ | \s+ ) b2 (\s+ | \? | \. | , | !)'],
+            test_io_spacing = io_test_find_all(filename, [r'(\^ | \s+ ) a2 (\s+ | \? | \. | , | ! | \n)',
+                                                          r'(\^ | \s+ ) a3 (\s+ | \? | \. | , | ! | \n)',
+                                                          r'(\^ | \s+ ) b1 (\s+ | \? | \. | , | ! | \n)',
+                                                          r'(\^ | \s+ ) b2 (\s+ | \? | \. | , | ! | \n)'],
                                                1, points=10)
             test_io_spacing['name'] += 'Testing for spacing.  Things you enter should have spaces or punctuations<br>' \
                                        'after them and spaces before them in the printout. <br>'

@@ -3,7 +3,7 @@ import os
 from name_dictionary import names
 
 
-def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python_lab=False, scratch_lab=False):
+def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python_lab=False, scratch_lab=False, person=''):
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
     gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-08-01T00:00:00\' and' \
@@ -20,6 +20,8 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python
         gdrive_query += ' and ' + extra_fulltext + ' '
     if scratch_lab:
         gdrive_query += ' and fullText contains \'sb3\'  '
+    if person:
+        gdrive_query += ' and fullText contains \'' + person + '\'  '
     gdrive_query += ' " '
     p_gdrive_cmd = gdrive_list + gdrive_query
     print("query is " + p_gdrive_cmd)
@@ -28,19 +30,28 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python
 
 def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer='',
                   rubric_extra_fulltext='', lab_extra_fulltext='', match_cells=[], python_lab_num='',
-                  python_rubric_suffix='', scratch_file=False, scratch_lab_num='', scratch_rubric_suffix=''):
+                  python_rubric_suffix='', scratch_file=False, scratch_lab_num='', scratch_rubric_suffix='', person=''):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential
 
     service_sheets = generate_sheets_credential()
-    if lab_extra_fulltext:
+    if lab_extra_fulltext and not person:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     mimetype='application/vnd.google-apps.document',
                                     extra_fulltext=lab_extra_fulltext)
+    elif lab_extra_fulltext and person:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    mimetype='application/vnd.google-apps.document',
+                                    extra_fulltext=lab_extra_fulltext, person=person)
+
+    elif person:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    mimetype='application/vnd.google-apps.document', person=person)
     else:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     mimetype='application/vnd.google-apps.document')
+
     if python_lab_num:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     python_lab=True)
