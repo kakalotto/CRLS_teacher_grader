@@ -4,7 +4,7 @@ def docs_feedback_scratch_12(link):
     tests = list()
     text = get_text(link)
     test1b2 = exact_answer('question 1 b2', [r'b\.aaa \s inlineobject\ntabledata?\s*looks?'], text, points=1)
-    test1b3 = keyword_and_length('question 1 b3', ['say', 'seconds', 'time', 'text', 'bubble'], text,
+    test1b3 = keyword_and_length('question 1 b3', ['say', 'seconds', 'time', 'text', 'bubble', 'speak'], text,
                                  search_string=r'b\.aaa \s inlineobject\n .+? tabledata?\s* (.+?)tabledata',  points=1)
     test1c2 = exact_answer('question 1 c2', [r'c\.aaa \s inlineobject\ntabledata?\s*sound?'], text, points=1)
     test1c3 = keyword_and_length('question 1 c3', ['play', 'sound', 'meow', 'noise'], text,
