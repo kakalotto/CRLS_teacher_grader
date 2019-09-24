@@ -210,8 +210,9 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         datapoint = {'range': range_name, 'values': [[text_value]]}
                         datapoints.append(datapoint)
                 # print("a " + str(i))
-                print(i - skipped_tests)
                 range_name = sheet_name + '!' + value_cells[i - skipped_tests]
+                print(str(i - skipped_tests) + '  range ' + range_name)
+
                 datapoint = {'range': range_name, 'values': [[value]]}
                 datapoints.append(datapoint)
 
