@@ -1,3 +1,6 @@
+
+
+
 def python_2_032a(p_filename, p_filename_data, *, debug_statement=''):
     """
     Function runs the test for python 2.032a lab
@@ -7,8 +10,8 @@ def python_2_032a(p_filename, p_filename_data, *, debug_statement=''):
                             about order  of inputs) (string)
     :return: dictionary of test results
     """
-    from app.python_labs.find_items import find_string
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.find_items import find_string
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
     test_and_or = find_string(p_filename_data, r'(and|or) \s+ .+ \s+ (and|or)', 1)
     if test_and_or['pass']:
         ands = True
@@ -97,8 +100,8 @@ def python_2_032b(p_filename, p_filename_data, *, debug_statement=''):
                             about order  of inputs) (string)
     :return: dictionary of test results
     """
-    from app.python_labs.find_items import find_string
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.find_items import find_string
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
     test_and_or = find_string(p_filename_data, r'(and|or) \s+ .+ \s+ (and|or)', 1)
     if test_and_or['pass']:
         ands_or = True
