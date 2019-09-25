@@ -24,11 +24,11 @@ rubric_sheet_name = ''
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_2051a, python_lab_num='2.051b',
+                  scorer=feedback_2051b, python_lab_num='2.051b',
                   python_rubric_suffix=' -  Python_2.051_Game_show_2_CRLS_voter_rubric')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_2051a, python_lab_num='2.051b',
+                  scorer=feedback_2051b, python_lab_num='2.051b',
                   python_rubric_suffix='  Python_2.051_Game_show_2_CRLS_voter_rubric', person=person)
 
 fulltext_search = 'Game_Show'

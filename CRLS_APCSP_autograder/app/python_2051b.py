@@ -52,6 +52,7 @@ def feedback_2051b(filename):
                 test_1_io = python_2_051b_1(filename, 5)
                 tests.append(test_1_io)
 
+                print("asdfasdfasdf")
                 # Try C R L S blah blah blah, should get 1, 1, 1, 1
                 test_2_io = python_2_051b_2(filename, 5)
                 tests.append(test_2_io)

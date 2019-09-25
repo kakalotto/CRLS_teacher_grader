@@ -9,6 +9,9 @@ def python_2_051a(p_filename, p_filename_data):
     from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     prizes = find_list_items(p_filename_data, 'prizes')
+    prizes[1] = prizes[1].replace(' ', '\s')
+    prizes[2] = prizes[2].replace(' ', '\s')
+     
     test_2 = io_test(p_filename, prizes[1], 2)
     test_3 = io_test(p_filename, prizes[2], 3)
 
@@ -86,7 +89,7 @@ def python_2_051b_2(p_filename, points):
     """
     from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
-    test_io = io_test(p_filename, r'\[\s*1\s*,\s*1\s*,\s*1\s*,\s*1\s*\]', 1)
+    test_io = io_test(p_filename, r'\[\s*1\s*,\s*1\s*,\s*1\s*,\s*1\s*\]', 2)
 
     p_tests = {"name": "Test case #2 for 2.051b works (" +
                        str(points) +

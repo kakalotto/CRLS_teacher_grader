@@ -100,7 +100,7 @@ def io_test(p_filename, p_string, p_test_num, *, points=0, occurrences=1):
         raise Exception('Failed, trying to run ' + cmd + ".  Try running the program manually to see what is wrong.")
 
     outfile_data = c.out
-    print("WUT WUT WUT " + outfile_data)
+    print("outfile_data " + outfile_data)
 
     p_test_io = {"name": "Testing input/output  (" + str(points) + " points).<br>" +
                          "In output, looking for " + str(p_string) + "<br>",
