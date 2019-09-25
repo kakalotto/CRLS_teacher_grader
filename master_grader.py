@@ -52,9 +52,13 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     mimetype='application/vnd.google-apps.document')
 
-    if python_lab_num:
+    if python_lab_num and not person:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     python_lab=True)
+    elif python_lab_num and person:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    python_lab=True, person=person)
+
     elif scratch_file and not person:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     scratch_lab=True)
