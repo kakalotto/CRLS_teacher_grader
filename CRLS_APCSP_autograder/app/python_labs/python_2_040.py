@@ -51,11 +51,15 @@ def python_2_040(p_filename, p_filename_data):
                     "points": 0,
                     }
 
-    prize1 = prize1.replace(' ', '\s')
-    prize2 = prize2.replace(' ', '\s')
-    prize3 = prize3.replace(' ', '\s')
-    prize4 = prize4.replace(' ', '\s')
-      
+    prize1 = prize1.replace(' ', r'\s')
+    prize2 = prize2.replace(' ', r'\s')
+    prize3 = prize3.replace(' ', r'\s')
+    prize4 = prize4.replace(' ', r'\s')
+    prize1 = prize1.replace(r'$', r'\$')
+    prize2 = prize2.replace(r'$', r'\$')
+    prize3 = prize3.replace(r'$', r'\$')
+    prize4 = prize4.replace(r'$', r'\$')
+
     test_1 = io_test(p_filename, prize1, 1)
     test_2 = io_test(p_filename, prize2, 2)
     test_3 = io_test(p_filename, prize3, 3)
