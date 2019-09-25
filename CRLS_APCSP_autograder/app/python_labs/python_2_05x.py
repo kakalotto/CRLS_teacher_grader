@@ -5,8 +5,8 @@ def python_2_051a(p_filename, p_filename_data):
     :param p_filename_data: contents of the filename (string)
     :return: A dictionary of test info
     """
-    from app.python_labs.find_items import find_list_items
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.find_items import find_list_items
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     prizes = find_list_items(p_filename_data, 'prizes')
     test_2 = io_test(p_filename, prizes[1], 2)
@@ -52,7 +52,7 @@ def python_2_051b_1(p_filename, points):
     :param points: Points this is worth(int)
     :return: A dictionary of test info
     """
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     test_io_1 = io_test(p_filename, r'\[\s*2\s*,\s*1\s*,\s*1\s*,\s*1\s*\]', 1)
 
@@ -84,7 +84,7 @@ def python_2_051b_2(p_filename, points):
     :param points: Points this is worth(int)
     :return: A dictionary of test info
     """
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     test_io = io_test(p_filename, r'\[\s*1\s*,\s*1\s*,\s*1\s*,\s*1\s*\]', 1)
 
@@ -110,7 +110,7 @@ def python_2_051b_2(p_filename, points):
 
 
 if __name__ == "__main__":
-    from app.python_labs.read_file_contents import read_file_contents
+    from CRLS_APCSP_autograder.app.python_labs.read_file_contents import read_file_contents
     print("yes")
 #    filename = '/home/ewu/abc/2.040/2019_mayasater_2.040.py'
     filename = '/Users/dimmyfinster/PycharmProjects/untitled5/2019_anais_2.050a.py'

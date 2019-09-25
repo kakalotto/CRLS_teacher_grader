@@ -89,6 +89,11 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
 #                print("lab " + str(python_lab_num))
                 print("found python file")
                 python_filename = columns[1]
+                if re.search(r'extra', python_filename):
+                    continue
+                if re.search(r'charles', python_filename):
+                    continue
+
                 found_lab = re.search(python_lab_num, python_filename)
                 if found_lab:
                     print("do this: " + str(columns[1]))
