@@ -6,7 +6,9 @@ def scratch_filename_test(p_filename, p_lab):
     :return: a test dictionary
     """
     import re
-    YEAR='2019'
+    #from app.python_labs import YEAR
+    YEAR = '2019'
+
     find_year = re.search(YEAR, p_filename)
     find_lab = re.search(p_lab, p_filename)
     find_caps = re.search(r'[A-Z]', p_filename)
@@ -419,10 +421,10 @@ def build_scratch_script(starting_block_id, p_blocks):
         elif current_block['opcode'] == 'motion_changeyby':
             dy = extract_value(current_block['inputs']['DY'], p_blocks)
             #dy = current_block['inputs']['DY'][1][1]
-            script.extend(['motion_changeyby', dy]) # updated
+            script.append(['motion_changeyby', dy]) # updated
         elif current_block['opcode'] == 'motion_changexby':
             dx = extract_value(current_block['inputs']['DX'], p_blocks)
-            script.extend(['motion_changexby', dx]) # tested
+            script.append(['motion_changexby', dx])  # tested
         elif current_block['opcode'] == 'motion_pointindirection':
             direction = extract_value(current_block['inputs']['DIRECTION'], p_blocks)
             script.append(['motion_pointindirection', direction])
@@ -617,8 +619,11 @@ def build_scratch_script(starting_block_id, p_blocks):
             return backdrop
 #            script.append(backdrop)
         elif current_block['opcode'] == 'pen_penDown':
+            print("fff pen down")
+
             script.append('pen_penDown')
         elif current_block['opcode'] == 'pen_penUp':
+            print("fff pen up")
             script.append('pen_penUp')
         elif current_block['opcode'] == 'pen_clear':
             script.append('pen_clear')

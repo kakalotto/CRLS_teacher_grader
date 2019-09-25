@@ -9,7 +9,6 @@ if len(sys.argv) > 1:
     person = sys.argv[1]
 
 
-
 def doc_name_to_rubric_name(doc_name):
     import re
     p_rubric_name = doc_name
@@ -18,7 +17,7 @@ def doc_name_to_rubric_name(doc_name):
     return p_rubric_name
 
 
-value_cells = ['B7', 'F3', 'F4', 'F5', 'F6']
+value_cells = ['B7', 'F3', 'F4', 'F5', 'F6', 'B3']
 rubric_sheet_name = 'Sheet1'
 
 

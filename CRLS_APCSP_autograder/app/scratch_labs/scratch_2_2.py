@@ -925,7 +925,7 @@ def press_zero(p_scripts, p_points):
     :param p_points: Number of points this test is worth (int)
     :return: The test dictionary
     """
-    from app.scratch_labs.scratch import match_string
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string
 
     p_test = {"name": "Checking that there is a script that has 'when 0 key is pressed' along with a "
                       "pen down, goto -160 -180, clear, and point 90. (" + str(p_points) + " points)<br>",
@@ -963,7 +963,7 @@ def press_zero(p_scripts, p_points):
 
 
 def press_one(p_scripts, p_points):
-    from app.scratch_labs.scratch import match_string
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string
 
     p_test = {"name": "Checking that there is a script that has 'when 1 key is pressed' and that this "
                       "script draws a single brick, assuming 0 is pressed first "
@@ -1020,7 +1020,7 @@ def press_one(p_scripts, p_points):
 
 
 def press_two(p_scripts, p_points):
-    from app.scratch_labs.scratch import match_string
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string
 
     p_test = {"name": "Checking that there is a script that has 'when 2 key is pressed' and that this "
                       "script draws a two bricks, assuming 0 is pressed first "
@@ -1079,7 +1079,7 @@ def press_two(p_scripts, p_points):
 
 
 def press_three(p_scripts, p_points):
-    from app.scratch_labs.scratch import match_string
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string
 
     p_test = {"name": "Checking that there is a script that has 'when 3 key is pressed' and that this "
                       "script draws 8 bricks, assuming 0 is pressed first "
@@ -1150,7 +1150,7 @@ def press_three(p_scripts, p_points):
 
 
 def press_four(p_scripts, p_points):
-    from app.scratch_labs.scratch import match_string
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string
 
     p_test = {"name": "Checking that there is a script that has 'when 4 key is pressed' and that this "
                       "script draws an entire brick road, assuming 0 is pressed first "
@@ -1352,10 +1352,9 @@ def press_four(p_scripts, p_points):
                 break
     print("ggg sprite.x {} sprite.y {} dir {} targets {}".format(sprite.x, sprite.y, sprite.direction,
                                                                  sprite.draw_targets))
-    find_repeat_1 = match_string(r"\['event_whenkeypressed', \s* '4'], .+ \['control_repeat', \s '2'", p_scripts)
-    find_repeat_2 = match_string(r"\['event_whenkeypressed', \s* '4'], .+ \['control_repeat', \s '8'", p_scripts)
-    if find_repeat_1['pass'] is False or find_repeat_2['pass'] is False:
-        p_test['fail_message'] += "Did not find two repeat with the correct number of times in the script. <br>"
+    find_repeat_1 = match_string(r"\['event_whenkeypressed', \s* '4'], .+ \['control_repeat', ", p_scripts)
+    if find_repeat_1['pass'] is False:
+        p_test['fail_message'] += "Did not find repeat in the script. <br>"
     if success is False:
         p_test['fail_message'] += 'Drew too many lines.<br>'
     if 1 in sprite.draw_targets.values():
@@ -1370,7 +1369,8 @@ def press_four(p_scripts, p_points):
             counter += 1
             if counter % 8 == 0:
                 p_test['fail_message'] += 'New row <br>'
-    if success and find_repeat_1['pass'] and find_repeat_2['pass'] and 1 not in sprite.draw_targets.values():
+    if success and find_repeat_1['pass'] and 1 not in sprite.draw_targets.values():
         p_test['pass'] = True
         p_test['points'] += p_points
+    print("This is the move history \n" + str(sprite.move_history))
     return p_test
