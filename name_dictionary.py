@@ -48,4 +48,5 @@ names = {
     'nobeltemam': 'Nobel Temam',
     'andrewtheobald': 'Andrew Theobald',
     'tayriwhitebullock': 'Tayri White-bullock',
+    'eden': 'Eden Wegayhu',
     }

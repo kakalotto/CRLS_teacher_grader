@@ -55,11 +55,15 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
     if python_lab_num:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     python_lab=True)
-    elif scratch_file:
+    elif scratch_file and not person:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     scratch_lab=True)
         gdrive_cmd += ' | grep ' + scratch_lab_num
-
+    elif scratch_file and person:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    scratch_lab=True, person=person)
+        gdrive_cmd += ' | grep ' + scratch_lab_num
+        
     print(gdrive_cmd)
     c = delegator.run(gdrive_cmd)
     print(c.out)
@@ -111,7 +115,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 print("doc id")
                 print(doc_id)
 
-                # from python lab, get rubric name
+                # from scratch lab, get rubric name
                 print("columns[1] " + str(columns[1]))
                 print("lab " + str(python_lab_num))
                 scratch_filename = columns[1]
