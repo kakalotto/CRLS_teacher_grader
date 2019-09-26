@@ -5,7 +5,7 @@ def python_3_011_1(p_filename_data, p_points):
     :param p_points: Number of points for this test (int)
     :return:  a dictionary of the test
     """
-    from app.python_labs.find_items import find_if
+    from CRLS_APCSP_autograder.app.python_labs.find_items import find_if
 
     # test if, check for max 3 if statement
     test_if = find_if(p_filename_data, 3, 1, minmax='max')
@@ -33,8 +33,8 @@ def python_3_011_1(p_filename_data, p_points):
 
 
 def python_3_011_2(p_filename, p_filename_data, p_points):
-    from app.python_labs.find_items import find_list_items
-    from app.python_labs.io_test import _var_filename, _var_dir
+    from CRLS_APCSP_autograder.app.python_labs.find_items import find_list_items
+    from CRLS_APCSP_autograder.app.python_labs.io_test import _var_filename, _var_dir
 
     import delegator
     import re

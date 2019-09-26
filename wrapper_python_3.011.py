@@ -24,11 +24,11 @@ rubric_sheet_name = ''
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_2051b, python_lab_num='3.011',
+                  scorer=feedback_3011, python_lab_num='3.011',
                   python_rubric_suffix=' - Python 3.011 The Sorting Hat - Rubric')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_2051b, python_lab_num='3.011',
+                  scorer=feedback_3011, python_lab_num='3.011',
                   python_rubric_suffix=' Python 3.011 The Sorting Hat - Rubric', person=person)
 
 fulltext_search = 'Sorting'
