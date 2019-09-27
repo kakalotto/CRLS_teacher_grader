@@ -6,14 +6,14 @@ def docs_feedback_encryption_1(link):
     test1a = keyword_and_length('question 1a', ['\s*26!\s*', '\ss*4\.[0-9]+ .+ 26\s*', '\s* 26 \s* factorial',
                                                 '\s*26\s*x\s*25\s*x\s*24'], text,
                                 search_string=r'1a. .+? tabledata (.+) 1b', min_length=1, points=5)
-    test1b = keyword_and_length('question 1b', [r'[a-zA-Z]+'], text,
-                                search_string=r'1b. .+? tabledata (.+) 2a', min_length=10, points=1)
+    test1b = keyword_and_length('question 1b', [r'[a-zA-Z0-9]+'], text,
+                                search_string=r'1b. .+? tabledata (.+?) 2a', min_length=1, points=1)
     test2a = keyword_and_length('question 2a', [r'[a-zA-Z]+'], text,
                                 search_string=r'2a. .+? tabledata (.+) 2b', min_length=10, points=1)
     test2b = keyword_and_length('question 2b', [r'\s* 1\.6[0-9]+ .+ 25'], text,
                                 search_string=r'2b. .+? tabledata (.+) 2c', min_length=1, points=5)
     test2c = keyword_and_length('question 2c', [r'[a-zA-Z]+'], text,
-                                search_string=r'2c. .+? tabledata (.+) 3a', min_length=9, points=1)
+                                search_string=r'2c. .+? tabledata (.+?) 3a', min_length=3, points=1)
     test3a = keyword_and_length('question 3a', [r'[a-zA-Z]+'], text,
                                 search_string=r'3a. .+? tabledata (.+) 3b', min_length=10, points=1)
     test3b = keyword_and_length('question 3b', [r'[a-zA-Z]+'], text,
