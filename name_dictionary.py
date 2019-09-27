@@ -41,6 +41,7 @@ names = {
     'biruk': 'Biruuk Alemu',
     'kaialm': 'Kai Alm',
     'linaM': 'Lina Mulualem',
+    'lina': 'Lina Mulualem',
     'fletcherodonnel': "Fletcher O'Donnell",
     'Mdsakib': 'Md Sakib',
     'emilesater': 'Emile Sater',
