@@ -28,7 +28,7 @@ def docs_feedback_encryption_2(link):
     test4a = keyword_and_length('question 4a', [r'no'], text,
                                 search_string=r'4a. .+? tabledata (.+?) 4b', min_length=1, points=5)
     test4b = keyword_and_length('question 4b', [r'[a-zA-Z]+'], text,
-                                search_string=r'4b. .+? tabledata (.+?) ith', min_length=7, points=1)
+                                search_string=r'4b. .+? tabledata (.+?) utograder', min_length=7, points=1)
     
     tests.extend([test1a, test1b, test1c, test1d, test1e, test2a, test2b, test3a, test4a, test4b, ])
     return tests

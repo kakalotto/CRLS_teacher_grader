@@ -30,7 +30,7 @@ def docs_feedback_hardware_memory(link):
                           text, points=1)
 
     test6a = keyword_and_length('6a. Compare server/desktop memory', [r'[a-zA-Z]+'], text,
-                                search_string=r'6a\. .+? tabledata (.+) laptop', min_length=15, points=1)
+                                search_string=r'6a\. .+? tabledata (.+?) laptop', min_length=15, points=1)
     test7a = keyword_and_length('7a. sodimm', [r'[a-zA-Z]+'], text,
                                 search_string=r'7a\. .+? tabledata (.+) check', min_length=7, points=1)
     tests.extend([test1c, test1d, test1e, test1f, test1g, test2b, test2c, test3a, test4a, test4b, test5a, test5b,
