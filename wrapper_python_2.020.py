@@ -16,11 +16,11 @@ def doc_name_to_rubric_name(doc_name):
 
 
 
-#fulltext_search = '.py'
-#value_cells = ['F18', 'F19', 'F20', 'F21', 'F22', 'B9', 'B4',]
+fulltext_search = '.py'
+value_cells = ['F18', 'F19', 'F20', 'F21', 'F22', 'B9', 'B4',]
 
-#master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, 
-#              scorer=feedback_2020,  python_lab_num='2.020', python_rubric_suffix=' - Python 2.020 Casting - Rubric')
+master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, 
+              scorer=feedback_2020,  python_lab_num='2.020', python_rubric_suffix=' - Python 2.020 Casting - Rubric')
              
 
 
