@@ -1,7 +1,7 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.hardware_cpu import docs_feedback_hardware_cpu
+from CRLS_APCSP_autograder.app.hardware_cpus import docs_feedback_hardware_cpus
 
 fulltext_search = 'cpu'
 person=''
@@ -21,8 +21,8 @@ rubric_sheet_name = 'Sheet1'
 match_cells = ['D4', 'D6', 'D8', 'D12', 'F4']
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_hardware_cpu, match_cells=match_cells)
+                  scorer=docs_feedback_hardware_cpus, match_cells=match_cells)
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_hardware_cpu, person=person, match_cells=match_cells)
+                  scorer=docs_feedback_hardware_cpus, person=person, match_cells=match_cells)
 
