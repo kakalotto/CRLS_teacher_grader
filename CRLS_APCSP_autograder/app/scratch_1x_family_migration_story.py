@@ -1,4 +1,4 @@
-def scratch_feedback_1x_family_migration_story(link):
+def scratch_feedback_1x_family_migration_story(filename):
     from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, unzip_sb3, read_json_file, find_help, arrange_blocks, \
         match_string, every_sprite_green_flag, every_sprite_broadcast_and_receive
     from CRLS_APCSP_autograder.app.scratch_labs.scratch_1_4_1_5 import min_two_sprites, show_and_hide
@@ -42,6 +42,5 @@ def scratch_feedback_1x_family_migration_story(link):
             tests.append(test_change_stage)
             test_help = find_help(json_data, 5)
             tests.append(test_help)
-            score_info['finished_scoring'] = True
             return tests
         

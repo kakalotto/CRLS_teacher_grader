@@ -17,7 +17,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python
     else:
         gdrive_query += ' '
     if extra_fulltext:
-        gdrive_query += ' and ' + extra_fulltext + ' '
+        gdrive_query += ' and fullText contains \'' + extra_fulltext + '\' '
     if scratch_lab:
         gdrive_query += ' and fullText contains \'sb3\'  '
     if person:

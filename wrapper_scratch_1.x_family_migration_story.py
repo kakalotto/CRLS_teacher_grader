@@ -1,6 +1,6 @@
 # Pass these in as parameters
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.scratch_22 import scratch_feedback_22
+from CRLS_APCSP_autograder.app.scratch_1x_family_migration_story import scratch_feedback_1x_family_migration_story
 import sys
 
 fulltext_search = ''
@@ -23,9 +23,9 @@ rubric_sheet_name = 'Sheet1'
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=scratch_feedback_22, scratch_file=True, scratch_lab_num='1.x',
+                  scorer=scratch_feedback_1x_family_migration_story, scratch_file=True, scratch_lab_num='1.x',
                   scratch_rubric_suffix=' - Lab 1.x Family migration story - rubric - RSTA')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,\
-                  scorer=scratch_feedback_22, scratch_file=True, scratch_lab_num='1.x',
+                  scorer=scratch_feedback_1x_family_migration_story, scratch_file=True, scratch_lab_num='1.x',
                   scratch_rubric_suffix=' - Lab 1.x Family migration story - rubric - RSTA', person=person)
