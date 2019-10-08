@@ -3,6 +3,7 @@ names = {
     'estherck': 'Esther Cull-Kahn',
     'chloedw': 'CHLOE DUNCAN-WALD',
     'josephd': 'JOSEPH DURAISINGH',
+    'josephD': 'JOSEPH DURAISINGH',
     'rajkirpalani': 'Raj Kirpalani',
     'charlesklineman': 'CHARLES KLINEMAN',
     'xavierlouisjacques': 'XAVIER LOUIS-JACQUES',
