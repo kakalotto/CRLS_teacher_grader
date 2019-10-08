@@ -58,8 +58,8 @@ def create_testing_file(p_filename):
     import os
     import re
 
-    from app.python_labs import YEAR
-
+#    from CRLS_APCSP_autograder.app.python_labs import YEAR
+    YEAR = '2019'
     if sys.platform == 'darwin':
         var_dir = '/Users/dimmyfinster/PycharmProjects/CRLS_APCSP_autograder/var'
         # This is Eric's home computer
