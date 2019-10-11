@@ -3,7 +3,8 @@ import os
 from name_dictionary import names
 
 
-def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python_lab=False, scratch_lab=False, person=''):
+def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_nottext='',
+                   python_lab=False, scratch_lab=False, person=''):
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
     gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-08-01T00:00:00\' and' \
@@ -16,6 +17,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python
         gdrive_query += ' and mimeType = \'' + mimetype + "'" 
     else:
         gdrive_query += ' '
+    print("blahb alh " + extra_fulltext)
     if extra_fulltext:
         gdrive_query += ' and fullText contains \'' + extra_fulltext + '\' '
     if scratch_lab:

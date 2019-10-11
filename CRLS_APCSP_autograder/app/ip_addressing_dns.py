@@ -14,7 +14,9 @@ def docs_feedback_ip_addressing_dns(link):
     test3a = keyword_and_length('question 3a', [r'32 \s* b*'], text,
                                 search_string=r'3a\. .+? tabledata (.+?) 3b\.', min_length=1, points=5)
 
-    test3b = keyword_and_length('question 3b', [r'4\s*billion', '2 .+32', '4[\s,]*294[\s,]*967[\s,]*296'], text,
+    test3b = keyword_and_length('question 3b', [r'4\s*billion', '2 .+32', '4[\s,]*294[\s,]*967[\s,]*296',
+                                                r'4 [\s,]* 000 [\s,]* 000 [\s,]* 000'
+                                                ], text,
                                 search_string=r'3b. .+? tabledata (.+) 4a', min_length=1, points=5)
 
     test4a = keyword_and_length('question 4a', [r'[a-zA-Z]'], text,
