@@ -80,6 +80,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
         if line:
             columns = line.split()
             doc_id = columns[0]
+
             if doc_id == 'Id':
                 continue
             print("doc id")
@@ -149,6 +150,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 match = re.search(r'.+? \s+ (.+?) doc', line, re.X | re.M | re.S)
                 doc_name = match.group(1)
                 doc_name = doc_name.rstrip()
+                if re.search(r'Big\sData', doc_name):
+                    continue
                 rubric_name = doc_name_to_rubric_name(doc_name)
 #                rubric_extra_fulltext = rubric_name
                 print("doc name")

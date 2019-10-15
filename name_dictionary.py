@@ -54,6 +54,7 @@ names = {
     'matias': 'Matias Stringa',
     'Matias': 'Matias Stringa',
     'matis': 'Matias Stringa',
+    'danielsweeney': 'Daniel Sweeney',
     'Kavita': 'KAVITA TRIVEDI',
     'KavitaTrivedi': 'KAVITA TRIVEDI',
     'ellawilliams': 'ELLA WILLIAMS',
