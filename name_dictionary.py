@@ -63,6 +63,7 @@ names = {
     'tennessee': 'TENNESSEE FOSTER',
     'wilbertgomez': 'Wilbert Gomez Osorio',
     'jimongreene': 'Jimon Greene',
+    'jimongreen': 'Jimon Greene',
     'ryanguerrero': 'RYAN GUERRERO',
     'ryangurrero': 'RYAN GUERRERO',
     'martyhe': 'Muen He',
