@@ -3,7 +3,9 @@ from master_grader import master_grader
 from CRLS_APCSP_autograder.app.hexadecimal_numbers_v3 import docs_feedback_hexadecimal_numbers_v3
 import sys
 
-fulltext_search = 'hexadecimal_numbers_v3_lab'
+#fulltext_search = 'hexadecimal_numbers_v3_lab'
+fulltext_search = 'hexadecimal_numbers_v3'
+
 person=''
 if len(sys.argv) > 1:
     person = sys.argv[1]
