@@ -3,8 +3,8 @@ import os
 from name_dictionary import names
 
 
-def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_nottext='',
-                   python_lab=False, scratch_lab=False, person=''):
+def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', python_lab=False, scratch_lab=False,
+                   person=''):
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
     gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-08-01T00:00:00\' and' \
@@ -14,7 +14,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_
     else:
         gdrive_query += ' '
     if mimetype:
-        gdrive_query += ' and mimeType = \'' + mimetype + "'" 
+        gdrive_query += ' and mimeType = \'' + mimetype + "'"
     else:
         gdrive_query += ' '
     print("blahb alh " + extra_fulltext)
@@ -69,7 +69,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     scratch_lab=True, person=person)
         gdrive_cmd += ' | grep ' + scratch_lab_num
-        
+
     print(gdrive_cmd)
     c = delegator.run(gdrive_cmd)
     print(c.out)
@@ -80,7 +80,6 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
         if line:
             columns = line.split()
             doc_id = columns[0]
-
             if doc_id == 'Id':
                 continue
             print("doc id")
@@ -88,8 +87,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
 
             if python_lab_num:
                 # from python lab, get rubric name
-#                print("columns[1] " + str(columns[1]))
-#                print("lab " + str(python_lab_num))
+                #                print("columns[1] " + str(columns[1]))
+                #                print("lab " + str(python_lab_num))
                 print("found python file")
                 python_filename = columns[1]
                 if re.search(r'extra', python_filename):
@@ -134,8 +133,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                     gdrive_cmd = 'gdrive download ' + str(doc_id)
                     print("Running this : " + str(gdrive_cmd))
                     c = delegator.run(gdrive_cmd)
-#                    if c.err:
-#                        raise Exception("Tried to download scratch file, failed. {} asdf".format(c.err))
+                    #                    if c.err:
+                    #                        raise Exception("Tried to download scratch file, failed. {} asdf".format(c.err))
                     for key in names.keys():
                         if re.search(key, scratch_filename):
                             print("Do this one! {}".format(scratch_filename))
@@ -150,10 +149,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 match = re.search(r'.+? \s+ (.+?) doc', line, re.X | re.M | re.S)
                 doc_name = match.group(1)
                 doc_name = doc_name.rstrip()
-                if re.search(r'Big\sData', doc_name):
-                    continue
                 rubric_name = doc_name_to_rubric_name(doc_name)
-#                rubric_extra_fulltext = rubric_name
+                #                rubric_extra_fulltext = rubric_name
                 print("doc name")
                 print(doc_name)
                 print("rubric name rubric extra")
@@ -186,11 +183,11 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             else:
                 print("no rubric, have to skip")
                 continue
-            
+
             # Score?
             datapoints = []
-#            tests = docs_feedback_hardware_esd_formfactors_cards(doc_id)
-            if python_lab_num: # python file
+            #            tests = docs_feedback_hardware_esd_formfactors_cards(doc_id)
+            if python_lab_num:  # python file
                 print("python file. filename is {}".format(python_filename))
                 tests = scorer(python_filename)
             elif scratch_lab_num:
