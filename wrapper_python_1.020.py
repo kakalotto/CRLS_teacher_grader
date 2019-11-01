@@ -6,7 +6,7 @@ import sys
 def doc_name_to_rubric_name(doc_name):
     import re
     p_rubric_name = doc_name
-    p_rubric_name = re.sub(r'1.020_Using_the_Interpreter_TEALS', r'Python 1.020 Interpreter - Rubric',
+    p_rubric_name = re.sub(r'lab', r'rubric',
                            p_rubric_name)
     return p_rubric_name
 
