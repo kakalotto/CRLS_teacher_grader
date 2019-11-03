@@ -18,10 +18,11 @@ if len(sys.argv) > 1:
 
 
 value_cells = ['B3', 'B5', 'B6', 'B6', 'B7', 'B9', 'B10', 'B12', 'B13', 'B15', 'B16', 'B17', 'B19', 'B21', 'B23', 'F3',
-               'F5', 'F7', 'F9', 'F11', 'F13', 'F15', 'F15', 'F17']
+               'F5', 'F7', 'F9', 'F11', 'F13', 'F15', 'F17']
 rubric_sheet_name = 'Sheet1'
 
-match_cells = ['C4', 'C8', 'C14', 'C118', 'C20', 'C22', 'C24', 'G4', 'G6', 'G8', 'G10', 'G12', 'G14', 'G16', 'G18', 'G19']
+match_cells = ['D4', 'D8', 'D11', 'D14', 'D18', 'D20', 'D22', 'D24', 'G4', 'G6', 'G8', 'G10', 'G12', 'G14', 'G16',
+               'G18', 'G19']
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
                   scorer=docs_feedback_passwords_passwords_revisited, match_cells=match_cells)
