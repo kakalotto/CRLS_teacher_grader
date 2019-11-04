@@ -11,6 +11,7 @@ names = {
     'isaacp': 'ISAAC PATTERSON',
     'isaac': 'ISAAC PATTERSON',
     'kathrynr': 'KATHRYN RAUH',
+    'kathryn': 'KATHRYN RAUH',
     'phoebetamaoki': 'PHOEBE TAMAOKI',
     'anindita': 'ANINDITA TURNA',
     'stef': 'Stefan Tzaprev',
