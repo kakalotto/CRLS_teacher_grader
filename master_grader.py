@@ -126,7 +126,11 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 # from scratch lab, get rubric name
                 print("columns[1] " + str(columns[1]))
                 print("lab " + str(python_lab_num))
+
                 scratch_filename = columns[1]
+#                if re.search(r'justin', scratch_filename):
+#                    continue
+
                 found_lab = re.search(scratch_lab_num, scratch_filename)
                 if found_lab:
                     print("do this: " + str(columns[1]))
