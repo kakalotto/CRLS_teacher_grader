@@ -6,9 +6,7 @@ def scratch_filename_test(p_filename, p_lab):
     :return: a test dictionary
     """
     import re
-    #from app.python_labs import YEAR
     YEAR = '2019'
-
     find_year = re.search(YEAR, p_filename)
     find_lab = re.search(p_lab, p_filename)
     find_caps = re.search(r'[A-Z]', p_filename)
@@ -368,6 +366,7 @@ def extract_value(block_portion, p_blocks):
     :param p_blocks: al the blocks for this script
     :return: a combined script (dictionary)
     """
+    print("block_porting right before death {} ".format(block_portion))
     if len(block_portion) == 2:
         return block_portion[1][1]  # length is 2, say it directly.
     else:
@@ -397,7 +396,7 @@ def build_scratch_script(starting_block_id, p_blocks):
     script = []
     while next_block_id is not None:
         current_block = p_blocks[current_block_id]
-        # print(f"aaa {current_block_id} opcode {current_block['opcode']}")
+        print("aaa {} opcode {}".format(current_block_id, current_block['opcode']))
         if current_block['opcode'] == 'motion_movesteps':
             print("XXX script {}".format(script))
             steps = extract_value(current_block['inputs']['STEPS'], p_blocks)
@@ -441,12 +440,18 @@ def build_scratch_script(starting_block_id, p_blocks):
             script.append(['event_whenbroadcastreceived', message])
         elif current_block['opcode'] == 'control_repeat' or \
             current_block['opcode'] == 'control_forever':
-            substack_id = current_block['inputs']['SUBSTACK'][1]
-            repeat_script = build_scratch_script(substack_id, p_blocks)
+            if current_block['inputs']['SUBSTACK'][1]:
+                substack_id = current_block['inputs']['SUBSTACK'][1]
+                repeat_script = build_scratch_script(substack_id, p_blocks)
+            else:
+                repeat_script = ['']
             if current_block['opcode'] == 'control_forever':
                 times = 150
             else:
-                times = current_block['inputs']['TIMES'][1][1]
+                #  oldtimes = current_block['inputs']['TIMES'][1][1]
+                print('CURRENT BLOCK {}'.format(current_block['inputs']['TIMES']))
+                times = extract_value(current_block['inputs']['TIMES'], p_blocks)
+
             script.append(['control_repeat', times, repeat_script])
         elif current_block['opcode'] == 'control_repeat_until':
             substack_id = current_block['inputs']['SUBSTACK'][1]
@@ -472,6 +477,15 @@ def build_scratch_script(starting_block_id, p_blocks):
             # 4.4 wants extend 4.3b wants append?
             #return ['looks_sayforsecs', message, time]
             print("looks_sayforsecs script is this {}".format(script))
+        elif current_block['opcode'] == 'looks_say':
+            time = 1
+            message = extract_value(current_block['inputs']['MESSAGE'], p_blocks)
+            script.append(['looks_sayforsecs', message, time])  # no distinction beteen say and say for 1 second
+
+            # 4.4 wants extend 4.3b wants append?
+            #return ['looks_sayforsecs', message, time]
+            print("looks_say script is this {}".format(script))
+
         elif current_block['opcode'] == 'sensing_answer':
             return 'sensing_answer'
         elif current_block['opcode'] == 'data_setvariableto':
@@ -507,28 +521,29 @@ def build_scratch_script(starting_block_id, p_blocks):
             script.append(current_block['mutation']['proccode'])
         elif current_block['opcode'] == 'control_if':
             if 'SUBSTACK' not in current_block['inputs'].keys():
-                raise Exception("You have an if statement with nothing in it.  "
-                                "Add something inside it before autograding")
-            substack_1_id = current_block['inputs']['SUBSTACK'][1]
-            condition_id = current_block['inputs']['CONDITION'][1]
-            if_script = build_scratch_script(substack_1_id, p_blocks)
-            condition_script = build_scratch_script(condition_id, p_blocks)
-            script.append(['control_if', condition_script, if_script])  # need append
+                script.append(['control_if', 'True', ['say', '1', 'You have an if without a condition']])  # need append
+                #raise Exception("You have an if statement with nothing in it.  "
+                #                "Add something inside it before autograding")
+            else:
+                substack_1_id = current_block['inputs']['SUBSTACK'][1]
+                condition_id = current_block['inputs']['CONDITION'][1]
+                print("substack 1 id {} condition id {}".format(substack_1_id, condition_id))
+                if_script = build_scratch_script(substack_1_id, p_blocks)
+                condition_script = build_scratch_script(condition_id, p_blocks)
+                script.append(['control_if', condition_script, if_script])  # need append
         elif current_block['opcode'] == 'control_if_else':
-            if 'SUBSTACK' not in current_block['inputs'].keys():
-                raise Exception("You have an if/else statement with nothing in the if.  "
-                                "Add something inside it before autograding")
-            if 'SUBSTACK2' not in current_block['inputs'].keys():
-                raise Exception("You have an if/else statement with nothing in the else.  "
-                                "Add something inside it before autograding")
-
-            substack_1_id = current_block['inputs']['SUBSTACK'][1]
-            substack_2_id = current_block['inputs']['SUBSTACK2'][1]
-            condition_id = current_block['inputs']['CONDITION'][1]
-            if_script = build_scratch_script(substack_1_id, p_blocks)
-            else_script = build_scratch_script(substack_2_id, p_blocks)
-            condition_script = build_scratch_script(condition_id, p_blocks)
-            script.append(['control_if_else', condition_script, if_script, else_script])
+            print("wut {} {} ")
+            if 'SUBSTACK' not in current_block['inputs'].keys() or  'SUBSTACK2' not in current_block['inputs'].keys():
+                script.append(['control_if_else', 'True', ['say', '1', 'You have an if without a condition'],  ['say', '1', 'You have an else without a condition']])  # need append
+            else:
+                print("systems gogo")
+                substack_1_id = current_block['inputs']['SUBSTACK'][1]
+                substack_2_id = current_block['inputs']['SUBSTACK2'][1]
+                condition_id = current_block['inputs']['CONDITION'][1]
+                if_script = build_scratch_script(substack_1_id, p_blocks)
+                else_script = build_scratch_script(substack_2_id, p_blocks)
+                condition_script = build_scratch_script(condition_id, p_blocks)
+                script.append(['control_if_else', condition_script, if_script, else_script])
         elif current_block['opcode'] == 'operator_not':
             #operand = extract_value(current_block['inputs']['OPERAND'], p_blocks)
             operand_id = current_block['inputs']['OPERAND'][1]
@@ -603,6 +618,11 @@ def build_scratch_script(starting_block_id, p_blocks):
             string1 = extract_value(current_block['inputs']['STRING1'], p_blocks)
             string2 = extract_value(current_block['inputs']['STRING2'], p_blocks)
             script.extend(['join', string1, string2]) #extend tested
+        elif current_block['opcode'] == 'operator_contains':
+            string1 = extract_value(current_block['inputs']['STRING1'], p_blocks)
+            string2 = extract_value(current_block['inputs']['STRING2'], p_blocks)
+            script.extend(['operator_contains', string2, string1])
+
         elif current_block['opcode'] == 'operator_random':
             print("ccc entering random")
             num_from = extract_value(current_block['inputs']['FROM'], p_blocks)
@@ -677,7 +697,7 @@ def arrange_blocks_v2(p_json):
                                                           block['inputs']['OPERAND2'][1][1]]
                 elif block['opcode'] == "control_if_else":
                     if 'inputs' in block:
-                        if 'SUBSTACK' in block['inputs']:
+                        if 'SUBSTACK' in block['inputs'] and 'SUBSTACK2' in block['inputs'] :
                             if_scripts[block_id] = [block['inputs']['CONDITION'][1],
                                                     block['inputs']['SUBSTACK'][1],
                                                     block['inputs']['SUBSTACK2'][1]]
@@ -912,7 +932,9 @@ def is_equilateral_triangle(p_coordinates):
     d12 = distance(p_coordinates[0], p_coordinates[1])
     d23 = distance(p_coordinates[1], p_coordinates[2])
     d13 = distance(p_coordinates[0], p_coordinates[2])
-    tol = 0.01 * d12
+    tol = 0.02 * d12
+    print("in is_equilaterla.  distances are these {} {} {} tol is this {}".format(d12, d23, d13, tol))
+
     if abs(d12 - d23) < tol and abs(d12 - d13) < tol and abs(d23 - d13) < tol:
         return True
     else:
@@ -935,7 +957,7 @@ def is_square(p_coordinates):
     d23 = distance(p_coordinates[1], p_coordinates[2])
     d24 = distance(p_coordinates[1], p_coordinates[3])
     d34 = distance(p_coordinates[2], p_coordinates[3])
-    tol = 0.01 * d12
+    tol = 0.02 * d12
     print("here are the tolerances in is_square {} {} {} {} {} {}".format(d12, d13, d14, d23, d24, d34))
     if abs(d12 - d13) < tol:   # distance to 4 is the long one
         if abs(d14 - d23) < tol:
@@ -1041,6 +1063,7 @@ def is_pentagon(p_coordinates):
             return False
     return True
 
+
 def procedure_exists(p_name, p_scripts):
     """
     Tests to see if procedure with X name and certain variables exists
@@ -1073,3 +1096,22 @@ def free_points(p_points):
     p_test['points'] += p_points
     return p_test
 
+
+def variable_check_no_space(p_monitors):
+    import re
+    test_spaces = {"name": "Testing that Scratch variables have no spaces",
+                   "pass": True,
+                   "pass_message": "<h5 style=\"color:green;\">Pass!</h5> Scratch variables appear to have no spaces",
+                   "fail_message": "<h5 style=\"color:red;\">Fail.</h5> "
+                                   "Looks like there is at least one space in your variables "
+                                   " Rename your variable and and resubmit.<br>"
+                                   "File name should be like this: <br> <br>",
+                   'points': 0,
+                  }
+    for monitor in p_monitors:
+        if monitor['opcode'] == 'data_variable':
+            variable = monitor['params']['VARIABLE']
+            if re.search(r'\s', variable):
+                test_spaces['pass'] = False
+                test_spaces['fail_message'] += 'This variable has a space in it: ' + str(variable) + "<br>"
+    return test_spaces

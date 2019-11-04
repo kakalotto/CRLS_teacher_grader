@@ -1,6 +1,6 @@
 def case_1(p_filename):
     import re
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     p_test = {"name": "Given 10000 sims, Atwood's dance party AND army taking over happens ~50% of the time"
                       " (10 points) <br>",
@@ -33,7 +33,7 @@ def case_1(p_filename):
 
 def case_2(p_filename):
     import re
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     p_test = {"name": "Given 10000 sims, Atwood's dance party but no army taking over happens ~33% of the time"
                       " (10 points) <br>",
@@ -52,7 +52,7 @@ def case_2(p_filename):
         for number in match:
             percent = float(number)
             print("aaaa percent " + str(percent))
-            if 30.0 < percent < 36.0:
+            if 29.0 < percent < 36.0:
                 p_test['points'] += 10
                 p_test['pass'] = True
                 break
@@ -66,7 +66,7 @@ def case_2(p_filename):
 
 def case_3(p_filename):
     import re
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     p_test = {"name": "Given 10000 sims, No Atwood's dance party BUT army taking over happens ~12% of the time"
                       " (10 points) <br>",
@@ -99,7 +99,7 @@ def case_3(p_filename):
 
 def case_4(p_filename):
     import re
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     p_test = {"name": "Given 10000 sims, no Atwood's dance party AND  noarmy taking over happens ~6.25% of the time"
                       " (10 points) <br>",
