@@ -6,7 +6,8 @@ def scratch_filename_test(p_filename, p_lab):
     :return: a test dictionary
     """
     import re
-    YEAR = '2019'
+    from CRLS_APCSP_autograder.app.python_labs import YEAR
+
     find_year = re.search(YEAR, p_filename)
     find_lab = re.search(p_lab, p_filename)
     find_caps = re.search(r'[A-Z]', p_filename)
@@ -111,7 +112,7 @@ def find_variable(p_json, variable_name, p_points):
                       "' is in the Scratch program "
                       "(" + str(p_points) + " points)",
               "pass": False,
-              "pass_message": "<h5 style=\"color:green;\">Pass. <h5>"
+              "pass_message": "<h5 style=\"color:green;\">Pass. </h5>"
                               "Variable '" +
                               variable_name +
                               "' is in the Scratch program. <br>",
@@ -284,6 +285,43 @@ def find_set_variable(p_json, variable, value, *, points=0):
     return p_test
 
 
+def find_change_variable(p_json, variable, *, points=0):
+    """
+    Find a particular string in all of the questions being asked in scratch. Retruns True/False
+    :param p_json: The json
+    :param variable: the variable
+    :param p_points: Number of points this test is worth
+    :return: test dictionary
+    """
+    p_test = {"name": "Testing that variable " + variable + " is changed  in the Scratch program  (" +
+                      str(points) + "  points)",
+              "pass": False,
+              "pass_message": "<h5 style=\"color:green;\">Pass. </h5>" +
+                              "A variable '" +
+                              variable +
+                              "' is changed in the Scratch program  <br>",
+              "fail_message": "<h5 style=\"color:red;\">Fail. </h5>"
+                              "Did not find  a variable '" +
+                              variable +
+                              "' that is changed in the Scratch program  <br>",
+              'points': 0
+              }
+
+    sprites = p_json['targets']
+    for sprite in sprites:
+        if 'blocks' in sprite:
+            blocks = sprite['blocks']
+            for block_id in blocks:
+                block = blocks[block_id]
+                if 'opcode' not in block:
+                    continue
+                if block['opcode'] == 'data_changevariableby':
+                    p_test['pass'] = True
+    if p_test['pass']:
+        p_test['points'] += points
+    return p_test
+
+
 def _clean_block(block):
     """
     Helper function, gets rid of a bunch of keys to make more readable
@@ -366,7 +404,7 @@ def extract_value(block_portion, p_blocks):
     :param p_blocks: al the blocks for this script
     :return: a combined script (dictionary)
     """
-    print("block_porting right before death {} ".format(block_portion))
+    # print("block_portion right before death {} {} ".format(block_portion, len(block_portion)))
     if len(block_portion) == 2:
         return block_portion[1][1]  # length is 2, say it directly.
     else:
@@ -398,7 +436,7 @@ def build_scratch_script(starting_block_id, p_blocks):
         current_block = p_blocks[current_block_id]
         print("aaa {} opcode {}".format(current_block_id, current_block['opcode']))
         if current_block['opcode'] == 'motion_movesteps':
-            print("XXX script {}".format(script))
+            # print("XXX script {}".format(script))
             steps = extract_value(current_block['inputs']['STEPS'], p_blocks)
             script.append(['motion_movesteps', steps])  # had to use append in instance of 1 pressed, moe
         if current_block['opcode'] == 'motion_turnleft':
@@ -424,6 +462,8 @@ def build_scratch_script(starting_block_id, p_blocks):
         elif current_block['opcode'] == 'motion_changexby':
             dx = extract_value(current_block['inputs']['DX'], p_blocks)
             script.append(['motion_changexby', dx])  # tested
+        elif current_block['opcode'] == 'motion_xposition':
+            script.append(['motion_xposition'])
         elif current_block['opcode'] == 'motion_pointindirection':
             direction = extract_value(current_block['inputs']['DIRECTION'], p_blocks)
             script.append(['motion_pointindirection', direction])
@@ -451,7 +491,6 @@ def build_scratch_script(starting_block_id, p_blocks):
                 #  oldtimes = current_block['inputs']['TIMES'][1][1]
                 print('CURRENT BLOCK {}'.format(current_block['inputs']['TIMES']))
                 times = extract_value(current_block['inputs']['TIMES'], p_blocks)
-
             script.append(['control_repeat', times, repeat_script])
         elif current_block['opcode'] == 'control_repeat_until':
             substack_id = current_block['inputs']['SUBSTACK'][1]
@@ -459,9 +498,21 @@ def build_scratch_script(starting_block_id, p_blocks):
             repeat_script = build_scratch_script(substack_id, p_blocks)
             condition_script = build_scratch_script(condition_id, p_blocks)
             script.append(['control_repeat_until', condition_script, repeat_script])
+        elif current_block['opcode'] == 'control_stop':
+            script.append(['control_stop'])
+        elif current_block['opcode'] == 'control_wait':
+            time = extract_value(current_block['inputs']['DURATION'], p_blocks)
+            script.append(['control_wait', time])
         elif current_block['opcode'] == 'sensing_askandwait':
             question = extract_value(current_block['inputs']['QUESTION'], p_blocks)
             script.append(['sensing_askandwait', question])
+        elif current_block['opcode'] == 'sensing_keypressed':
+            sensing_keyoptions_id = current_block['inputs']['KEY_OPTION'][1]
+            sensing_keyoptions_list = build_scratch_script(sensing_keyoptions_id, p_blocks)
+            script.extend(['sensing_keypressed', sensing_keyoptions_list])
+        elif current_block['opcode'] == 'sensing_keyoptions':
+            key = current_block['fields']['KEY_OPTION'][0]
+            script.extend(['sensing_keyoptions', key])
         elif current_block['opcode'] == 'sensing_touchingobject':
             touchingobjectmenu_id = current_block['inputs']['TOUCHINGOBJECTMENU'][1]
             touching_object_list = build_scratch_script(touchingobjectmenu_id, p_blocks)
@@ -473,7 +524,6 @@ def build_scratch_script(starting_block_id, p_blocks):
             time = current_block['inputs']['SECS'][1][1]
             message = extract_value(current_block['inputs']['MESSAGE'], p_blocks)
             script.append(['looks_sayforsecs', message, time])  # Needs the append # 7/31 try again extend 8/1 need append
-
             # 4.4 wants extend 4.3b wants append?
             #return ['looks_sayforsecs', message, time]
             print("looks_sayforsecs script is this {}".format(script))
@@ -481,11 +531,26 @@ def build_scratch_script(starting_block_id, p_blocks):
             time = 1
             message = extract_value(current_block['inputs']['MESSAGE'], p_blocks)
             script.append(['looks_sayforsecs', message, time])  # no distinction beteen say and say for 1 second
-
             # 4.4 wants extend 4.3b wants append?
             #return ['looks_sayforsecs', message, time]
             print("looks_say script is this {}".format(script))
-
+        elif current_block['opcode'] == 'looks_nextcostume':
+            script.extend(['looks_nextcostume'])  # no distinction beteen say and say for 1 second
+        elif current_block['opcode'] == 'looks_switchcostumeto':
+            costume_id = current_block['inputs']['COSTUME'][1]
+            print("COSTUME ID " + str(costume_id))
+            costume_costume = build_scratch_script(costume_id, p_blocks)
+            script.append(['looks_switchcostumeto', costume_costume])  # no distinction beteen say and say for 1 second
+        elif current_block['opcode'] == 'looks_costume':
+            costume = current_block['fields']['COSTUME'][0]
+            script.append(['looks_costume', costume])  # no distinction beteen say and say for 1 second
+        elif current_block['opcode'] == 'looks_gotofrontback':
+            frontback = current_block['fields']['FRONT_BACK'][0]
+            script.append(['looks_gotofrontback', frontback])  # no distinction beteen say and say for 1 second
+        elif current_block['opcode'] == 'looks_goforwardbackwardlayers':
+            num = extract_value(current_block['inputs']['NUM'], p_blocks)
+            forwardbackwards = current_block['fields']['FORWARD_BACKWARD'][0]
+            script.append(['looks_goforwardbackwardlayers', num, forwardbackwards])  # no distinction beteen say and say for 1 second
         elif current_block['opcode'] == 'sensing_answer':
             return 'sensing_answer'
         elif current_block['opcode'] == 'data_setvariableto':
@@ -521,8 +586,12 @@ def build_scratch_script(starting_block_id, p_blocks):
             script.append(current_block['mutation']['proccode'])
         elif current_block['opcode'] == 'control_if':
             if 'SUBSTACK' not in current_block['inputs'].keys():
-                script.append(['control_if', 'True', ['say', '1', 'You have an if without a condition']])  # need append
+                script.append(['control_if', 'True', ['say', '1', 'You have an if without a substack']])  # need append
                 #raise Exception("You have an if statement with nothing in it.  "
+                #                "Add something inside it before autograding")
+            elif 'CONDITION' not in current_block['inputs'].keys():
+                script.append(['control_if', 'True', ['say', '1', 'You have an if without a condition']])  # need append
+                # raise Exception("You have an if statement with nothing in it.  "
                 #                "Add something inside it before autograding")
             else:
                 substack_1_id = current_block['inputs']['SUBSTACK'][1]
@@ -532,11 +601,9 @@ def build_scratch_script(starting_block_id, p_blocks):
                 condition_script = build_scratch_script(condition_id, p_blocks)
                 script.append(['control_if', condition_script, if_script])  # need append
         elif current_block['opcode'] == 'control_if_else':
-            print("wut {} {} ")
             if 'SUBSTACK' not in current_block['inputs'].keys() or  'SUBSTACK2' not in current_block['inputs'].keys():
                 script.append(['control_if_else', 'True', ['say', '1', 'You have an if without a condition'],  ['say', '1', 'You have an else without a condition']])  # need append
             else:
-                print("systems gogo")
                 substack_1_id = current_block['inputs']['SUBSTACK'][1]
                 substack_2_id = current_block['inputs']['SUBSTACK2'][1]
                 condition_id = current_block['inputs']['CONDITION'][1]
@@ -624,7 +691,6 @@ def build_scratch_script(starting_block_id, p_blocks):
             script.extend(['operator_contains', string2, string1])
 
         elif current_block['opcode'] == 'operator_random':
-            print("ccc entering random")
             num_from = extract_value(current_block['inputs']['FROM'], p_blocks)
             num_to = extract_value(current_block['inputs']['TO'], p_blocks)
             script.extend(['operator_random', num_from, num_to])
@@ -728,9 +794,10 @@ def arrange_blocks_v2(p_json):
                                         temp_repeat_commands.append(item)
                                     repeat_scripts[block_id] = temp_repeat_commands
                 elif block['parent'] is None:
-                    # print(f"yyy {block_id} doing things without parents now.")
+                    print("yyyy {} doing things without parents now.".format(block_id))
                     script = build_scratch_script(block_id, blocks)
                     scripts[block_id] = script
+            print("All scripts " + str(scripts))
     return scripts
 
 
@@ -813,6 +880,18 @@ def count_sprites(p_json):
             num_sprites += 1
     return num_sprites
 
+
+def find_sprite_name(p_json, p_name):
+    """
+    Finds the number of sprites that are NOT background
+    :param p_json:  - json of all code
+    :param p_name: name you are looking for
+    :return: all matches, as a list of integers
+    """
+    for target in p_json['targets']:
+        if target['name'] == p_name:
+            return True
+    return False
 
 def count_stage_changes(p_json):
     """
