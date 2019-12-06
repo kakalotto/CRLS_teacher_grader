@@ -1,5 +1,6 @@
 import math
 
+
 class brickLayer(object):
     def __init__(self, x, y, direction, *, pendown=True, draw_targets={}, variables={}):
         self.x = x
@@ -10,31 +11,36 @@ class brickLayer(object):
         self.move_history = [[self.x, self.y]]
         self.variables = variables
         self.say_history = ''
+        self.error = ''
 
     def move(self, amount):
-        print("start of move selfx {} selfy {} hist {}".format(self.x, self.y, self.move_history))
+        # print("start of move selfx {} selfy {} hist {}".format(self.x, self.y, self.move_history))
 
         orig_x = self.x
         orig_y = self.y
+        print("This is amount! {}".format(amount))
         amount = int(amount)
         self.y += round(math.cos(self.direction) * amount)
         self.x += round(math.sin(self.direction) * amount)
-        print("end move selfx {} selfy {} hist {}".format(self.x, self.y, self.move_history))
+        # print("end move selfx {} selfy {} hist {}".format(self.x, self.y, self.move_history))
         self.move_history.append([self.x, self.y])
         if self.pendown is True:
-
+            print("checking {} ".format(((orig_x, orig_y), (self.x, self.y))))
             if ((orig_x, orig_y), (self.x, self.y)) in self.draw_targets.keys():
+                print("is there, same order")
                 self.draw_targets[((orig_x, orig_y), (self.x, self.y))] = 0
                 return True
             elif ((self.x, self.y), (orig_x, orig_y)) in self.draw_targets.keys():
+                print('is there, reversed')
                 self.draw_targets[((self.x, self.y), (orig_x, orig_y))] = 0
                 return True
             else:
+                print("not there")
                 return False
-
 
     def turn(self, amount):
         self.direction += amount
+        # print("end turn selfx {} selfy {} hist {}".format(self.x, self.y, self.move_history))
 
 
 def eval_boolean(p_boolean, p_sprite):
@@ -58,7 +64,7 @@ def eval_boolean(p_boolean, p_sprite):
     # got a blank?
     if len(words) == 2:
         if words[0] == '==' or words[0] == '>' or words[0] == '<':
-            words.insert(0,"' '")
+            words.insert(0, "' '")
         else:
             words.append("' '")
     print("aaa inside wordsafter space check {}".format(words))
@@ -141,7 +147,7 @@ def do_sprite(p_sprite, moves, success):
                 success = False
                 break
         else:
-            print("ggg  at beggining of loop not a list.  move is this{}".format(move))
+            print("ggg  at beginning of loop not a list.  move is this{}".format(move))
             if move == 'event_whenkeypressed':
                 break
             if move == 'motion_movesteps':
@@ -240,17 +246,25 @@ def do_sprite(p_sprite, moves, success):
                     delta_value = ret_val
                 else:
                     delta_value = moves[2]
-                if re.search("\d \. \d", str(delta_value), re.X | re.M | re.S):
+                if re.search(r'Error: Index out of range', str(delta_value)):
+                    delta_value = 99999999
+                elif re.search("\d \. \d", str(delta_value), re.X | re.M | re.S):
                     delta_value = float(delta_value)
                 else:
                     delta_value = int(delta_value)
                 variable = re.sub('VARIABLE_', '', variable_plus_variable)
                 if variable in p_sprite.variables.keys():
-                    if re.search("\d \. \d", str(p_sprite.variables[variable]), re.X | re.M | re.S):
+                    print("vava " + str(p_sprite.variables[variable]))
+                    if re.search(r"\d \. \d", str(p_sprite.variables[variable]), re.X | re.M | re.S):
                         p_sprite.variables[variable] = float(p_sprite.variables[variable])
-                    else:
+                        p_sprite.variables[variable] += delta_value
+                    elif re.search(r"^\d+", str(p_sprite.variables[variable]), re.X | re.M | re.S):
                         p_sprite.variables[variable] = int(p_sprite.variables[variable])
-                    p_sprite.variables[variable] += delta_value
+                        p_sprite.variables[variable] += delta_value
+                    else:
+                        p_sprite.error += "Bug in changing " + str(variable) + " by " + str(delta_value) + \
+                        ". Setting variable to " + str(delta_value) + " and continuing. <br>"
+                        p_sprite.variables[variable] = delta_value
                 else:
                     raise Exception("Tried to edit variable {}, but that variable does not exist.<br>".format(variable))
                 print("changevariable by worked? {}".format(p_sprite.variables))
@@ -267,15 +281,32 @@ def do_sprite(p_sprite, moves, success):
                 if isinstance(index, list):
                     index = do_sprite(p_sprite, index, success)
                 index = sub_variables(str(index), p_sprite)
+                print("asdfasdf list name " + str(list_name))
+                if list_name not in p_sprite.variables:
+                    p_sprite.say_history += "<br>Found a bad variable/listname: " + str(list_name) + \
+                                            ".  This variable or list name is in your script somewhere " \
+                                            "and it should not be there.   <br>Check your pull downs to be sure" \
+                                            " you did not accidentally select the wrong variable or list name." \
+                                            "<br><br>"
+                    return False
+                list_length = len(p_sprite.variables[list_name])
                 print("iiu index {}".format(index))
                 index = int(index)
                 # print("fff index {}".format(index))
                 if index - 1 < 0:
+                    p_sprite.say_history += "Error: Index is too low "\
+                                 "  Did you try to 'say' 0th item of list or something like that?<br> "
+                    return False
+
                     raise Exception("Index was 0 or lower (too low of number.\n"
                                     "  Did you try to 'say' 0th item of list or something like that?)")
                 try:
                     item = p_sprite.variables[list_name][index - 1]
                 except IndexError:
+                    #flash("Broken")
+                    return "Error: Index out of range.  " \
+                           "You are trying to access the {} item in a list, " \
+                           "but list only has {} items. <br>".format(index, list_length)
                     raise Exception("Index was out of range of list.  This means you are picking an item that is longer"
                                     " than the list.\n"
                                     "For example, you might be trying to pick item 10 of a 3 item list.\n"
@@ -322,6 +353,9 @@ def do_sprite(p_sprite, moves, success):
 
                 print("jjj item is this {}".format(item))
                 item = int(sub_variables(str(item), p_sprite))
+                if list_name not in p_sprite.variables:
+                    p_sprite.say_history += 'Tried to access ' + str(list_name) + ' of the sprite, but it no exist <br>'
+                    return False
                 p_sprite.variables[list_name].pop(item - 1)
 
                 break
@@ -414,6 +448,24 @@ def do_sprite(p_sprite, moves, success):
                 evaluated = num1 == num2
                 print("jjj ran operator_equals and got this {}".format(evaluated))
                 return evaluated
+            elif move == 'operator_contains':
+                print("operator_contains moves {}".format(moves))
+                if isinstance(moves[1], list):
+                    char1 = do_sprite(p_sprite, moves[1], success)
+                else:
+                    char1 = moves[1]
+                if isinstance(moves[2], list):
+                    string1 = do_sprite(p_sprite, moves[2], success)
+                else:
+                    string1 = moves[2]
+                print("operator_contains pre sub char1 {} string1 {}".format(char1, string1))
+                num1 = sub_variables(str(char1), p_sprite)
+                num2 = sub_variables(str(string1), p_sprite)
+                print("operator_contains  post sub char1 {} string1 {}".format(char1, string1))
+                evaluated = char1 in string1
+                print("jjj ran operator_contains and got this {}".format(evaluated))
+                return evaluated
+
             elif move == 'operator_gt':
                 print("operator_gt moves {}".format(moves))
                 if isinstance(moves[1], list):
@@ -469,13 +521,17 @@ def do_sprite(p_sprite, moves, success):
                 try:
                     temp = float(num1)
                 except ValueError:
-                    raise Exception("First number of subtraction can't be converted to int.  Number is: {}"
-                                    .format(num1))
+                    #raise Exception("First number of subtraction can't be converted to int.  Number is: {}"
+                     #               .format(num1))
+                    num1 = 999999999999999999
                 try:
                     temp = float(num2)
+#                except ValueError:
+#                    raise Exception("Second number of subtraction can't be converted to int.  Number is: {}"
+#                                    .format(num2))
                 except ValueError:
-                    raise Exception("Second number of subtraction can't be converted to int.  Number is: {}"
-                                    .format(num2))
+                    num2 = 99999999999
+
                 tol = 0.01
                 if abs(round(float(num1)) - float(num1)) < tol:
                     num1 = int(num1)
@@ -613,6 +669,7 @@ def do_sprite(p_sprite, moves, success):
                     num2 = do_sprite(p_sprite, moves[2], success)
                 else:
                     num2 = moves[2]
+                print("aaa num1 {} num2 {}".format(num1, num2))
                 num1 = sub_variables(str(num1), p_sprite)
                 num2 = sub_variables(str(num2), p_sprite)
 
@@ -636,7 +693,10 @@ def do_sprite(p_sprite, moves, success):
                     num2 = int(num2)
                 else:
                     num2 = float(num2)
-                evaluated = num1 / num2
+                if num2 == 0:
+                    evaluated = 9999999
+                else:
+                    evaluated = num1 / num2
                 print("jjj ran operator_divide and got this {}".format(evaluated))
                 return evaluated
             elif move == 'operator_multiply':
@@ -742,7 +802,6 @@ def do_sprite(p_sprite, moves, success):
                 p_sprite.pendown = False
             elif move == 'pen_penDown':
                 p_sprite.pendown = True
-
             elif move == 'motion_turnright':
                 degrees = float(moves[i+1])
                 degrees = math.radians(degrees)
@@ -795,8 +854,14 @@ def do_sprite(p_sprite, moves, success):
             elif move == 'sensing_answer':
                 return 'sensing_answer'
             elif move == 'sensing_askandwait':
-                p_sprite.variables['current_answer'] = p_sprite.variables['sensing_answer'].pop(0)
-                print("ooo current answer is this {}".format(p_sprite.variables['current_answer']))
+                try:
+                    p_sprite.variables['current_answer'] = p_sprite.variables['sensing_answer'].pop(0)
+                    print("ooo current answer is this {}".format(p_sprite.variables['current_answer']))
+                except IndexError:
+                    p_sprite.variables['current_answer'] = 'Tried ask a question when a question was not anticipated.' \
+                                                           '<br>' \
+                                                           'Are you asking an extra question?<br>.'
+
             elif move == 'join':
                 string1 = moves[i+1]
                 if isinstance(string1, list):
@@ -809,6 +874,9 @@ def do_sprite(p_sprite, moves, success):
                 print("uuu join string1 {} string2 {} and both {}".format(string1, string2, string1 + string2))
 
                 return string1 + string2
+            elif move == 'control_error':
+                p_sprite.error += moves[i + 1]
+                return False
             elif move == 'control_if_else':
                 print("ooo found a control if_else moves{}  i{}".format(moves, i))
                 operator = moves[i + 1]
@@ -869,7 +937,16 @@ def do_sprite(p_sprite, moves, success):
             #         ret_val = do_sprite(p_sprite, moves[2], success)
             #     break
             elif move == 'control_repeat':
-                times = int(moves[i + 1])
+                print("WHOOO BOY CONTROL REPEAT")
+                if isinstance(moves[i+1], list):
+                    times = do_sprite(p_sprite, moves[i+1], success)
+                else:
+                    times = int(moves[i + 1])
+                if isinstance(times, float):
+                    p_sprite.say_history += "Tried to do a repeat with a float number of times.  Can only repeat integers."
+                    success = False
+                    break
+
                 for _ in range(times):
                     print("ooo repeat time {_}")
                     ret_val = do_sprite(p_sprite, moves[2], success)
@@ -1059,9 +1136,11 @@ def press_two(p_scripts, p_points):
                 break
     # print("ggg sprite.x {} sprite.y {} dir {} targets {}".format(sprite.x, sprite.y, sprite.direction,
     #                                                              sprite.draw_targets))
-    find_repeat = match_string(r"\['event_whenkeypressed', \s* '2'], .+ \['control_repeat', \s '2'", p_scripts)
+    find_repeat = match_string(
+        r"\['event_whenkeypressed', \s* '2'], .+?  \['control_repeat', \s '2', \s \[\['control_repeat', \s '2'",
+        p_scripts)
     if find_repeat['pass'] is False:
-        p_test['fail_message'] += "Did not find a repeat with the correct number of times in the script. <br>"
+        p_test['fail_message'] += "Did not find  a double repeat in the script. <br>"
     if success is False:
         p_test['fail_message'] += 'Drew too many lines.<br>'
     if 1 in sprite.draw_targets.values():
@@ -1124,6 +1203,7 @@ def press_three(p_scripts, p_points):
         if script[0] == ['event_whenkeypressed', '3']:
             print("here we go 3")
             success = do_sprite(sprite, script, True)
+
             print("success? {} ".format(success))
             if success:
                 break
@@ -1353,7 +1433,7 @@ def press_four(p_scripts, p_points):
     print("ggg sprite.x {} sprite.y {} dir {} targets {}".format(sprite.x, sprite.y, sprite.direction,
                                                                  sprite.draw_targets))
     find_repeat_1 = match_string(r"\['event_whenkeypressed', \s* '4'], .+ \['control_repeat', ", p_scripts)
-    if find_repeat_1['pass'] is False:
+    if find_repeat_1['pass'] is False :
         p_test['fail_message'] += "Did not find repeat in the script. <br>"
     if success is False:
         p_test['fail_message'] += 'Drew too many lines.<br>'
@@ -1373,4 +1453,5 @@ def press_four(p_scripts, p_points):
         p_test['pass'] = True
         p_test['points'] += p_points
     print("This is the move history \n" + str(sprite.move_history))
+
     return p_test

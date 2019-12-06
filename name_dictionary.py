@@ -72,6 +72,7 @@ names = {
     'jimongreen': 'Jimon Greene',
     'ryanguerrero': 'RYAN GUERRERO',
     'ryangurrero': 'RYAN GUERRERO',
+    'ryan': 'RYAN GUERRERO',
     'martyhe': 'Muen He',
     'haymanotkorich': 'Haymanot Koricho',
     'haymanot': 'Haymanot Koricho', 
