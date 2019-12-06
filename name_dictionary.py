@@ -39,6 +39,7 @@ names = {
     'aprice': 'ABIGAIL PRICE',
     'AlejandroRuiz': 'ALEJANDRO RUIZ',
     'Alejandro': 'ALEJANDRO RUIZ',
+    'alejandroruiz': 'ALEJANDRO RUIZ',
     'SekaiTullyCarr': 'Ulysses Tully Carr',
     'UlyssesTullyCarr': 'Ulysses Tully Carr',  
     'domiadam': 'Domokos Adam',
