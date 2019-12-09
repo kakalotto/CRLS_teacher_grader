@@ -26,7 +26,7 @@ def find_good_print(p_function_data):
 
 
 def python_4_031_good_prints(p_filename):
-    from app.python_labs.function_test import extract_all_functions, extract_single_function
+    from CRLS_APCSP_autograder.app.python_labs.function_test import extract_all_functions, extract_single_function
 
     programs = ['loop1', 'loop2', 'loop3', 'loop4', 'loop5', 'loop6', 'loop7', 'loop8']
     extract_all_functions(p_filename)
@@ -54,7 +54,7 @@ def python_4_031_good_prints(p_filename):
 
 
 def python_4_031_double_loops(p_filename):
-    from app.python_labs.function_test import extract_all_functions, extract_single_function
+    from CRLS_APCSP_autograder.app.python_labs.function_test import extract_all_functions, extract_single_function
 
     programs = ['loop4', 'loop5', 'loop6', 'loop7', 'loop8']
     extract_all_functions(p_filename)

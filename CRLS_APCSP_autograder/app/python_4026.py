@@ -27,7 +27,7 @@ def feedback_4026(filename):
         tests.append(test_function_1)
 
         if test_function_1['pass'] is False:
-            return render_template('feedback.html', user=user, tests=tests, filename=filename, score_info=score_info)
+            return tests
         else:
             print("trying 2")
             test_function_2 = run_unit_test('4.026', 2, 10)
