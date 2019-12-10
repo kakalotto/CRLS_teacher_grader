@@ -53,3 +53,54 @@ def scratch_feedback_43a_alternate(filename):
                 tests.append(test_help)
                 return tests
 
+
+def scratch_feedback_43b_alternate(filename):
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, unzip_sb3, read_json_file, find_help, \
+        arrange_blocks_v2, free_points, variable_check_no_space
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch_4_3 import oneb_works, songs_list, songs_list_min_items, oneb_looks_ok, \
+        twob_looks_ok, \
+        threeb_looks_ok,  twob_works, threeb_works, fourb_works, fiveb_works, tester
+
+    tests = list()
+
+    # Test file name
+    test_filename = scratch_filename_test(filename, '4.3b_alternate')
+    tests.append(test_filename)
+    if test_filename['pass'] is False:
+        return tests
+    else:
+        unzip_sb3(filename)
+        json_data = read_json_file()
+        test_spaces = variable_check_no_space(json_data['monitors'])
+        tests.append(test_spaces)
+        if test_spaces['pass'] is False:
+            return tests
+        else:
+            scripts = arrange_blocks_v2(json_data)
+            test_songs_list = songs_list(json_data, 5)
+            tests.append(test_songs_list)
+            test_songs_list_min_items = songs_list_min_items(json_data, 5)
+            tests.append(test_songs_list_min_items)
+
+            if test_songs_list_min_items['pass'] is False:
+                return tests
+            else:
+                test_oneb_looks_ok = oneb_looks_ok(scripts, 5)
+                tests.append(test_oneb_looks_ok)
+                test_oneb_works = oneb_works(scripts, 5)
+                tests.append(test_oneb_works)
+                test_twob_looks_ok = twob_looks_ok(scripts, 5)
+                tests.append(test_twob_looks_ok)
+                test_twob_works = twob_works(scripts, 5)
+                tests.append(test_twob_works)
+                test_threeb_looks_ok = threeb_looks_ok(scripts, 5)
+                tests.append(test_threeb_looks_ok)
+                test_threeb_works = threeb_works(scripts, 5)
+                tests.append(test_threeb_works)
+                test_fourb_works = fourb_works(scripts, 5)
+                tests.append(test_fourb_works)
+                test_fiveb_works = fiveb_works(scripts, 5)
+                tests.append(test_fiveb_works)
+                test_help = find_help(json_data, 5)
+                tests.append(test_help)
+                return tests
