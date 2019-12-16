@@ -1,7 +1,7 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.databases_3_002 import docs_feedback_databases_databases_3002
+from CRLS_APCSP_autograder.app.databases_3_002 import docs_feedback_databases_3002
 
 def doc_name_to_rubric_name(doc_name):
     import re
