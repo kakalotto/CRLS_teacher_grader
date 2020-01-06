@@ -10,16 +10,15 @@ def docs_feedback_databases_3002(link):
                            r'where .+? name .*? = .*? christmas \s island .+? 3b\.',
                            r'3a\. .+? tabledata \s* update .+? country .+? set .+? name .*? \s* = \s* .*? holiday \s island .+? where .+? code .*?  = .*? cxr .+? 3b\.',
                            ], text, points=10)
-    test3b = exact_answer('3b. population > 5M', [r'3b\. .+? tabledata \s* select \s* .+? \s* from \s* `*world`* \.'
-                                                  r'`*country`* \s* where `* \s* `* population`* \s* > \s* 5,*000,*000 '
-                                                  r'\s*'
+    test3b = exact_answer('3b. population > 5M', [r'3b\. .+? tabledata \s* select .+? from .+? world .+?'
+                                                  r'country .+? where .+? population .+? > \s* 5,*000,*000 '
                                                   r'.+? 3c\.',
                                                   r'3b\. .+? tabledata \s* select \s* .+? \s* from \s* `*country`* \s* where \s* `*population`* \s* > \s* 5,*000,*000 \s* .+? 3c\.  '],
                           text, points=10)
-    test3c = exact_answer('3c. Beginning w/York', [r'3c\. .+? tabledata \s* select \s* .+? \s* from .+? `* city `* \s* '
-                                                   r'where \s* `*name`* \s* like .+? york% .+? 3d\.',], text, points=5)
-    test3d = exact_answer('3d. Ending w/York',    [r'3d\. .+? tabledata \s* select \s* .+? \s* from .+? `* city `* \s* '
-                                                   r'where \s* `*name`* \s* like .+? %york .+? 3e\.'], text, points=5)
+    test3c = exact_answer('3c. Beginning w/York', [r'3c\. .+? tabledata \s* select \s* .+? \s* from .+? `* city .+? '
+                                                   r'where .+? name .+? like .+? york% .+? 3d\.',], text, points=5)
+    test3d = exact_answer('3d. Ending w/York',    [r'3d\. .+? tabledata \s* select \s* .+? \s* from .+? `* city .+? '
+                                                   r'where .+? name .+? like .+? %york .+? 3e\.'], text, points=5)
     test3e = exact_answer('3e. Avg. Asia population', [r'3e\. .+? tabledata \s* select  \s* avg  \(population\) \s* '
                                                          r'from \s* `*country`* \s* where .+? continent .+? asia .+? '
                                                          r'3f\.'], text, points=10)

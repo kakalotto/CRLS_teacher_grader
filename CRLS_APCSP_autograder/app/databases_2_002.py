@@ -15,20 +15,21 @@ def docs_feedback_databases_2002(link):
                           [r'7a\. .+? tabledata \s* select \s* \* \s* from \s* country .+? 7b\.'],
                           text, points=10)
     test7b = exact_answer('7b. sql query select city, M names',
-                          [r'7b\. .+? tabledata \s* select \s* .+?\s* from \s* city \s* where \s* name \s* like \s*'
+                          [r'7b\. .+? tabledata \s* select .+?  from .+? city .+? where .+? name .+? like \s*'
                            r' .+? m%  .+? 7c\.'],
                           text, points=10)
     test7c = exact_answer('7c. sql query surface area',
-                          [r'7c\. .+? tabledata \s* select \s .+? \s from \s country \s where \s surfacearea \s* > '
+                          [r'7c\. .+? tabledata \s* select .+? from .+? country .+? where .+? surfacearea .+? > '
                            r'\s* 50 ,* 000 \s*'
                            r' .+?  7d\.'],
                           text, points=10)
     test7d = exact_answer('7d. life expectancy > 70',
-                          [r'7d\. .+? tabledata \s* select \s count .+? \s from \s country \s where \s '
+                          [r'7d\. .+? tabledata \s* select \s* count .+? from .+? country .+? where \s* '
                            r'lifeexpectancy \s* > '
                            r'\s* 70 \s*'
                            r' .+?  $'],
                           text, points=10)
+
 
     tests.extend([test3a, test4a, test4b, test5a, test5b, test6a, test6b, test7a, test7b, test7c, test7d])
     return tests
