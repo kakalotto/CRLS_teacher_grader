@@ -2,9 +2,9 @@ def docs_feedback_search_sort(link):
     from CRLS_APCSP_autograder.app.docs_labs.docs import get_text, exact_answer, keyword_and_length
 
     tests = list()
+    text = get_text(link)
 
 
-    print(text)
     test1a = keyword_and_length('1a. Good algorithm?', [r'[a-zA-Z]+'], text,
                                 search_string=r'1a\. .+? tabledata (.+) 2a\.', min_length=10, points=1)
     test2a = keyword_and_length('2a. Efficiency of merge vs. bubble, small sets??', [r'[a-zA-Z]+'], text,
@@ -30,8 +30,8 @@ def docs_feedback_search_sort(link):
     test7b = exact_answer('7b. n! reasonable?',
                           [r'7b\. .+? tabledata .+? no .+?  in \s the \s real'], text, points=5)
 
-    tests.extend([test1a, test2a, test2b, test3a, test3b, test3c, test3d, test4a, test5a, test6a, test6a, test7a,
+    tests.extend([test1a, test2a, test2b, test3a, test3b, test3c, test3d, test4a, test5a, test6a, test7a,
                   test7b])
 
-    return render_template('feedback.html', user=user, tests=tests, filename=link, score_info=score_info)
+    return tests
 

@@ -156,6 +156,9 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 doc_name = doc_name.rstrip()
                 rubric_name = doc_name_to_rubric_name(doc_name)
                 #                rubric_extra_fulltext = rubric_name
+                if re.search(r'JULIAN', line, re.X | re.M | re.S):
+                    print("YESYES")
+                    continue 
                 print("doc name")
                 print(doc_name)
                 print("rubric name rubric extra")
@@ -205,7 +208,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             skipped_tests = 0
             # print("xxx tests: {}".format(tests))
             for i, test in enumerate(tests):
-                # print('xxx test : {}'.format(test))
+                #print('xxx test : {}'.format(test))
+
                 if 'name' in test:
                     if re.search(r'that \s file \s is \s named \s correctly', test['name'], re.X | re.S | re.M):
                         skipped_tests += 1
@@ -234,5 +238,6 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 datapoints.append(datapoint)
 
             body = {'valueInputOption': 'USER_ENTERED', 'data': datapoints}
+            print(body)
             result = service_sheets.spreadsheets().values().batchUpdate(spreadsheetId=rubric_id, body=body).execute()
             print("match_counter" + str(match_counter))

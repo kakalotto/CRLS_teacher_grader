@@ -16,10 +16,10 @@ if len(sys.argv) > 1:
     person = sys.argv[1]
 
 
-value_cells = ['F2', 'F4', 'F6', 'F8', 'F9', 'F10', 'F11', 'F12', 'F13', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20']
+value_cells = ['F2', 'F4', 'F6', 'F8', 'F9', 'F11', 'F12', 'F13', 'F15', 'F17', 'F19', 'F20', ]
 rubric_sheet_name = 'Sheet1'
 
-match_cells = ['H3', 'H5', 'H7',]
+match_cells = ['H3', 'H5', 'H7', 'H10', 'H14', 'H16', 'H18', ]
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
                   scorer=docs_feedback_search_sort, match_cells=match_cells)
