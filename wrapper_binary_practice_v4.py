@@ -18,10 +18,10 @@ def doc_name_to_rubric_name(doc_name):
 
 value_cells = ['B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'B16', 'B17', 'B18',
                'B19', 'B20', 'B21', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'F13', 'F14', 'F15',
-               'F16', 'F17', 'F18', 'F19', 'F20', 'F21', 'F22', ]
+               'F16', 'F17', 'F19','F20', 'F22', 'F23', ]
 rubric_sheet_name = 'Sheet1'
 
-match_cells = ['H18', 'H20', 'h22']
+match_cells = ['H18', 'H21', 'H24']
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
