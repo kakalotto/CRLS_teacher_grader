@@ -3,12 +3,12 @@ def docs_feedback_hex_minilab_v2(link):
 
     tests = list()
     text = get_text(link)
-    test1a = exact_answer('question 1a', [r'1a\. .*? tabledata .*? 7 .*? tabledata'], text, points=2)
+    test1a = exact_answer('question 1a', [r'1a\. .*? tabledata .*? 7 .*? tabledata .*? 1b\.'], text, points=2)
     test1b = exact_answer('question 1b', [r'1b\. .*? tabledata .*? 13 .*? tabledata'], text, points=2)
     test1c = exact_answer('question 1c', [r'1c\. .*? tabledata .*? 166 .*? tabledata'], text, points=2)
     test1d = exact_answer('question 1d', [r'1d\. .*? tabledata .*? 46 .*? tabledata'], text, points=2)
     test2a = exact_answer('question 2a', [r'2a\. .*? tabledata .*? 1e .*? tabledata '], text, points=2)
-    test2b = exact_answer('question 2b', [r'2b\. .*? tabledata .*? 7 .*? tabledata'], text, points=2)
+    test2b = exact_answer('question 2b', [r'2b\. .*? tabledata .*? 7 .*? 7 .*? tabledata .*? 2c\.'], text, points=2)
     test2c = exact_answer('question 2c', [r'2c\. .*? tabledata .*? 41 .*? tabledata'], text, points=2)
     test2d = exact_answer('question 2d', [r'2d\. .*? tabledata .*? ff .*? tabledata'], text, points=2)
 

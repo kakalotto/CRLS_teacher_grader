@@ -2,7 +2,7 @@
 from master_grader import master_grader
 from CRLS_APCSP_autograder.app.python_1030 import docs_feedback_python_1030
 import sys
-
+person = ''
 fulltext_search = 'Python 1.030'
 
 if len(sys.argv) > 1:

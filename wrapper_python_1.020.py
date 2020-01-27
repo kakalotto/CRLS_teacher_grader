@@ -3,6 +3,7 @@ from master_grader import master_grader
 from CRLS_APCSP_autograder.app.python_1020 import docs_feedback_python_1020
 import sys
 
+person = ''
 def doc_name_to_rubric_name(doc_name):
     import re
     p_rubric_name = doc_name
