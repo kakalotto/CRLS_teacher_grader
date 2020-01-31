@@ -86,4 +86,8 @@ names = {
     'andrewtheoblad': 'Andrew Theobald',
     'tayriwhitebullock': 'Tayri White-bullock',
     'eden': 'Eden Wegayhu',
-    }
+
+    'oliver': 'Oliver Judd',
+    'green': 'Caitlyn Green',
+    'scree': 'ALBATOOL ALSHOURA'
+}
