@@ -116,7 +116,7 @@ names = {
     'eyoboss10': 'Eyosiyas Kebede',
     'mcfly': 'MARTIN ARMSTRONG',
     'grace': 'GRACE GILLIG',
-    'generalkenobi': 'Riley O\'Rourke'
+    'generalkenobi': 'Riley O\'Rourke',
     'imdisapointed': 'TOBIN MALLON',
     'dubois': 'Tyler Chueh',
     'techsupport': 'SHADNAN ASRAF',
