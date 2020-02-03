@@ -9,7 +9,8 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
     gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-12-15T00:00:00\' and' \
-                   ' ( \'Kann\' in owners or  \'me\' in owners ) '
+                   '  \'me\' in owners  '
+#                   ' ( \'Kann\' in owners or  \'me\' in owners ) '
     if fulltext_search:
         gdrive_query += ' and fullText contains \'' + fulltext_search + '\'  '
     else:
@@ -206,7 +207,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 tests = scorer(doc_id)
             match_counter = 0
             skipped_tests = 0
-            # print("xxx tests: {}".format(tests))
+            print("xxx tests: {}".format(tests))
             for i, test in enumerate(tests):
                 #print('xxx test : {}'.format(test))
 

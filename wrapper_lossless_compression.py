@@ -20,7 +20,7 @@ value_cells = ['B3', 'B4', 'B6', 'B8', 'B10', 'B12', 'B14',
                'F3', 'F5', ]
 rubric_sheet_name = 'Sheet1'
 
-match_cells = ['C18', 'C19', 'C20', 'C21', 'C22', 'C23', 'C24', 'C25', 'C26', 'C27']
+match_cells = ['D5', 'D7', 'D9', 'D11', 'D13', 'D15', 'H4', 'H6', ]
 
 #match_cells = ['A18', 'A18', 'A18', 'A18', 'H11', 'H13', 'H15', 'H16', 'H17']
 if not person:

@@ -22,7 +22,7 @@ def doc_name_to_rubric_name(doc_name):
 value_cells = ['B3', 'B5', 'B6', 'B8', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'F3', 'F4', 'F5', ]
 rubric_sheet_name = 'Sheet1'
 
-match_cells = ['C17', 'C18', 'C19']
+match_cells = ['D4', 'D7', 'D9']
 
 #match_cells = ['H7', 'H9', 'I6']
 if not person:

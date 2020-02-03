@@ -7,12 +7,15 @@ def scratch_filename_test(p_filename, p_lab):
     """
     import re
     #from CRLS_APCSP_autograder.app.python_labs import YEAR
-    YEAR='2019'
+    LAST_YEAR='2019'
+    YEAR='2020'
 
     find_year = re.search(YEAR, p_filename)
+    find_last_year = re.search(LAST_YEAR, p_filename)
     find_lab = re.search(p_lab, p_filename)
     find_caps = re.search(r'[A-Z]', p_filename)
     find_all = re.search(YEAR + r"_ .+ _ " + p_lab + r".sb3", p_filename, re.X | re.M | re.S)
+    find_all_last_year = re.search(LAST_YEAR + r"_ .+ _ " + p_lab + r".sb3", p_filename, re.X | re.M | re.S)
     p_test_filename = {"name": "Testing that file is named correctly",
                        "pass": True,
                        "pass_message": "<h5 style=\"color:green;\">Pass!</h5> File name looks correct "
@@ -29,7 +32,7 @@ def scratch_filename_test(p_filename, p_lab):
                                        " Other tests not run. They will be run after filename is fixed.<br>",
                        'points': 0,
                        }
-    if find_year and find_lab and find_all and not find_caps:
+    if (find_year or find_last_year) and find_lab and ( find_all or find_all_last_year) and not find_caps:
         p_test_filename['pass'] = True
     else:
         p_test_filename['pass'] = False
