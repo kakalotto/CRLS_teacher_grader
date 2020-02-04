@@ -92,7 +92,7 @@ def find_help(p_json, p_points):
     for target in p_json['targets']:
         if target['comments']:
             for comment_id in target['comments']:
-                helps = re.search('help', target['comments'][comment_id]['text'], re.X | re.M | re.S)
+                helps = re.search('(help|Help)', target['comments'][comment_id]['text'], re.X | re.M | re.S)
                 teacher = re.search('(Wu|Martinez|Atwood)', target['comments'][comment_id]['text'], re.X | re.M | re.S)
                 if helps and not teacher:
                     help_comments += 1

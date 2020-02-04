@@ -143,24 +143,26 @@ def press_four(p_scripts, p_points):
                               "pentagon<br>",
               "points": 0
               }
-    test_two = match_string(r"'event_whenkeypressed',\s'4'", p_scripts)
+    test_four = match_string(r"'event_whenkeypressed',\s'4'", p_scripts)
     sprite = brickLayer(0, 0, 0, pendown=False)
-    if test_two['pass'] is False:
+    if test_four['pass'] is False:
         p_test['fail_message'] += "Did not find a 'when key 4 is pressed' in the code .<br>"
     move_success = False
-    if test_two['pass']:
+    if test_four['pass']:
         for key in p_scripts:
             script = p_scripts[key]
-            if len(script) > 4:
+            print(script)
+            if len(script) > 1:
                 if script[0] == ['event_whenkeypressed', '4']:
                     move_success = do_sprite(sprite, script, True)
     coords = unique_coordinates(sprite.move_history)
+    print(coords)
     if len(coords) != 4:
-        p_test['fail_message'] += "After pressing 1, sprite should land on 4 unique coordinates, but does not.<br>"
+        p_test['fail_message'] += "After pressing 1, sprite should land on 4 unique coordinates plus start, but does not.<br>"
     pentagon = is_pentagon(coords)
     if pentagon is False:
         p_test['fail_message'] += "Failed test for pentagon <br>.<br>"
-    if test_two['pass'] and pentagon and move_success:
+    if test_four['pass'] and pentagon and move_success:
         p_test['pass'] = True
         p_test['points'] += p_points
     return p_test
@@ -194,7 +196,7 @@ def press_five(p_scripts, p_points):
     if test_two['pass']:
         for key in p_scripts:
             script = p_scripts[key]
-            if len(script) > 5:
+            if len(script) > 1:
                 if script[0] == ['event_whenkeypressed', '5']:
                     move_success = do_sprite(sprite, script, True)
     coords = unique_coordinates(sprite.move_history)
