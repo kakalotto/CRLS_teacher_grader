@@ -25,7 +25,7 @@ def docs_feedback_scratch_12(link):
     test1h3 = keyword_and_length('question 1 h3', ['color', 'sprite', 'change', ], text,
                                  search_string=r'h\.aaa \s inlineobject\n .+? tabledata?\s* (.+?)tabledata', points=1)
     test1i2 = exact_answer('question 1 i2', [r'i\.aaa \s inlineobject\ntabledata?\s*motion?'], text, points=1)
-    test1i3 = keyword_and_length('question 1 i3', ['move', 'go', 'location', 'position' , 'appear'],   text,
+    test1i3 = keyword_and_length('question 1 i3', ['move', 'go', 'location', 'position' , 'appear', 'teleport',],   text,
                                  search_string=r'i\.aaa \s inlineobject\n .+? tabledata?\s* (.+?)tabledata', points=1)
     test1j2 = exact_answer('question 1 j2', [r'j\.aaa \s inlineobject\n.+?tabledata?\s*pen?'], text, points=1)
     test1j3 = keyword_and_length('question 1 j3', ['pen', 'change', 'size', ], text,

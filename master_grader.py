@@ -10,7 +10,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
     gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-12-15T00:00:00\' and' \
                    '  \'me\' in owners  '
-#                   ' ( \'Kann\' in owners or  \'me\' in owners ) '
+##                   ' ( \'Kann\' in owners or  \'me\' in owners ) '
 #                   '  \'me\' in owners  '
     if fulltext_search:
         gdrive_query += ' and fullText contains \'' + fulltext_search + '\'  '
