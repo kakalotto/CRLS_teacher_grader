@@ -20,7 +20,7 @@ value_cells = ['B3', 'B5', 'B7', 'B9', 'B11', 'B13', 'F3', 'F5', 'F7', 'F9', 'F1
 rubric_sheet_name = 'Sheet1'
 
 #match_cells = ['D4', 'D6', 'D8', 'D10', 'D12', 'D14', 'H4', 'H6', 'H8', 'H10', 'H12']
-match_cells = ['D4', 'D6', 'D8', 'D10', 'D12', 'D14', 'G4', 'G6', 'G8', 'G10', 'G12']
+match_cells = ['D4', 'D6', 'D8', 'D10', 'D12', 'D14', 'H4', 'H6', 'H8', 'H10', 'H12']
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,

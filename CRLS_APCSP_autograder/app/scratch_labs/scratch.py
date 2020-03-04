@@ -6,16 +6,20 @@ def scratch_filename_test(p_filename, p_lab):
     :return: a test dictionary
     """
     import re
-    #from CRLS_APCSP_autograder.app.python_labs import YEAR
-    LAST_YEAR='2019'
-    YEAR='2020'
+    YEAR = '2020'
+    LAST_YEAR = '2019'
+#    from CRLS_APCSP_autograder.app.python_labs import YEAR
+#    from CRLS_APCSP_autograder.app.python_labs import LAST_YEAR
+
 
     find_year = re.search(YEAR, p_filename)
     find_last_year = re.search(LAST_YEAR, p_filename)
+    
     find_lab = re.search(p_lab, p_filename)
     find_caps = re.search(r'[A-Z]', p_filename)
     find_all = re.search(YEAR + r"_ .+ _ " + p_lab + r".sb3", p_filename, re.X | re.M | re.S)
-    find_all_last_year = re.search(LAST_YEAR + r"_ .+ _ " + p_lab + r".sb3", p_filename, re.X | re.M | re.S)
+    find_all_last = re.search(LAST_YEAR + r"_ .+ _ " + p_lab + r".sb3", p_filename, re.X | re.M | re.S)
+
     p_test_filename = {"name": "Testing that file is named correctly",
                        "pass": True,
                        "pass_message": "<h5 style=\"color:green;\">Pass!</h5> File name looks correct "
@@ -32,7 +36,7 @@ def scratch_filename_test(p_filename, p_lab):
                                        " Other tests not run. They will be run after filename is fixed.<br>",
                        'points': 0,
                        }
-    if (find_year or find_last_year) and find_lab and ( find_all or find_all_last_year) and not find_caps:
+    if (find_year or find_last_year) and find_lab and (find_all or find_all_last) and not find_caps:
         p_test_filename['pass'] = True
     else:
         p_test_filename['pass'] = False
@@ -92,7 +96,7 @@ def find_help(p_json, p_points):
     for target in p_json['targets']:
         if target['comments']:
             for comment_id in target['comments']:
-                helps = re.search('(help|Help)', target['comments'][comment_id]['text'], re.X | re.M | re.S)
+                helps = re.search(r'(help|Help)', target['comments'][comment_id]['text'], re.X | re.M | re.S)
                 teacher = re.search('(Wu|Martinez|Atwood)', target['comments'][comment_id]['text'], re.X | re.M | re.S)
                 if helps and not teacher:
                     help_comments += 1
@@ -322,7 +326,42 @@ def find_change_variable(p_json, variable, *, points=0):
                 if block['opcode'] == 'data_changevariableby':
                     p_test['pass'] = True
     if p_test['pass']:
-        p_test['points'] += points
+        p_teFst['points'] += points
+    return p_test
+
+
+def check_only_one_block(p_scripts, find_this, p_points):
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import find_question, match_string
+
+    p_test = {"name": "Testing only one block of a particular type (i.e. one flag)'(" + \
+                      str(p_points) + " points)",
+              "pass": False,
+              "pass_message": "<h5 style=\"color:green;\">Pass. <h5>"
+                              "There is only one block of a particular type <br>",
+              "fail_message": "<h5 style=\"color:red;\">Fail. </h5>"
+                              "Found multiple blocks of this type!.<br>",
+              'points': 0
+              }
+    count = 0
+    block_dict = {'greenflag' : 'event_whenflagclicked'}
+    target = block_dict[find_this]
+
+    for key in p_scripts:
+        script = p_scripts[key]
+        test_found_1 = match_string(target, script)
+        if test_found_1['pass']:
+            count += 1
+    print(count)
+    if count > 1:
+        p_test['fail_message'] += "<h5 style=\"color:purple;\">Found too many of " + str(target) + \
+                                  ".<br>Expected 1 found " + str(count) + "</h5>"
+        p_test['pass'] = False
+    elif count != 1:
+        p_test['fail_message'] += "<h5 style=\"color:purple;\">Found wrong number of " + str(target) + \
+                                  ".<br>Expected 1 found " + str(count)  + "</h5>"
+        p_test['pass'] = False
+    else:
+        p_test['pass'] = True
     return p_test
 
 
@@ -966,7 +1005,7 @@ def every_sprite_broadcast_and_receive(p_json, p_points):
         if target['isStage'] is True:
             pass
         else:
-            if match_string(r'event_broadcast', target)['pass'] is False or \
+            if match_string(r'(event_broadcast|event_broadcastandwait)', target)['pass'] is False or \
                     match_string(r'event_whenbroadcastreceived', target)['pass'] is False:
                 p_test['pass'] = False
                 p_test['fail_message'] += 'This sprite does not have a broadcast AND a receive: ' + \
@@ -1198,3 +1237,31 @@ def variable_check_no_space(p_monitors):
                 test_spaces['pass'] = False
                 test_spaces['fail_message'] += 'This variable has a space in it: ' + str(variable) + "<br>"
     return test_spaces
+
+
+def set_variable_in_block(p_script, p_variable):
+    """
+    verifies you aren't setting a variable in a script where you don't want
+    :param p_script: that script
+    :param p_variable: variable you arelooking for
+    :return: a test dictionary
+    """
+    import re
+    p_test = {"name": "Testing that this script has a 'set " + str(p_variable) + " to xxx",
+              "pass": False,
+              "pass_message": "<h5 style=\"color:green;\">Pass!</h5> This script has a 'set " + \
+                              str(p_variable) + " to xxx' ",
+              "fail_message": "<h5 style=\"color:red;\">Fail.</h5> " \
+                              "This script has does not have a 'set  " + str(p_variable) + " to xxx'. <br>"
+                              " This variable name is special for this problem and should not be used.<br>" \
+                                                                           "Sometimes you are reading this error" \
+                                                                           "because you are doing something like" \
+                                                                           "set (singular) variable = list.<br><br>",
+              'points': 0,
+           }
+
+    findthis = r"\[\'data_setvariableto', \s \'" + str(p_variable) + "\', .+? ]"
+    match = re.search(findthis, str(p_script), re.X | re.M | re.S)
+    if match:
+        p_test['pass'] = True
+    return p_test

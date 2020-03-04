@@ -1,6 +1,11 @@
 # Pass these in as parameters
+import sys
 from master_grader import master_grader
 from CRLS_APCSP_autograder.app.python_2020 import docs_feedback_python_2020, feedback_2020
+person = ''
+if len(sys.argv) > 1:
+    person = sys.argv[1]
+
 
 
 
@@ -29,7 +34,12 @@ master_grader(fulltext_search, doc_name_to_rubric_name, value_cells,
 value_cells = ['F4','F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'F13', 'F14', 'F15', 'F16', 'F17',]
 fulltext_search = 'Casting'
 
-master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, 
+if not person:
+    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, 
               scorer=docs_feedback_python_2020,
+              )
+else:
+    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, 
+              scorer=docs_feedback_python_2020, person=person
               )
 
