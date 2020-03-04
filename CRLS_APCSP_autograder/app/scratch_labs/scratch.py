@@ -6,11 +6,10 @@ def scratch_filename_test(p_filename, p_lab):
     :return: a test dictionary
     """
     import re
-    YEAR = '2020'
-    LAST_YEAR = '2019'
-#    from CRLS_APCSP_autograder.app.python_labs import YEAR
-#    from CRLS_APCSP_autograder.app.python_labs import LAST_YEAR
-
+#    from app.python_labs import YEAR
+#    from app.python_labs import LAST_YEAR
+    YEAR='2020'
+    LAST_YEAR='2019'
 
     find_year = re.search(YEAR, p_filename)
     find_last_year = re.search(LAST_YEAR, p_filename)
@@ -36,6 +35,34 @@ def scratch_filename_test(p_filename, p_lab):
                                        " Other tests not run. They will be run after filename is fixed.<br>",
                        'points': 0,
                        }
+
+    if find_year:
+        print("YES! Found the year")
+
+    if find_lab:
+        print("YES! Found the lab")
+    else:
+        print("noo. no lab " + str(p_lab) + " " + str(p_filename) )
+
+    if (find_year or find_last_year) and find_lab and (find_all or find_all_last) and not find_caps:
+        p_test_filename['pass'] = True
+    else:
+        p_test_filename['pass'] = False
+    return p_test_filename
+
+
+def read_json_file():
+    """
+    Reads in json file
+    :return: dictionary of what is in json file
+    """
+    import json
+
+    with open('/tmp/project.json', 'r') as json_file:
+        json_data = json.load(json_file)
+    return json_data
+
+
     if (find_year or find_last_year) and find_lab and (find_all or find_all_last) and not find_caps:
         p_test_filename['pass'] = True
     else:
@@ -506,7 +533,9 @@ def build_scratch_script(starting_block_id, p_blocks):
             dx = extract_value(current_block['inputs']['DX'], p_blocks)
             script.append(['motion_changexby', dx])  # tested
         elif current_block['opcode'] == 'motion_xposition':
-            script.append(['motion_xposition'])
+            script.extend(['motion_xposition'])
+        elif current_block['opcode'] == 'motion_yposition':
+            script.extend(['motion_yposition'])
         elif current_block['opcode'] == 'motion_pointindirection':
             direction = extract_value(current_block['inputs']['DIRECTION'], p_blocks)
             script.append(['motion_pointindirection', direction])
@@ -946,7 +975,7 @@ def count_stage_changes(p_json):
     changes = 0
     for target in p_json['targets']:
         if target['isStage'] is True:
-            matches = len(re.findall(r'(looks_switchcostumeto|looks_nextbackdrop)', str(p_json), re.X | re.M | re.S))
+            matches = len(re.findall(r'(looks_switchbackdropto|looks_nextbackdrop)', str(p_json), re.X | re.M | re.S))
         else:
             matches = len(re.findall(r'(looks_nextbackdrop|looks_switchbackdropto)', str(p_json), re.X | re.M | re.S))
         if matches:
@@ -977,7 +1006,7 @@ def every_sprite_green_flag(p_json, p_points):
         else:
             if match_string(r'event_whenflagclicked', target)['pass'] is False:
                 p_test['pass'] = False
-                p_test['fail_message'] += 'This sprite does not have a green flag: ' + target['name'] + '<br>'
+                p_test['fail_message'] += '<h5 style=\"color:purple;\">This sprite does not have a green flag: ' + target['name'] + '<br></h5>'
     if p_test['pass']:
         p_test['points'] += p_points
     return p_test

@@ -22,7 +22,7 @@ def docs_feedback_routers_and_redundancy(link):
                                search_string=r'6. .+? tabledata (.+) 7.', min_length=7,
                                points=1)
     test7 = keyword_and_length('question 7', [r'[a-zA-Z]+'], text,
-                               search_string=r'7. .+? tabledata (.+) 8.', min_length=5,
+                               search_string=r'7. .+? tabledata (.+) 8.', min_length=1,
                                points=1)
     test8 = keyword_and_length('question 8', [r'[a-zA-Z]+'], text,
                                search_string=r'8. .+? tabledata (.+) 9.', min_length=5,
