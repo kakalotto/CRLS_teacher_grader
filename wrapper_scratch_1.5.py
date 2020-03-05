@@ -24,9 +24,9 @@ rubric_sheet_name = 'Sheet1'
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=scratch_feedback_14_15, scratch_file=True, scratch_lab_num='1.5',
+                  scorer=scratch_feedback_15, scratch_file=True, scratch_lab_num='1.5',
                   scratch_rubric_suffix=' - Lab_1.5_Animated_Knock_Knock_Joke_rubric')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,\
-                  scorer=scratch_feedback_14_15(), scratch_file=True, scratch_lab_num='1.5',
-                  scratch_rubric_suffix='  - Lab_1.5_Animated_Knock_Knock_Joke_rubric', person=person)
+                  scorer=scratch_feedback_15, scratch_file=True, scratch_lab_num='1.5',
+                  scratch_rubric_suffix=' - Lab_1.5_Animated_Knock_Knock_Joke_rubric', person=person)

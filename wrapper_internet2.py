@@ -12,7 +12,7 @@ def doc_name_to_rubric_name(doc_name):
     import re
     p_rubric_name = doc_name
 #    p_rubric_name = re.sub(r'lab', r'- Rubric', p_rubric_name)
-    p_rubric_name = re.sub(r'The_Internet_2_v2_worksheet', r'The_internet2_v2- Rubric', p_rubric_name)
+    p_rubric_name = re.sub(r'lab', r'rubric', p_rubric_name)
     return p_rubric_name
 
 

@@ -19,5 +19,6 @@ def min_two_stages(p_json, p_points):
         p_test['points'] += p_points
     else:
         p_test['pass'] = False
+        p_test['fail_message'] +=  "<h5 style=\"color:purple;\"> Either the stage needs to have a switch backdrop or next backdrop or else a sprite needs it</h5>"
         p_test['fail_message'] += "Found this many stage changes: " + str(num_changes)
     return p_test
