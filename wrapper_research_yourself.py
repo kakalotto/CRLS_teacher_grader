@@ -7,7 +7,7 @@ from CRLS_APCSP_autograder.app.research_yourself import docs_feedback_research_y
 def doc_name_to_rubric_name(doc_name):
     import re
     p_rubric_name = doc_name
-    p_rubric_name = re.sub(r'yourself', r'yourself - Rubric', p_rubric_name)
+    p_rubric_name = re.sub(r'lab', r'rubric', p_rubric_name)
     return p_rubric_name
 
 
@@ -16,10 +16,10 @@ person = ''
 if len(sys.argv) > 1:
     person = sys.argv[1]
 
-value_cells = ['F5', 'F6', 'F7', 'F8', 'F9', ]
+value_cells = ['B4', 'B5', 'B6', 'B7', 'B8', ]
 rubric_sheet_name = 'Sheet1'
 
-match_cells = []
+match_cells = ['D4', 'D5', 'D6', 'D7', 'D8',]
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
                   scorer=docs_feedback_research_yourself, match_cells=match_cells)
