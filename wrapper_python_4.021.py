@@ -25,22 +25,10 @@ rubric_sheet_name = ''
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
                   scorer=feedback_4021, python_lab_num='4.021',
-                  python_rubric_suffix=' - Python_4.021_The_Rock_says_rubric ')
+                  python_rubric_suffix=' - Python_4.021_The_Rock_says_rubric')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
                   scorer=feedback_4021, python_lab_num='4.021',
                   python_rubric_suffix=' - Python_4.021_The_Rock_says_rubric', person=person)
 
 fulltext_search = 'Sorting'
-
-#value_cells = ['F4', ]
-#rubric_sheet_name = ''
-
-#if not person:
-#    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-#                  scorer=docs_feedback_python_2051)
-#else:
-#    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-#                  scorer=docs_feedback_python_2051, person=person)#
-#
-#print("oooo" )
