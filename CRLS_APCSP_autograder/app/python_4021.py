@@ -6,9 +6,7 @@ def feedback_4021(filename):
     from CRLS_APCSP_autograder.app.python_labs.helps import helps
     from CRLS_APCSP_autograder.app.python_labs.pep8 import pep8
 
-    user = {'username': 'CRLS Scholar'}
     tests = list()
-    score_info = {'score': 0, 'max_score': 37,  'manually_scored': 11, 'finished_scoring': False}
 
     # Test 1: file name
     test_filename = filename_test(filename, '4.021')
@@ -32,40 +30,33 @@ def feedback_4021(filename):
             test_loop['name'] += "Testing there is a loop in the the_rock_says function.<br>"
             tests.append(test_loop)
 
-            if test_loop['pass'] is False:
-                return tests
-            else:
-                # Check that function is called 3x
-                test_function_run = function_called(filename, 'the_rock_says', 3, points=5)
-                tests.append(test_function_run)
-
-                # test1 for the_rock_says
-                test_function_1 = run_unit_test('4.021', 1, 5)
-                test_function_1['name'] += " (Testing calling the_rock_says with list ['eggs', 'apple'] returns a " \
-                                           "list ['The Rock says eggs', 'The Rock says apple']) "
-                tests.append(test_function_1)
-
-                # test2 for the_rock_says
-                test_function_2 = run_unit_test('4.021', 2, 5)
-                test_function_2['name'] += " (Testing calling the_rock_says withlist ['eggs', 'smell'] returns " \
-                                           "['The Rock says eggs', 'Do you smell what The Rock is cooking']" \
-                                           "['The Rock says eggs', 'The Rock says apple']) <br> "
-                tests.append(test_function_2)
-
-                # test3 for the_rock_says
-                test_function_3 = run_unit_test('4.021', 3, 5)
-                test_function_3['name'] += " (Testing calling the_rock_says with list " \
-                                           "['smog', 'smells', 'smashmouth'] returns ['Do you smell what The Rock is" \
-                                           " cooking', " \
-                                           "'Do you smellell what The Rock is cooking', " \
-                                           "'Do you smellellellellellellell what The Rock is cooking'] <br> "
-                tests.append(test_function_3)
-
-                # Find number of PEP8 errors and helps
-                test_pep8 = pep8(filename, 7)
-                tests.append(test_pep8)
-                test_help = helps(filename, 2.5)
-                tests.append(test_help)
-
-                return tests
-
+            # Check that function is called 3x
+            test_function_run = function_called(filename, 'the_rock_says', 3, points=5)
+            
+            tests.append(test_function_run)
+            
+            # test1 for the_rock_says
+            test_function_1 = run_unit_test('4.021', 1, 5)
+            test_function_1['name'] += " (Testing calling the_rock_says with list ['eggs', 'apple'] returns a " \
+                                       "list ['The Rock says eggs', 'The Rock says apple']) (caps unimportant)"
+            tests.append(test_function_1)
+            
+            # test2 for the_rock_says
+            test_function_2 = run_unit_test('4.021', 2, 5)
+            test_function_2['name'] += " (Testing calling the_rock_says with list ['eggs', 'smell'] returns " \
+                                       "['The Rock says eggs', 'Do you smell what The Rock is cooking'] (caps unimportant) <br>"
+            tests.append(test_function_2)
+            
+            # test3 for the_rock_says
+            test_function_3 = run_unit_test('4.021', 3, 5)
+            test_function_3['name'] += " (Testing calling the_rock_says with list " \
+                                       "['eggs', 'what should I think'] returns ['The Rock says eggs', 'It doesn't matter what you think' (caps unimportant) "
+            tests.append(test_function_3)
+            
+            # Find number of PEP8 errors and helps
+            test_pep8 = pep8(filename, 7)
+            tests.append(test_pep8)
+            test_help = helps(filename, 2.5)
+            tests.append(test_help)
+            return tests
+            

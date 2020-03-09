@@ -25,7 +25,7 @@ rubric_sheet_name = ''
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
                   scorer=feedback_4023, python_lab_num='4.023',
-                  python_rubric_suffix=' - Python_4.023_Mr_Powers_playlist_rubric ')
+                  python_rubric_suffix=' - Python_4.023_Mr_Powers_playlist_rubric')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
                   scorer=feedback_4023, python_lab_num='4.023',

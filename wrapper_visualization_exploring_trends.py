@@ -7,7 +7,7 @@ from CRLS_APCSP_autograder.app.visualization_exploring_trends import docs_feedba
 def doc_name_to_rubric_name(doc_name):
     import re
     p_rubric_name = doc_name
-    p_rubric_name = re.sub(r'Visualization_exploring_trends', r'visualization_exploring_trends - Rubric', p_rubric_name)
+    p_rubric_name = re.sub(r'lab', r'rubric', p_rubric_name)
     return p_rubric_name
 
 

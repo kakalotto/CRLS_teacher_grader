@@ -7,7 +7,7 @@ from CRLS_APCSP_autograder.app.privacy_policies import docs_feedback_privacy_pol
 def doc_name_to_rubric_name(doc_name):
     import re
     p_rubric_name = doc_name
-    p_rubric_name = re.sub(r'Privacy_policies', r'Privacy_policies - Rubric', p_rubric_name)
+    p_rubric_name = re.sub(r'lab', r'rubric', p_rubric_name)
     return p_rubric_name
 
 

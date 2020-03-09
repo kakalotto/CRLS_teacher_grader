@@ -2,7 +2,9 @@ def docs_feedback_hexadecimal_numbers_v4(link):
     from CRLS_APCSP_autograder.app.docs_labs.docs import get_text, exact_answer, keyword_and_length
 
     tests = list()
+
     text = get_text(link)
+
     test1a = exact_answer('1a. B  ', [r'1a\. .*? tabledata .*? 1011 .*? 2a\.'], text, points=3)
     test2a = exact_answer('2a. 3E ', [r'2a\. .*? tabledata .*? 11  \s* 1110 .*? 3a\.'], text, points=3)
     test3a = exact_answer('3a. D6 ', [r'3a\. .*? tabledata .*? 1101 \s* 0110 .*?  4a\.'], text, points=3)
@@ -15,6 +17,6 @@ def docs_feedback_hexadecimal_numbers_v4(link):
     test10a = exact_answer('10a. 010101011110', [r'10a\. .*? tabledata .*? 5 \s* 5 \s* e .*?  11a\.'], text,
                            points=3)
     test11a = exact_answer('11a. 101101111111', [r'11a\. .*? tabledata .*? b \s* 7 \s* f .*? check \s your \s work'], text, points=3)
-
     tests.extend([test1a, test2a, test3a, test4a, test5a, test6a, test7a, test8a, test9a, test10a, test11a, ])
     return tests
+

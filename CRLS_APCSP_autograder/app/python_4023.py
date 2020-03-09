@@ -6,9 +6,8 @@ def feedback_4023(filename):
     from CRLS_APCSP_autograder.app.python_labs.helps import helps
     from CRLS_APCSP_autograder.app.python_labs.pep8 import pep8
 
-    user = {'username': 'CRLS Scholar'}
+
     tests = list()
-    score_info = {'score': 0, 'max_score': 34.5,  'manually_scored': 11, 'finished_scoring': False}
 
     # Test 1: file name
     test_filename = filename_test(filename, '4.023')
@@ -16,12 +15,9 @@ def feedback_4023(filename):
     if test_filename['pass'] is False:
         return tests
     else:
-
-
         # extract functions and create python test file
         extract_all_functions(filename)
         create_testing_file(filename)
-
         test_function_1 = run_unit_test('4.023', 1, 5)
         tests.append(test_function_1)
         test_function_2 = run_unit_test('4.023', 2, 2.5)
@@ -42,12 +38,10 @@ def feedback_4023(filename):
         tests.append(test_function_9)
 
 
-
         # Find number of PEP8 errors and helps
         test_pep8 = pep8(filename, 7)
         tests.append(test_pep8)
         test_help = helps(filename, 2.5)
         tests.append(test_help)
-
         return tests
     
