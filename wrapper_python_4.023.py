@@ -19,7 +19,7 @@ def doc_name_to_rubric_name(doc_name):
 
 
 fulltext_search = '.py'
-value_cells = [ 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'B4', 'B10', ]
+value_cells = [ 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'B10', 'B4', ]
 rubric_sheet_name = ''
 
 if not person:
