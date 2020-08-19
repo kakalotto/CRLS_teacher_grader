@@ -1,212 +1,183 @@
-def docs_feedback_python_1020(link):
-    from CRLS_APCSP_autograder.app.docs_labs.docs import get_text, exact_answer, keyword_and_length
+def route_docs_python_1020(link):
+    from CRLS_APCSP_autograder.app.docs_labs.docs import get_text, check_answer
+    from CRLS_APCSP_autograder.app.routes import initialize_scoring, sum_score
 
-    tests = list()
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scholar', score_max=39, score_manual=10)
     text = get_text(link)
-
-    test1a = exact_answer('question 1 expected', [r'1a\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s 1b\.'],
-                          text, points=0.5)
-    test1b = exact_answer('question 1 actual', [r'1b\. .*? tabledata \s 9 .*? tabledata \s 1c\.'],
-                          text, points=0.5)
-    test1c = exact_answer('question 1 difference',
-                          [r'1c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s print .*? 2a\.'],
-                          text, points=0.5)
-    test2a = exact_answer('question 2 expected', [r'2a\. .*? tabledata .*? [\.a-zA-Z0-9] .*? tabledata \s 2b\.'],
-                          text, points=0.5)
-    test2b = exact_answer('question 2 actual', [r'2b\. .*? tabledata .*? 0*\.6+ .*? tabledata \s 2c\.'],
-                          text, points=0.5)
-    test2c = exact_answer('question 2 difference',
-                          [r'2c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s print .*? 3a\.'],
-                          text, points=0.5)
-    test3a = exact_answer('question 3 expected', [r'3a\. .*? tabledata \s [\.a-zA-Z0-9] .*? tabledata \s 3b\.'],
-                          text, points=0.5)
-    test3b = exact_answer('question 3 actual', [r'3b\. .*? tabledata \s 3\.0 .*? tabledata \s 3c\.'],
-                          text, points=0.5)
-    test3c = exact_answer('question 3 difference',
-                          [r'3c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s print .*? 4a\.'],
-                          text, points=0.5)
-    test4a = exact_answer('question 4 expected', [r'4a\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s 4b\.'],
-                          text, points=0.5)
-    test4b = exact_answer('question 4 actual', [r'4b\. .*? tabledata \s 50 .*? tabledata \s 4c\.'],
-                          text, points=0.5)
-    test4c = exact_answer('question 4 difference',
-                          [r'4c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s print .*? 5a\.'],
-                          text, points=0.5)
-    test5a = exact_answer('question 5 expected', [r'5a\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s 5b\.'],
-                          text, points=0.5)
-    test5b = exact_answer('question 5 actual', [r'5b\. .*? tabledata \s 2\.0 .*? tabledata \s 5c\.'],
-                          text, points=0.5)
-    test5c = exact_answer('question 5 difference',
-                          [r'5c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s print .*? 6a\.'],
-                          text, points=0.5)
-    test6a = exact_answer('question 6 expected', [r'6a\. .*? tabledata .*? [a-zA-Z0-9] .*? tabledata \s 6b\.'],
-                          text, points=0.5)
-    test6b = exact_answer('question 6 actual', [r'6b\. .*? tabledata .*? 1\.0 .*? tabledata \s 6c\.'],
-                          text, points=0.5)
-    test6c = exact_answer('question 6 difference',
-                          [r'6c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s print .*? section'],
-                          text, points=0.5)
-    test7a = exact_answer('question 7 expected', [r'7a\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s 7b\.'],
-                          text, points=0.5)
-    test7b = exact_answer('question 7 actual', [r'7b\. .*? tabledata \s error .*? tabledata \s 7c\.'],
-                          text, points=0.5)
-    test7c = exact_answer('question 7 difference',
-                          [r'7c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s print .*? 8a\.'],
-                          text, points=0.5)
-    test8a = exact_answer('question 8 expected', [r'8a\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s 8b\.'],
-                          text, points=0.5)
-    test8b = exact_answer('question 8 actual', [r'8b\. .*? tabledata \s a .*? tabledata \s 8c\.'],
-                          text, points=0.5)
-    test8c = exact_answer('question 8 difference',
-                          [r'8c\. .*? tabledata \s [a-zA-Z0-9] .*? section'],
-                          text, points=0.5)
-    test9a = exact_answer('question 9 expected', [r'9a\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s 9b\.'],
-                          text, points=0.5)
-    test9b = exact_answer('question 9 actual', [r'9b\. .*? tabledata \s a \s* \+ \s* b .*? tabledata \s 9c\.'],
-                          text, points=0.5)
-    test9c = exact_answer('question 9 difference',
-                          [r'9c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s print .*? 10a\.'],
-                          text, points=0.5)
-    test10a = exact_answer('question 10 expected', [r'10a\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s 10b\.'],
-                          text, points=0.5)
-    test10b = exact_answer('question 10 actual', [r'10b\. .*? tabledata \s ab .*? tabledata \s 10c\.'],
-                          text, points=0.5)
-    test10c = exact_answer('question 10 difference', [r'10c\. .*? tabledata \s [a-zA-Z0-9] .*? section'],
-                          text, points=0.5)
-    test11a = exact_answer('question 11 expected', [r'11a\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s 11b\.'],
-                           text, points=0.5)
-    test11b = exact_answer('question 11 actual', [r'11b\. .*? tabledata \s error .*? tabledata \s 11c\.'],
-                           text, points=0.5)
-    test11c = exact_answer('question 11 difference',
-                           [r'11c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s print .*? 12a\.'],
-                           text, points=0.5)
-    test12a = exact_answer('question 12 expected', [r'12a\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s 12b\.'],
-                           text, points=0.5)
-    test12b = exact_answer('question 12 actual', [r'12b\. .*? tabledata \s aa .*? tabledata \s 12c\.'],
-                           text, points=0.5)
-    test12c = exact_answer('question 12 difference',
-                           [r'12c\. .*? tabledata \s [a-zA-Z0-9] .*? tabledata \s .*? part'],
-                           text, points=0.5)
-    test13a = exact_answer('question 13 expected datatype',
-                           [r'13a\. .*? tabledata .*? (integer|float|string|error) .*? tabledata \s 13b\.'],
-                           text, points=0.5)
-    test14a = exact_answer('question 14 expected datatype',
-                           [r'14a\. .*? tabledata .*? (integer|float|string|error) .*? tabledata \s 14b\.'],
-                           text, points=0.5)
-    test15a = exact_answer('question 15 expected datatype',
-                           [r'15a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 15b\.'],
-                           text, points=0.5)
-    test16a = exact_answer('question 16 expected datatype',
-                           [r'16a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 16b\.'],
-                           text, points=0.5)
-    test17a = exact_answer('question 17 expected datatype',
-                           [r'17a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 17b\.'],
-                           text, points=0.5)
-    test18a = exact_answer('question 18 expected datatype',
-                           [r'18a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 18b\.'],
-                           text, points=0.5)
-    test19a = exact_answer('question 19 expected datatype',
-                           [r'19a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 19b\.'],
-                           text, points=0.5)
-    test20a = exact_answer('question 20 expected datatype',
-                           [r'20a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 20b\.'],
-                           text, points=0.5)
-    test21a = exact_answer('question 21 expected datatype',
-                           [r'21a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 21b\.'],
-                           text, points=0.5)
-    test22a = exact_answer('question 22 expected datatype',
-                           [r'22a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 22b\.'],
-                           text, points=0.5)
-    test23a = exact_answer('question 23 expected datatype',
-                           [r'23a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 23b\.'],
-                           text, points=0.5)
-    test24a = exact_answer('question 24 expected datatype',
-                           [r'24a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 24b\.'],
-                           text, points=0.5)
-    test25a = exact_answer('question 25 expected datatype',
-                           [r'25a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 25b\.'],
-                           text, points=0.5)
-    test26a = exact_answer('question 26 expected datatype',
-                           [r'26a\. .*? tabledata \s (integer|float|string|error) .*? tabledata \s 26b\.'],
-                           text, points=0.5)
-    test13b = exact_answer('question 13 expected', [r'13b\. .*? tabledata .*? [a-zA-Z0-9] .+ tabledata \s 13c\.'],
-                           text, points=0.5)
-    test14b = exact_answer('question 14 expected', [r'14b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 14c\.'],
-                           text, points=0.5)
-    test15b = exact_answer('question 15 expected', [r'15b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 15c\.'],
-                           text, points=0.5)
-    test16b = exact_answer('question 16 expected', [r'16b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 16c\.'],
-                           text, points=0.5)
-    test17b = exact_answer('question 17 expected', [r'17b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 17c\.'],
-                           text, points=0.5)
-    test18b = exact_answer('question 18 expected', [r'18b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 18c\.'],
-                           text, points=0.5)
-    test19b = exact_answer('question 19 expected', [r'19b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 19c\.'],
-                           text, points=0.5)
-    test20b = exact_answer('question 20 expected', [r'20b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 20c\.'],
-                           text, points=0.5)
-    test21b = exact_answer('question 21 expected', [r'21b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 21c\.'],
-                           text, points=0.5)
-    test22b = exact_answer('question 22 expected', [r'22b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 22c\.'],
-                           text, points=0.5)
-    test23b = exact_answer('question 23 expected', [r'23b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 23c\.'],
-                           text, points=0.5)
-    test24b = exact_answer('question 24 expected', [r'24b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 24c\.'],
-                           text, points=0.5)
-    test25b = exact_answer('question 25 expected', [r'25b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 25c\.'],
-                           text, points=0.5)
-    test26b = exact_answer('question 26 expected', [r'26b\. .*? tabledata \s [a-zA-Z0-9] .+ tabledata \s 26c\.'],
-                           text, points=0.5)
-    test13c = exact_answer('question 13 actual',
-                           [r'13c\. .*? tabledata .*?  5\.0 .*? tabledata \s 14a\.'],
-                           text, points=0.5)
-    test14c = exact_answer('question 14 actual',
-                           [r'14c\. .*? tabledata \s  0 .*? tabledata \s 15a\.'],
-                           text, points=0.5)
-    test15c = exact_answer('question 15 actual',
-                           [r'15c\. .*? tabledata \s  8 .*? tabledata \s 16a\.'],
-                           text, points=0.5)
-    test16c = exact_answer('question 16 actual',
-                           [r'16c\. .*? tabledata \s  21 .*? tabledata \s 17a\.'],
-                           text, points=0.5)
-    test17c = exact_answer('question 17 actual',
-                           [r'17c\. .*? tabledata \s  17 .*? tabledata \s 18a\.'],
-                           text, points=0.5)
-    test18c = exact_answer('question 18 actual',
-                           [r'18c\. .*? tabledata \s  ab123 .*? tabledata \s 19a\.'],
-                           text, points=0.5)
-    test19c = exact_answer('question 19 actual',
-                           [r'19c\. .*? tabledata .*?  error .*? tabledata \s 20a\.'],
-                           text, points=0.5)
-    test20c = exact_answer('question 20 actual',
-                           [r'20c\. .*? tabledata \s  abcd .*? tabledata \s 21a\.'],
-                           text, points=0.5)
-    test21c = exact_answer('question 21 actual',
-                           [r'21c\. .*? tabledata \s  abcabc .*? tabledata \s 22a\.'],
-                           text, points=0.5)
-    test22c = exact_answer('question 22 actual',
-                           [r'22c\. .*? tabledata \s 11222 .*? tabledata \s 23a\.'],
-                           text, points=0.5)
-    test23c = exact_answer('question 23 actual',
-                           [r'23c\. .*? tabledata \s error .*? tabledata \s 24a\.'],
-                           text, points=0.5)
-    test24c = exact_answer('question 24 actual',
-                           [r'24c\. .*? tabledata \s error .*? tabledata \s 25a\.'],
-                           text, points=0.5)
-    test25c = exact_answer('question 25 actual',
-                           [r'25c\. .*? tabledata \s error .*? tabledata \s 26a\.'],
-                           text, points=0.5)
-    test26c = exact_answer('question 26 actual',
-                           [r'26c\. .*? tabledata \s error .*? $'],
-                           text, points=0.5)
-
-    tests.extend([test1a, test1b, test1c, test2a, test2b, test2c, test3a, test3b, test3c, test4a, test4b, test4c,
-                  test5a, test5b, test5c, test6a, test6b, test6c, test7a, test7b, test7c, test8a, test8b, test8c,
-                  test9a, test9b, test9c, test10a, test10b, test10c, test11a, test11b, test11c,
-                  test12a, test12b, test12c, test13a, test13b, test13c, test14a, test14b, test14c, test15a, test15b,
-                  test15c, test16a, test16b, test16c, test17a, test17b, test17c, test18a, test18b, test18c, test19a,
-                  test19b, test19c, test20a, test20b, test20c, test21a, test21b, test21c, test22a, test22b, test22c,
-                  test23a, test23b, test23c, test24a, test24b, test24c, test25a,
-                  test25b, test25c, test26a, test26b, test26c, ])
-
-    return tests
+    expected = 'https://docs.google.com/presentation/d/12hooQ6UZPh7P2TgoLw-Rj_UJaFrP0q4Qe88lIyLHHL0/' \
+               'edit#slide=id.g5304dafeb6_0_0'
+    difference = 'https://docs.google.com/presentation/d/12hooQ6UZPh7P2TgoLw-Rj_UJaFrP0q4Qe88lIyLHHL0/' \
+                 'edit#slide=id.g5304dafeb6_0_13'
+    datatype = 'https://docs.google.com/presentation/d/12hooQ6UZPh7P2TgoLw-Rj_UJaFrP0q4Qe88lIyLHHL0/' \
+               'edit#slide=id.g5304dafeb6_0_5'
+    pemdas = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+             'edit#slide=id.g1ccdc42220236e58_37'
+    math = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+           'edit#slide=id.g1ccdc42220236e58_80'
+    no_defined = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+                 'edit#slide=id.g1ccdc42220236e58_19'
+    defined = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+              'edit#slide=id.g1ccdc42220236e58_28'
+    cat = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+          'edit#slide=id.g1ccdc42220236e58_46'
+    math_and_strings = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+                       'edit#slide=id.g1ccdc42220236e58_89'
+    more_math_strings = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+                        'edit#slide=id.g1ccdc42220236e58_109'
+    tests.append(check_answer('1a', 'question 1 expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('1b', 'question 1 actual', text, {'answers': r'9', 'help_link': pemdas},
+                              points=0.5))
+    tests.append(check_answer('1c', 'question 1 difference', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': difference}, points=0.5))
+    tests.append(check_answer('2a', 'question 2 expected', text,
+                              {'answers': r'[a-zA-Za-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('2b', 'question 2 actual', text, {'answers': r'0*\.6+', 'help_link': pemdas},
+                              points=0.5))
+    tests.append(check_answer('2c', 'question 2 difference', text,
+                              {'answers': r'[a-zA-Za-zA-Z0-9]+', 'help_link': difference}, points=0.5))
+    tests.append(check_answer('3a', 'question 3 expected', text,
+                              {'answers': r'[a-zA-Za-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('3b', 'question 3 actual', text, {'answers': r'3.0', 'help_link': pemdas},
+                              points=0.5))
+    tests.append(check_answer('3c', 'question 3 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('4a', 'question 4 expected', text,
+                              {'answers': r'[a-zA-Za-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('4b', 'question 4 actual', text, {'answers': r'50', 'help_link': pemdas},
+                              points=0.5))
+    tests.append(check_answer('4c', 'question 4 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('5a', 'question 5 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('5b', 'question 5 actual', text, {'answers': r'2\.0', 'help_link': math},
+                              points=0.5))
+    tests.append(check_answer('5c', 'question 5 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('6a', 'question 6 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('6b', 'question 6 actual', text, {'answers': r'1\.0', 'help_link': math},
+                              points=0.5))
+    tests.append(check_answer('6c', 'question 6 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('7a', 'question 7 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('7b', 'question 7 actual', text, {'answers': r'error', 'help_link': no_defined},
+                              points=0.5))
+    tests.append(check_answer('7c', 'question 7 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('8a', 'question 8 expected', text, {'answers': r'[a-zA-Z]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('8b', 'question 8 actual', text, {'answers': r'a', 'help_link': defined}, points=0.5))
+    tests.append(check_answer('8c', 'question 8 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('9a', 'question 9 expected', text, {'answers': r'[a-zA-Z]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('9b', 'question 9 actual', text, {'answers': r'a \s* \+ \s* b', 'help_link': defined},
+                              points=0.5))
+    tests.append(check_answer('9c', 'question 9 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('10a', 'question 10 expected', text, {'answers': r'[a-zA-Z]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('10b', 'question 10 actual', text, {'answers': r'ab', 'help_link': cat},
+                              points=0.5))
+    tests.append(check_answer('10c', 'question 10 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('11a', 'question 11 expected', text, {'answers': r'[a-zA-Z]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('11b', 'question 11 actual', text, {'answers': r'error', 'help_link': math_and_strings},
+                              points=0.5))
+    tests.append(check_answer('11c', 'question 11 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('12a', 'question 12 expected', text, {'answers': r'[a-zA-Z]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('12b', 'question 12 actual', text, {'answers': r'aa', 'help_link': math_and_strings},
+                              points=0.5))
+    tests.append(check_answer('12c', 'question 12 difference', text, {'answers': r'[a-zA-Z]+', 'help_link': difference},
+                              points=0.5))
+    tests.append(check_answer('13a', 'question 13 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('13b', 'question 13 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('13c', 'question 13 actual', text,
+                              {'answers': r'5\.0', 'help_link': pemdas}, points=0.5))
+    tests.append(check_answer('14a', 'question 14 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('14b', 'question 14 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('14c', 'question 14 actual', text,
+                              {'answers': r'0', 'help_link': math}, points=0.5))
+    tests.append(check_answer('15a', 'question 15 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('15b', 'question 15 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('15c', 'question 15 actual', text,
+                              {'answers': r'8', 'help_link': math}, points=0.5))
+    tests.append(check_answer('16a', 'question 16 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('16b', 'question 16 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('16c', 'question 16 actual', text,
+                              {'answers': r'21', 'help_link': pemdas}, points=0.5))
+    tests.append(check_answer('17a', 'question 17 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('17b', 'question 17 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('17c', 'question 17 actual', text,
+                              {'answers': r'17', 'help_link': pemdas}, points=0.5))
+    tests.append(check_answer('18a', 'question 18 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('18b', 'question 18 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('18c', 'question 18 actual', text,
+                              {'answers': r'ab123', 'help_link': cat}, points=0.5))
+    tests.append(check_answer('19a', 'question 19 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('19b', 'question 19 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('19c', 'question 19 actual', text,
+                              {'answers': r'error', 'help_link': no_defined}, points=0.5))
+    tests.append(check_answer('20a', 'question 20 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('20b', 'question 20 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('20c', 'question 20 actual', text,
+                              {'answers': r'abcd', 'help_link': cat}, points=0.5))
+    tests.append(check_answer('21a', 'question 21 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('21b', 'question 21 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('21c', 'question 21 actual', text,
+                              {'answers': r'abcabc', 'help_link': math_and_strings}, points=0.5))
+    tests.append(check_answer('22a', 'question 22 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('22b', 'question 22 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('22c', 'question 22 actual', text,
+                              {'answers': r'11222', 'help_link': math_and_strings}, points=0.5))
+    tests.append(check_answer('23a', 'question 23 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('23b', 'question 23 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('23c', 'question 23 actual', text,
+                              {'answers': r'error', 'help_link': math_and_strings}, points=0.5))
+    tests.append(check_answer('24a', 'question 24 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('24b', 'question 24 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('24c', 'question 24 actual', text,
+                              {'answers': r'error', 'help_link': more_math_strings}, points=0.5))
+    tests.append(check_answer('25a', 'question 25 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('25b', 'question 25 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('25c', 'question 25 actual', text,
+                              {'answers': r'error', 'help_link': more_math_strings}, points=0.5))
+    tests.append(check_answer('26a', 'question 26 expected datatype', text,
+                              {'answers': r'(integer|float|string|error)', 'help_link': datatype}, points=0.5))
+    tests.append(check_answer('26b', 'question 26 expected', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': expected}, points=0.5))
+    tests.append(check_answer('26c', 'question 26 actual', text,
+                              {'answers': r'error', 'help_link': more_math_strings}, points=0.5))
+    score_info = sum_score(tests, score_info)
+    return [user, tests, score_info]
