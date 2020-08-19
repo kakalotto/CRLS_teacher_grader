@@ -8,8 +8,12 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_
 
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
-    gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2019-12-15T00:00:00\' and' \
+    gdrive_query = '--query "not fullText contains \'Template\' and  modifiedTime > \'2020-06-15T00:00:00\' and' \
                    '  \'me\' in owners  '
+#                   ' ( \'Kann\' in owners or  \'me\' in owners ) '
+#                   '  \'me\' in owners  '
+#                   ' ( \'Kann\' in owners or  \'me\' in owners ) '
+#                   '  \'me\' in owners  '
 #                   ' ( \'Kann\' in owners or  \'me\' in owners ) '
          #          '  \'me\' in owners  '
     if fulltext_search:
@@ -206,11 +210,16 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
 
             else:  # doc here
                 tests = scorer(doc_id)
+                if 'username' in tests[0]:
+                    tests.pop()
+                    tests.pop(0)
+                    tests = tests[0]
             match_counter = 0
             skipped_tests = 0
-            print("xxx tests: {}".format(tests))
+            #print("xxx tests: {}".format(tests))
             for i, test in enumerate(tests):
-                #print('xxx test : {}'.format(test))
+                print("test here")
+                print('xxx test : {}'.format(test))
 
                 if 'name' in test:
                     if re.search(r'that \s file \s is \s named \s correctly', test['name'], re.X | re.S | re.M):
@@ -226,7 +235,9 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                     else:
                         raise Exception("No match couldn't find value of problem ")
                 if match_cells:
+                    print("MaTCH CELLS")
                     if 'match' in test:
+                        print("MaTCH in this test")
                         text_value = test['match']
                         range_name = sheet_name + '!' + match_cells[match_counter]
                         match_counter += 1
