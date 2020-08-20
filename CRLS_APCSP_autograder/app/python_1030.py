@@ -1,71 +1,66 @@
-def docs_feedback_python_1030(link):
-    from CRLS_APCSP_autograder.app.docs_labs.docs import get_text, exact_answer, keyword_and_length
+def route_docs_python_1030(link):
+    from CRLS_APCSP_autograder.app.docs_labs.docs import get_text, check_answer
+    from CRLS_APCSP_autograder.app.routes import initialize_scoring, sum_score
 
-    tests = list()
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scholar', score_max=29.5, score_manual=8)
     text = get_text(link)
-
-    test1a = exact_answer('question 1a expected',
-                         [r'\s1a\. \n+ tabledata \s* [a-zA-Z\.0-9] .+? tabledata \s 1b\.\n'],
-                         text, points=0.5)
-    test2a = exact_answer('question 2a expected',
-                         [r'\s2a\. \n+ tabledata \s* [a-zA-Z\.0-9] .+? tabledata \s 2b\.\n'],
-                         text, points=0.5)
-    test3a = exact_answer('question 3a expected',
-                         [r'\s3a\. \n+ tabledata \s* [a-zA-Z\.0-9] .+? tabledata \s 3b\.\n'],
-                         text, points=0.5)
-    test4a = exact_answer('question 4a expected',
-                         [r'\s4a\. \n+ tabledata \s* [a-zA-Z\.0-9] .+? tabledata \s 4b\.\n'],
-                         text, points=0.5)
-    test5a = exact_answer('question 5a expected',
-                         [r'\s5a\. \n+ tabledata \s* [a-zA-Z\.0-9] .+? tabledata \s 5b\.\n'],
-                         text, points=0.5)
-    test1b = exact_answer('question 1b actual', [r'\s1b\. \n+ tabledata \s  1 .+? tabledata \s 1c\.\n'],
-                          text, points=0.5)
-    test2b = exact_answer('question 2b actual', [r'\s2b\. \n+ tabledata \s  1 .+? tabledata \s 2c\.\n'],
-                          text, points=0.5)
-    test3b = exact_answer('question 3b actual', [r'\s3b\. \n+ tabledata \s  3 .+? tabledata \s 3c\.\n'],
-                          text, points=0.5)
-    test4b = exact_answer('question 4b actual', [r'\s4b\. \n+ tabledata \s  12 .+? tabledata \s 4c\.\n'],
-                          text, points=0.5)
-    test5b = exact_answer('question 5b actual',
-                          [r'\s5b\. \n+ tabledata \s  this \s is \s a \s sentence\. .+? tabledata \s 5c\.\n'],
-                          text, points=0.5)
-    test1c = exact_answer('question 1c different', [r'\s1c\. \n+ tabledata \s [a-zA-Z0-9\.] .+? tabledata \s 2a\.\n'],
-                          text, points=0.5)
-    test2c = exact_answer('question 2c different', [r'\s2c\. \n+ tabledata \s [a-zA-Z0-9\.] .+? tabledata \s 3a\.\n'],
-                          text, points=0.5)
-    test3c = exact_answer('question 3c different', [r'\s3c\. \n+ tabledata \s [a-zA-Z0-9\.] .+? tabledata \s 4a\.\n'],
-                          text, points=0.5)
-    test4c = exact_answer('question 4c different', [r'\s4c\. \n+ tabledata \s [a-zA-Z0-9\.] .+? tabledata \s 5a\.\n'],
-                          text, points=0.5)
-    test5c = exact_answer('question 5c different', [r'\s5c\. \n+ tabledata \s [a-zA-Z0-9\.] .+? part'],
-                          text, points=0.5)
-    test6a = exact_answer('question 6a', [r'\s6a\. .+? \n+ tabledata \s dogs \s are \s really \s cool .+? 6b\.'],
-                          text, points=5)
-    test7a = exact_answer('question 7a', [r'\s7a\. .+? \n+ tabledata \s error .+? 7b\.'],
-                          text, points=5)
-    test6b = keyword_and_length('question 6b', [r'[a-zA-Z]+'], text,
-                                search_string=r'6b\. .+? tabledata (.+?) type', min_length=3, points=1)
-    test7b = keyword_and_length('question 7b', [r'[a-zA-Z]+'], text,
-                                search_string=r'7b\. .+? tabledata (.+?) [Ww]rite', min_length=5, points=1)
-    test8a = exact_answer('question 8a', [r'8\. .+? tabledata .+? number \s* = \s* 100 .+? Create\sa\svariable'],
-                          text, points=2.5)
-    test8b = exact_answer('question 8b', [r'8\. .+? tabledata .+? print \s* \(number\) .+? Create\sa\svariable'],
-                          text, points=2.5)
-    test8c = exact_answer('question 8c', [r'8\. .+? tabledata .+? number2 .+? 100 .+? Create\sa\svariable'],
-                          text, points=2.5)
-    test8d = exact_answer('question 8d', [r'8\. .+? tabledata .+? print \s* \(number2\) .+? Create\sa\svariable'],
-                          text, points=2.5)
-    # test8a = keyword_and_length('question 8a', [r'number \s* = \s* 100'], text,
-    #                             search_string=r'\s8\. .+? tabledata (.+?) Create\sa\svariable', min_length=5, points=2.5)
-    # test8b = keyword_and_length('question 8b', [r'print \s* \(number\)'], text,
-    #                             search_string=r'\s8\. .+? tabledata (.+?) Create\sa\svariable', min_length=5, points=2.5)
-    # test8c = keyword_and_length('question 8c', [r'number2 .+? 100'], text,
-    #                             search_string=r'\s8\. .+? tabledata (.+?) Create\sa\svariable', min_length=5, points=2.5)
-    # test8d = keyword_and_length('question 8d', [r'print \s* \(number2\)'], text,
-    #                             search_string=r'\s8\. .+? tabledata (.+?) Create\sa\svariable', min_length=5, points=2.5)
-
-
-    tests.extend([test1a, test1b, test1c, test2a, test2b, test2c, test3a, test3b, test3c, test4a, test4b, test4c,
-                  test5a, test5b, test5c, test6a, test6b, test7a, test7b, test8a, test8b, test8c, test8d])
-    return tests
+    expected = 'https://docs.google.com/presentation/d/12hooQ6UZPh7P2TgoLw-Rj_UJaFrP0q4Qe88lIyLHHL0/' \
+               'edit#slide=id.g5304dafeb6_0_0'
+    print_string = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+                   'edit#slide=id.g1ccdc42220236e58_10'
+    print_ints = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+                 'edit#slide=id.g1ccdc42220236e58_37'
+    cat = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+          'edit#slide=id.g1ccdc42220236e58_46'
+    cat2 = 'https://docs.google.com/presentation/d/1R1jJfHfXgtZAjrYpC8lKL7uG4VW5Ujy8h3TawLWab3A/' \
+           'edit#slide=id.g3fba4a5ac1_1_63'
+    q_8 = 'https://docs.google.com/presentation/d/12hooQ6UZPh7P2TgoLw-Rj_UJaFrP0q4Qe88lIyLHHL0/' \
+          'edit#slide=id.g8c389c728e_2_0'
+    no_defined = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+                 'edit#slide=id.g1ccdc42220236e58_19'
+    tests.append(check_answer('1a', 'question 1a expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('1b', 'question 2b actual', text,
+                              {'answers': r'1', 'help_link': print_string}, points=0.5))
+    tests.append(check_answer('1c', 'question 1c different', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': print_string}, points=0.5))
+    tests.append(check_answer('2a', 'question 2a expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('2b', 'question 2b actual', text,
+                              {'answers': r'1', 'help_link': print_ints}, points=0.5))
+    tests.append(check_answer('2c', 'question 2c different', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': print_ints}, points=0.5))
+    tests.append(check_answer('3a', 'question 3a expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('3b', 'question 3b actual', text,
+                              {'answers': r'3', 'help_link': print_ints}, points=0.5))
+    tests.append(check_answer('3c', 'question 3c different', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': print_ints}, points=0.5))
+    tests.append(check_answer('4a', 'question 4a expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('4b', 'question 4b actual', text,
+                              {'answers': r'12', 'help_link': cat}, points=0.5))
+    tests.append(check_answer('4c', 'question 4c different', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': cat}, points=0.5))
+    tests.append(check_answer('5a', 'question 5a expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=0.5))
+    tests.append(check_answer('5b', 'question 5b actual', text,
+                              {'answers': r'this \s is \s a \s sentence\.', 'help_link': cat2}, points=0.5))
+    tests.append(check_answer('5c', 'question 5c different', text,
+                              {'answers': r'[a-zA-Z0-9]+', 'help_link': text}, points=0.5))
+    tests.append(check_answer('6a', 'What does this print', text,
+                              {'answers': r'dogs \s are \s really \s cool', 'help_link': print_string}, points=5))
+    tests.append(check_answer('6b', 'Why?', text, {'min_words': 5}, points=1))
+    tests.append(check_answer('7a', 'What does this print', text,
+                              {'answers': r'error', 'help_link': print_string}, points=5))
+    tests.append(check_answer('7b', 'Why?', text, {'min_words': 5, 'help_link': no_defined}, points=1))
+    tests.append(check_answer('8a', 'Create variable "number" equal to 100', text,
+                              {'answers': r'number \s* = \s* 100', 'help_link': q_8}, points=2.5))
+    tests.append(check_answer('8a', 'print number', text,
+                              {'answers': r'print \s* \(number\)', 'help_link': q_8}, points=2.5))
+    tests.append(check_answer('8a', 'Create variable "number2" equal to "number" + 100', text,
+                              {'answers': r'number2  .+? 100', 'help_link': q_8}, points=2.5))
+    tests.append(check_answer('8a', 'print number2', text,
+                              {'answers': r'print \s* \(number2\)', 'help_link': q_8}, points=2.5))
+    score_info = sum_score(tests, score_info)
+    return [user, tests, score_info]
