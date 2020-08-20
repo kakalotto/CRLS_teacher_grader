@@ -25,8 +25,6 @@ rubric_sheet_name = 'Sheet1'
 match_cells = ['D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'D14', 'D15', 'D16', 'D17', 'D18',
                'D19', 'D21', 'D22', 'H3', 'H4', 'H5', 'H6', ]
 
-# match_cells = ['D20', 'D23']
-
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
                   scorer=route_docs_python_1030, match_cells=match_cells)

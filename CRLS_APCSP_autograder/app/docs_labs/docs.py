@@ -151,7 +151,17 @@ def run_question_string(p_string):
     fh = open(p_filename, 'w')
     fh.write(p_string)
     fh.close()
-    cmd = 'python3 ' + p_filename
+    fh2 = open('/tmp/hw.in', 'w')
+    fh2.write('1')
+    fh2.write('1')
+    fh2.write('1')
+    fh2.write('1')
+    fh2.write('1')
+    fh2.write('1')
+    fh2.write('1')
+    fh2.write('1')
+    fh2.close()
+    cmd = 'python3 ' + p_filename + ' < /tmp/hw.in'
     c = delegator.run(cmd)
     if c.err:
         return c.err
@@ -174,7 +184,6 @@ def check_answer(question, label, fulltext, query, *, points=0):
     :param label: how to label the queston e.g. 'what is a BIOS' (str)
     :param fulltext: Full text of the google doc (from get_text)
     :param query: dictionary of questions I'm looking for (dict)
-    :param min_matches: if given answers in list, the minimum number of matches needed to score
     :param points: number of points this is worth (int)
     :return: a test dictionary
     """
@@ -215,10 +224,10 @@ def check_answer(question, label, fulltext, query, *, points=0):
                                   str(label) + " There are no tests for min words, screenshot, or answers."
         return p_test
 
-
     if 'min_words' in query.keys() and question_text:
         if query['min_words']:
             min_words = query['min_words']
+            print("LOOKING FOR THIS MANY WORDS " + str(min_words))
             if isinstance(query['min_words'], int) is False:
                 p_test['fail_message'] += "<h5 style=\"color:purple;\">Autograder programming bug for this question" \
                                           "</h5>  " + str(label) + " min_words needs to be an integer"
@@ -234,7 +243,6 @@ def check_answer(question, label, fulltext, query, *, points=0):
                                               "Found this many words: " + str(words) + \
                                               "<br> Require this many words: " + str(min_words) + "<br>"
                     p_test['pass'] = False
-
                 else:
                     p_test['pass_message'] += "Found: Minimum number of words required (" + str(min_words) +\
                                               ").<br>Your answer had this many words (" + str(words) + \
@@ -271,25 +279,29 @@ def check_answer(question, label, fulltext, query, *, points=0):
                 p_test['pass'] = False
                 if result:
                     passed += 1
-
                     item = re.sub('<', '&lt;', item)
                     item = re.sub('>', '&gt;', item)
                     p_test['fail_message'] += "Matched this regex expression in the answer " + str(item) + "<br>"
                     p_test['pass_message'] += "Matched this regex expression in the answer " + str(item) + "<br>"
-            if passed >= expected:
+            wrong_answers = False
+            if 'wrong_answers' in query.keys():
+                for item in query['wrong_answers']:
+                    result = re.search(str(item), str(question_text), re.X | re.M | re.S)
+                    if result:
+                        p_test['fail_message'] += "You have a wrong answer in your answer<br>"
+                        wrong_answers = True
+                        break
+            if passed >= expected and wrong_answers is False:
                 p_test['points'] += points
                 p_test['pass'] = True
             else:
-                p_test['fail_message'] += "<h5 style=\"color:purple;\"><br>"\
+                p_test['fail_message'] += "<h5 style=\"color:purple;\"><br>" \
                                           "Needed this many matches: " + str(expected) + \
                                           "<br>Found this many matches: " +  str(passed) + "<br></h5>"
     # question_text = re.sub('\n', '<br>', question_text)
     question_text = re.sub('<', '&lt;', question_text)
     question_text = re.sub('>', '&gt;', question_text)
     p_test['fail_message'] += 'Your answer was this:<br>' + str(question_text)  + "<br>"
-
-    print("WTF " + question_text)
-    print("WTF 2 " + str(question_text))
     if 'help_link' in query.keys():
         p_test['fail_message'] += 'See this link for help answering this question: <a href="' +\
                                   query['help_link'] + '" target="_blank">link</a>'
@@ -328,6 +340,7 @@ def exact_answer(p_label, p_answers, p_text, *, points=0, required=1):
     if passed >= required:
         p_test['pass'] = True
         p_test['points'] += points
+        print("passed and points " + str(p_test['points']))
     elif passed >= 1 and required >= 2:  # passed, but not enough
         p_test['fail_message'] += "Needed this many matches " + str(required) + "<br>Found this many matches " + \
                                   str(passed) + "<br>"
