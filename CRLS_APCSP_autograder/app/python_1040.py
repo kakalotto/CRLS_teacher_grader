@@ -6,10 +6,12 @@ def route_python_1_040(filename):
     from CRLS_APCSP_autograder.app.routes import initialize_scoring, sum_score
 
     [user, tests, score_info] = initialize_scoring(username='CRLS Scholar', score_max=34.5, score_manual=5.5)
+    print("starting")
     test_filename = filename_test(filename, '1.040')
     tests.append(test_filename)
+    print("one")
     if test_filename['pass'] is False:
-        return [user, tests, score_info]
+        return tests
     else:
         filename_data = read_file_contents(filename)
         tests.append(find_questions(filename_data, 3, 5))
@@ -34,4 +36,4 @@ def route_python_1_040(filename):
         tests.append(helps(filename, 2.5))
         score_info['finished_scoring'] = True
         score_info = sum_score(tests, score_info)
-        return [user, tests, score_info]
+        return tests

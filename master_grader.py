@@ -104,12 +104,13 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 if found_lab:
                     print("do this: " + str(columns[1]))
                     gdrive_cmd = 'gdrive download ' + str(doc_id)
-                    print("gddrive_cmd is this {}".format(gdrive_cmd))
+                    print("Found lab! gdrive_cmd running is this {}".format(gdrive_cmd))
                     c = delegator.run(gdrive_cmd)
                     #if c.err:
                     #    raise Exception("Tried to download python file, failed." + c.err)
                     found = 0
                     for key in names.keys():
+                        print(key)
                         if re.search(key, python_filename):
                             print("Do this one! {}".format(python_filename))
                             rubric_name = names[key] + python_rubric_suffix
@@ -117,7 +118,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                             found = 1
                             break
                     if found == 0:
-                        raise Exception("Could not find name {} ".format(python_filename))
+                        raise Exception("Could not find this name in the name_dictionary file: {} ".format(python_filename))
 
                 else:
                     print('skip this: ' + str(columns[1]))
@@ -216,15 +217,19 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                     tests = tests[0]
             match_counter = 0
             skipped_tests = 0
-            #print("xxx tests: {}".format(tests))
+            print("xxx tests: {}".format(tests))
             for i, test in enumerate(tests):
                 print("test here")
                 print('xxx test : {}'.format(test))
 
                 if 'name' in test:
+                    print("NAME IS")
                     if re.search(r'that \s file \s is \s named \s correctly', test['name'], re.X | re.S | re.M):
+                        print("SKIP THIS")
                         skipped_tests += 1
                         continue
+                if 'username' in test:
+                    continue
                 if test['pass'] is True:
                     value = '0'
                 else:
