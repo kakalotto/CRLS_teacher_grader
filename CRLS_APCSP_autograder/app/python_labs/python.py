@@ -7,7 +7,7 @@ def filename_test(p_filename, p_lab):
     """
     import re
     from CRLS_APCSP_autograder.app.python_labs import YEAR, LAST_YEAR
-    # from app.python_labs.name_dictionary import names
+    # from CRLS_APCSP_autograder.app.python_labs.name_dictionary import names
     find_year = re.search(YEAR, p_filename)
     find_last_year = re.search(LAST_YEAR, p_filename)
     import sys
@@ -31,7 +31,7 @@ def filename_test(p_filename, p_lab):
 
     found_name_passed = True
     if heroku is False:
-        from app.python_labs.name_dictionary import names
+        from CRLS_APCSP_autograder.app.python_labs.name_dictionary import names
         if found_name in names.keys():
             found_name_passed = True
         else:
