@@ -1,7 +1,7 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.python_2021 import feedback_2021
+from CRLS_APCSP_autograder.app.python_2021 import route_python_2_021
 
 from CRLS_APCSP_autograder.app.python_2020 import docs_feedback_python_2020
 
@@ -29,15 +29,13 @@ rubric_sheet_name = ''
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_2021, python_lab_num='2.021',
-                  python_rubric_suffix='- Python_2.021_Casting_TEALS_rubric')
+                  scorer=route_python_2_021, python_lab_num='2.021',
+                  python_rubric_suffix=' - Python_2.021_Casting_rubric')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_2021, python_lab_num='2.021',
-                  python_rubric_suffix=' - Python_2.021_Casting_TEALS_rubric',
+                  scorer=route_python_2_021, python_lab_num='2.021',
+                  python_rubric_suffix=' - Python_2.021_Casting_rubric',
                   person=person)
-
-
 
 
 # Doc part

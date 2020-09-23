@@ -1,7 +1,7 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.python_1060 import feedback_1060
+from CRLS_APCSP_autograder.app.python_1060 import route_python_1_060
 
 
 person = ''
@@ -26,9 +26,9 @@ rubric_sheet_name = ''
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_1060, python_lab_num='1.060', python_rubric_suffix=' - Python 1.060 Mad Libs - Rubric')
+                  scorer=route_python_1_060, python_lab_num='1.060', python_rubric_suffix=' - Python_1.060_Mad_Libs_TEALS_rubric')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_1060, python_lab_num='1.060',
-                  python_rubric_suffix=' - Python 1.060 Mad Libs - Rubric', person=person)
+                  scorer=route_python_1_060, python_lab_num='1.060',
+                  python_rubric_suffix=' - Python_1.060_Mad_Libs_TEALS_rubric', person=person)
 

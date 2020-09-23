@@ -240,9 +240,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                     else:
                         raise Exception("No match couldn't find value of problem ")
                 if match_cells:
-                    print("MaTCH CELLS")
                     if 'match' in test:
-                        print("MaTCH in this test")
+                        print("MaTCH in this test " + str(match_cells[match_counter]))
                         text_value = test['match']
                         range_name = sheet_name + '!' + match_cells[match_counter]
                         match_counter += 1

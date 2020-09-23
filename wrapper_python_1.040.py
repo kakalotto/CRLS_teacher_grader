@@ -26,7 +26,7 @@ if not person:
                   scorer=route_python_1_040, python_lab_num='1.040',
                   python_rubric_suffix=' - Python_1.040_Magic_Genie_TEALS_rubric')
 else:
-     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                   scorer=route_python_1_040, python_lab_num='1.040',
-                   python_rubric_suffix=' - Python_1.040_Magic_Genie_TEALS_rubric',
-                   person=person)
+    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
+                  scorer=route_python_1_040, python_lab_num='1.040',
+                  python_rubric_suffix=' - Python_1.040_Magic_Genie_TEALS_rubric',
+                  person=person)

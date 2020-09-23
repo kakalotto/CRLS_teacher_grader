@@ -1,57 +1,36 @@
-def feedback_2021(filename):
+def route_python_2_021(filename):
 
-    from CRLS_APCSP_autograder.app.python_labs.read_file_contents import read_file_contents
-    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test, io_test_find_all
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
     from CRLS_APCSP_autograder.app.python_labs.find_items import find_questions, find_string
-    from CRLS_APCSP_autograder.app.python_labs.pep8 import pep8
-    from CRLS_APCSP_autograder.app.python_labs.helps import helps
-    from CRLS_APCSP_autograder.app.python_labs.filename_test import filename_test
+    from CRLS_APCSP_autograder.app.routes import initialize_scoring, sum_score
+    from CRLS_APCSP_autograder.app.python_labs.python import filename_test, helps, pep8, read_file_contents
 
-    tests = list()
-
-    # Test 1: file name
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scholar', score_max=55, score_manual=11)
     test_filename = filename_test(filename, '2.021')
     tests.append(test_filename)
-
-    if not test_filename['pass']:
+    if test_filename['pass'] is False:
         return tests
     else:
-        # Read in the python file to filename_data
         filename_data = read_file_contents(filename)
-
-        # Check that there is 1 input questions
-        test_find_question = find_questions(filename_data, 1, 5)
-        test_find_question['name'] += " Checking for at least 1 question. <br> " + \
-                                      " Autograder will not continue if this test fails. <br>"
-        tests.append(test_find_question)
-        if not test_find_question['pass']:
-            return tests
-        else:
-            # Test for casting of any sort
-            test_find_casting = find_string(filename_data, r'( int\( | float\( )', 1, points=5)
-            test_find_casting['name'] += 'Checking that there is some casting of any sort to either integer or float.'
-            tests.append(test_find_casting)
-            test_io_1 = io_test(filename, r'3\.14', 1, points=5)
-            test_io_1['name'] += "case 1: Checks that circumference is calculated.  Input 1, " \
-                                 "expected 3.14 in output. <br>"
-            tests.append(test_io_1)
-            test_io_2 = io_test(filename, r'[^0-9]3$', 1, points=5)
-            test_io_2['name'] += "case 1: Checks that circumference is calculated, rounded.  Input 1, " \
-                                 "expected 3 in output. <br>"
-            tests.append(test_io_2)
-            test_io_3 = io_test(filename, r'5\.34', 2, points=5)
-            test_io_3['name'] += "case2: Checks that circumference is calculated.  Input 1.7, " \
-                                 "expected 5.34 in output (be sure pi has enough digits) <br>"
-            tests.append(test_io_3)
-            test_io_4 = io_test(filename, r'[^0-9]5$', 2, points=5)
-            test_io_4['name'] += "case2: Checks that circumference is calculated, rounded.  Input 1.7, " \
-                                 "expected 5 in output. <br>"
-            tests.append(test_io_4)
-
-            # Find number of PEP8 errors and helps
-            test_pep8 = pep8(filename, 7)
-            tests.append(test_pep8)
-            test_help = helps(filename, 2.5)
-            tests.append(test_help)
-
-            return tests
+        tests.append(find_questions(filename_data, 1, 5))
+        tests.append(find_string(filename_data, r'( int\(1 | float\( )', 1, points=5,
+                                 description='Checking that there is casting of any sort to either int or float'))
+        help_link = 'https://docs.google.com/document/d/16b7Rv3g0jQtTxcMBvflu1hGST-z2KxMbjPvedfIsE0Y/' \
+                    'edit#bookmark=id.x3i91ba2p0lc'
+        tests.append(io_test(filename, r'3\.14', 1, points=10,
+                             description='Checking calculation of circumference.  If I input 1, '
+                                         'program should printout 3.14....', help_link=help_link))
+        tests.append(io_test(filename, r'[^0-9]3$', 1, points=5,
+                             description='Checking calculation of circumference rounded down.  If I input 1, '
+                                         'program should printout 3', help_link=help_link))
+        tests.append(io_test(filename, r'5\.34', 2, points=5,
+                             description='Checking calculation of circumference.  If I input 1.7, '
+                                         'program should printout 5.34....', help_link=help_link))
+        tests.append(io_test(filename, r'[^0-9]5$', 2, points=6,
+                             description='Checking calculation of circumference rounded down.  If I input 1.7, '
+                                         'program should printout 5', help_link=help_link))
+        tests.append(pep8(filename, 14))
+        tests.append(helps(filename, 5))
+        score_info['finished_scoring'] = True
+        score_info = sum_score(tests, score_info)
+        return tests
