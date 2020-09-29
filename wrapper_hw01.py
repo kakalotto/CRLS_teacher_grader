@@ -3,7 +3,7 @@ import sys
 from master_grader import master_grader
 from CRLS_APCSP_autograder.app.hw01 import route_docs_hw01
 
-fulltext_search = 'HW 01, Printing'
+fulltext_search = 'HW 01'
 person = ''
 if len(sys.argv) > 1:
     person = sys.argv[1]
