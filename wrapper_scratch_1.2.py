@@ -1,7 +1,7 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.scratch_12 import docs_feedback_scratch_12
+from CRLS_APCSP_autograder.app.scratch_12 import route_docs_scratch_12
 
 fulltext_search = 'Scavenger'
 person= ''
@@ -25,7 +25,7 @@ rubric_sheet_name = 'Sheet1'
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-              scorer=docs_feedback_scratch_12)
+                  scorer=route_docs_scratch_12)
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_scratch_12, person=person)
+                  scorer=route_docs_scratch_12, person=person)

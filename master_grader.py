@@ -1,4 +1,5 @@
 import os
+import time
 
 from name_dictionary import names
 
@@ -24,7 +25,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_
         gdrive_query += ' and mimeType = \'' + mimetype + "'"
     else:
         gdrive_query += ' '
-    print("blahb alh " + extra_fulltext)
+    # print("blahb alh " + extra_fulltext)
     if extra_fulltext:
         gdrive_query += ' and fullText contains \'' + extra_fulltext + '\' '
     if scratch_lab:
@@ -175,7 +176,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                     continue
             # From rubric_name get rubric_i
 
-            print("yesyesyes")
+            #print("yesyesyes")
 
             if rubric_extra_fulltext:  # Doc file here with extra rubric text
                 gdrive_cmd = get_gdrive_cmd(fulltext_search=rubric_name,
@@ -217,13 +218,13 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                     tests = tests[0]
             match_counter = 0
             skipped_tests = 0
-            print("xxx tests: {}".format(tests))
+            # print("xxx tests: {}".format(tests))
             for i, test in enumerate(tests):
-                print("test here")
-                print('xxx test : {}'.format(test))
+                # print("test here")
+                # print('xxx test : {}'.format(test))
 
                 if 'name' in test:
-                    print("NAME IS")
+                    # print("NAME IS")
                     if re.search(r'that \s file \s is \s named \s correctly', test['name'], re.X | re.S | re.M):
                         print("SKIP THIS")
                         skipped_tests += 1
@@ -233,7 +234,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 if test['pass'] is True:
                     value = '0'
                 else:
-                    print(test['name'])
+                    # print(test['name'])
                     match = re.search(r'.+? \(([0-9]+\.*[0-9]*) \s* point s* \s* \)', test['name'], re.X | re.M | re.S)
                     if match:
                         value = str(-1 * float(match.group(1)))
@@ -241,19 +242,20 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         raise Exception("No match couldn't find value of problem ")
                 if match_cells:
                     if 'match' in test:
-                        print("MaTCH in this test " + str(match_cells[match_counter]))
+                        # print("MaTCH in this test " + str(match_cells[match_counter]))
                         text_value = test['match']
                         range_name = sheet_name + '!' + match_cells[match_counter]
                         match_counter += 1
                         datapoint = {'range': range_name, 'values': [[text_value]]}
                         datapoints.append(datapoint)
                 range_name = sheet_name + '!' + value_cells[i - skipped_tests]
-                print(str(i - skipped_tests) + '  range ' + range_name)
+                # print(str(i - skipped_tests) + '  range ' + range_name)
 
                 datapoint = {'range': range_name, 'values': [[value]]}
                 datapoints.append(datapoint)
 
             body = {'valueInputOption': 'USER_ENTERED', 'data': datapoints}
-            print(body)
+            # print(body)
             result = service_sheets.spreadsheets().values().batchUpdate(spreadsheetId=rubric_id, body=body).execute()
-            print("match_counter" + str(match_counter))
+            # print("match_counter" + str(match_counter))
+            time.sleep(1.5)
