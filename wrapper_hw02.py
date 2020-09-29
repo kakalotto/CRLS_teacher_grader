@@ -4,6 +4,7 @@ from master_grader import master_grader
 from CRLS_APCSP_autograder.app.hw02 import route_docs_hw02
 
 fulltext_search = 'HW 2, Types'
+name_search = 'HW02'
 person = ''
 if len(sys.argv) > 1:
     person = sys.argv[1]
@@ -22,7 +23,7 @@ match_cells = ['D3', 'D4', 'D5']
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=route_docs_hw02, match_cells=match_cells)
+                  scorer=route_docs_hw02, match_cells=match_cells, lab_name=name_search)
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=route_docs_hw02, person=person, match_cells=match_cells)
+                  scorer=route_docs_hw02, person=person, match_cells=match_cells, lab_name=name_search)

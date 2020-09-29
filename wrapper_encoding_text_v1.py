@@ -5,7 +5,7 @@ from CRLS_APCSP_autograder.app.encoding_text_v1 import route_docs_encoding_text
 
 fulltext_search = 'Activity Guide - Encoding Text'
 name_search = 'Encoding_text_v1'
-person=''
+person = ''
 if len(sys.argv) > 1:
     person = sys.argv[1]
 
