@@ -5,7 +5,7 @@ from name_dictionary import names
 
 
 def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_nottext='',
-                   python_lab=False, scratch_lab=False, person=''):
+                   python_lab=False, scratch_lab=False, person='', lab_name=''):
 
     # Create the gdrive command and run it
     gdrive_list = 'gdrive list -m 0 --name-width 0 '
@@ -17,7 +17,10 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_
 #                   '  \'me\' in owners  '
 #                   ' ( \'Kann\' in owners or  \'me\' in owners ) '
          #          '  \'me\' in owners  '
-    if fulltext_search:
+    print("LAB NAME IS " + str(lab_name))
+    if lab_name:
+        gdrive_query += ' and name contains \'' + lab_name + '\'  '
+    elif fulltext_search:
         gdrive_query += ' and fullText contains \'' + fulltext_search + '\'  '
     else:
         gdrive_query += ' '
@@ -40,13 +43,24 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_
 
 def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *, sheet_name='Rubric', scorer='',
                   rubric_extra_fulltext='', lab_extra_fulltext='', match_cells=[], python_lab_num='',
-                  python_rubric_suffix='', scratch_file=False, scratch_lab_num='', scratch_rubric_suffix='', person=''):
+                  python_rubric_suffix='', scratch_file=False, scratch_lab_num='', scratch_rubric_suffix='', person='',
+                  lab_name=''):
     import delegator
     import re
     from helper_functions.generate_sheets_credential import generate_sheets_credential
 
     service_sheets = generate_sheets_credential()
-    if lab_extra_fulltext and not person:
+    print("ASDF LABNAME " + str(lab_name))
+    if lab_name and not person:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    mimetype='application/vnd.google-apps.document',
+                                    extra_fulltext=lab_extra_fulltext, lab_name=lab_name)
+    elif lab_name and person:
+        gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
+                                    mimetype='application/vnd.google-apps.document',
+                                    extra_fulltext=lab_extra_fulltext, person=person, lab_name=lab_name)
+
+    elif lab_extra_fulltext and not person:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     mimetype='application/vnd.google-apps.document',
                                     extra_fulltext=lab_extra_fulltext)
@@ -54,7 +68,6 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     mimetype='application/vnd.google-apps.document',
                                     extra_fulltext=lab_extra_fulltext, person=person)
-
     elif person:
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     mimetype='application/vnd.google-apps.document', person=person)
