@@ -23,7 +23,7 @@ def route_docs_encoding_text(link):
                               {'answers': r'(4|four)', 'help_link': combo_help, }, points=1))
     tests.append(check_answer('2d', 'Explain 2c (checkoff)', text, {'min_words': 1, 'help_link': combo_help}, points=1))
     tests.append(check_answer('3a', '512 GigaBytes to Gigabits (in GB)', text,
-                              {'answers': r'4096', 'help_link': bytes_help, }, points=1))
+                              {'answers': r'4 .*? 096', 'help_link': bytes_help, }, points=1))
     tests.append(check_answer('3b', 'Explain 3a (checkoff)', text, {'min_words': 1, 'help_link': bytes_help}, points=1))
     tests.append(check_answer('3c', '0.05 GigaBytes to Gigabit?', text,
                               {'answers': r'\.00625', 'help_link': bytes_help, }, points=1))

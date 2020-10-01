@@ -8,10 +8,18 @@ cp ../CRLS_APCSP_autograder/app/python_labs/__init__.py CRLS_APCSP_autograder/ap
 cp ../CRLS_APCSP_autograder/app/python_labs/io_test.py CRLS_APCSP_autograder/app/python_labs
 cp ../CRLS_APCSP_autograder/app/python_labs/find_items.py CRLS_APCSP_autograder/app/python_labs
 
+cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch_1_3.py CRLS_APCSP_autograder/app/scratch_labs
+cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch.py CRLS_APCSP_autograder/app/scratch_labs
 
 sed -i  's/from app import app/from CRLS_APCSP_autograder import app/' CRLS_APCSP_autograder/app/routes.py
 sed -i  's/from app.forms /from CRLS_APCSP_autograder.app.forms /' CRLS_APCSP_autograder/app/routes.py
 sed -i  's/^@app.*//' CRLS_APCSP_autograder/app/routes.py
+sed -i  's/from app.scratch_labs.scratch/from CRLS_APCSP_autograder.app.scratch_labs.scratch /' CRLS_APCSP_autograder/app/routes.py
+
+
+sed -i  's/from app.scratch_labs.scratch /from CRLS_APCSP_autograder.app.scratch_labs.scratch /' CRLS_APCSP_autograder/app/scratch_labs/scratch_1_3.py
+sed -i  's/from app.scratch_labs.scratch_2_2 /from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_2 /' CRLS_APCSP_autograder/app/scratch_labs/scratch_1_3.py
+sed -i  's/from app.python_labs /from CRLS_APCSP_autograder.app.python_labs /' CRLS_APCSP_autograder/app/scratch_labs/scratch.py
 
 
 sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/binary_practice_v5.py
@@ -78,3 +86,8 @@ sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs
 sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/anonymity_and_privacy.py
 sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/multimedia.py
 sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/multimedia.py
+
+
+sed -i  's/from app.scratch_labs.scratch /from CRLS_APCSP_autograder.app.scratch_labs.scratch /' CRLS_APCSP_autograder/app/scratch_13.py
+sed -i  's/from app.routes /from CRLS_APCSP_autograder.app.routes /' CRLS_APCSP_autograder/app/scratch_13.py
+sed -i  's/from app.scratch_labs.scratch_1_3 /from CRLS_APCSP_autograder.app.scratch_labs.scratch_1_3 /' CRLS_APCSP_autograder/app/scratch_13.py

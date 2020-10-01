@@ -48,6 +48,6 @@ def route_docs_encoding_color(link):
     tests.append(check_answer('4b', 'Explain 4a', text, {'min_words': 2, 'help_link': color_link}, points=1))
     tests.append(check_answer('4c', 'How many times bigger file?', text, {'answers': r'2', 'help_link': size_link},
                               points=5))
-    tests.append(check_answer('4d', 'Explain 4c', text, {'min_words': 3, 'help_link': size_link}, points=1))
+    tests.append(check_answer('4d', 'Explain 4c', text, {'min_words': 2, 'help_link': size_link}, points=1))
     score_info = sum_score(tests, score_info)
     return [user, tests, score_info]

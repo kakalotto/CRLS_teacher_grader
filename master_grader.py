@@ -221,7 +221,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 tests = scorer(python_filename)
             elif scratch_lab_num:
                 print("scratch file. filename is {}".format(scratch_filename))
-                tests = scorer(scratch_filename)
+                [_, tests, _] = scorer(scratch_filename)
 
             else:  # doc here
                 tests = scorer(doc_id)
@@ -242,8 +242,14 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         print("SKIP THIS")
                         skipped_tests += 1
                         continue
+                    if re.search(r'Checking \s the  \s number \s of \s \(non-background\) \s sprite',
+                                 test['name'], re.X | re.S | re.M):
+                        print("SKIP THIS")
+                        skipped_tests += 1
+                        continue
                 if 'username' in test:
                     continue
+                print(test)
                 if test['pass'] is True:
                     value = '0'
                 else:

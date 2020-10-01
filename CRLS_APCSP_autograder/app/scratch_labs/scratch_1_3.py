@@ -1,211 +1,79 @@
-def press_zero(p_scripts, p_points):
+def press_number(p_scripts, number, p_points):
     """
-    :param p_scripts: json data from file, which is the code of the scratch file. (dict)
-    :param p_points: Number of points this test is worth (int)
-    :return: The test dictionary
+    Runs all of the "press number" tests for scratch 1.3 drawing shapes.
+    :param p_scripts: scripts for the sprite (sprite limited to one) (list of dict)
+    :param number: the number I'm pressing (int)
+    :param p_points: number of points this test is worth (int)
+    :return: test dictionary (dict)
     """
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string
-
-    p_test = {"name": "Checking that there is a script that has 'when 0 key is pressed' along with a "
-                      "pen down, goto 0 0, clear, and point 90. (" + str(p_points) + " points)<br>",
-              "pass": False,
-              "pass_message": "<h5 style=\"color:green;\">Pass!</h5>  "
-                              "We found the strings in the code!<br>",
-              "fail_message": "<h5 style=\"color:red;\">Fail.</h5> "
-                              "Code does not find string we were looking for.<br>"
-                              "Be sure that there is only one 'when 0 key is pressed'<br>",
-              "points": 0
-              }
-    print("aaa asdfasdf {} ".format(p_scripts))
-    test_pendown = match_string(r"\['event_whenkeypressed', \s* '0'] .+ 'pen_penDown'", p_scripts)
-    if test_pendown['pass'] is False:
-        p_test['fail_message'] += "Did not find a when 0 pressed followed by a pen erase all.<br>"
-    test_clear = match_string(r"\['event_whenkeypressed', \s* '0'] .+ 'pen_clear'", p_scripts)
-    if test_clear['pass'] is False:
-        p_test['fail_message'] += "Did not find a when 0 pressed followed by an erase all.<br>"
-    test_point = match_string(r"\['event_whenkeypressed', \s* '0'] .+ \['motion_pointindirection', \s '90'],",
-                              p_scripts)
-    if test_point['pass'] is False:
-        p_test['fail_message'] += "Did not find a when 0 pressed followed by a point in direction 90.<br>"
-    test_goto = match_string(r"\['event_whenkeypressed', \s* '0'] .+ \['motion_gotoxy', \s '0', \s '0'],",
-                             p_scripts)
-    if test_goto['pass'] is False:
-        p_test['fail_message'] += "Did not find a when 0 pressed followed by goto 0 0 .<br>"
-    if test_pendown['pass'] and test_clear['pass'] and test_point['pass'] and test_goto['pass']:
-        p_test['pass'] = True
-        p_test['points'] += p_points
-    return p_test
-
-
-def press_one(p_scripts, p_points):
-    """
-    :param p_scripts: json data from file, which is the code of the scratch file. (dict)
-    :param p_points: Number of points this test is worth (int)
-    :return: The test dictionary
-    """
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string, unique_coordinates, is_square
+    import re
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import one_event, unique_coordinates, is_equilateral_triangle, is_square, \
+        is_pentagon, is_parallelogram
     from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_2 import brickLayer, do_sprite
 
-    p_test = {"name": "Checking that there is a script that has 'when 1 key is pressed' that draws a square"
-                      " (" + str(p_points) + " points)<br>",
+    shape_dict = {1: 'equilateral triangle', 2: 'square', 3: 'pentagon', 4: 'parallelogram', }
+    sides_dict = {1: 3, 2: 4, 3: 5, 4: 4}
+    p_test = {"name": "Checking that there is a script that has 'when " + str(number) +
+                      " key is pressed' that draws a(n) " + str(shape_dict[number]) + ". (" +
+                      str(p_points) + " points)<br>",
               "pass": False,
               "pass_message": "<h5 style=\"color:green;\">Pass!</h5>  "
-                              "There is a script that has 'when 1 key is pressed' that draws a "
-                              "square.<br>",
+                              "There is a script that has 'when " + str(number) +
+                              " key is pressed' that draws a(n) " + shape_dict[number] + ".<br>",
               "fail_message": "<h5 style=\"color:red;\">Fail.</h5> "
-                              "There is not a script that has 'when 1 key is pressed' that draws a "
-                              "square<br>",
+                              "There is not a script that has 'when " + str(number) +
+                              " key is pressed' that correctly draws a(n) " + shape_dict[number] + ".<br>",
               "points": 0
               }
-    test_two = match_string(r"'event_whenkeypressed',\s'1'", p_scripts)
-    sprite = brickLayer(0, 0, 0, pendown=False)
-    if test_two['pass'] is False:
-        p_test['fail_message'] += "Did not find a 'when key 1 is pressed' in the code .<br>"
-    move_success = False
-    if test_two['pass']:
-        for key in p_scripts:
-            script = p_scripts[key]
-            if len(script) > 1:
-                if script[0] == ['event_whenkeypressed', '1']:
-                    move_success = do_sprite(sprite, script, True)
+    search_string = r"'event_whenkeypressed',\s'" + str(number) + "'"
+    [test_one_press, script] = one_event(p_scripts, search_string)
+    if test_one_press['pass'] is False:
+        p_test['fail_message'] += test_one_press['fail_message']
+        return p_test
+    sprite = brickLayer(0, 0, 0, pendown=True)
+    move_success = do_sprite(sprite, script, True)
     coords = unique_coordinates(sprite.move_history)
-    if len(coords) != 4:
-        p_test['fail_message'] += "After pressing 1, sprite should land on 4 unique coordinates, but does not.<br>"
-    square = is_square(coords)
-    if square is False:
-        p_test['fail_message'] += "Failed test for square <br>.<br>"
-    if test_two['pass'] and square and move_success:
-        p_test['pass'] = True
-        p_test['points'] += p_points
-    return p_test
-
-
-def press_two(p_scripts, p_points):
-    """
-    :param p_scripts: json data from file, which is the code of the scratch file. (dict)
-    :param p_points: Number of points this test is worth (int)
-    :return: The test dictionary
-    """
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string, unique_coordinates, is_equilateral_triangle
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_2 import brickLayer, do_sprite
-
-    p_test = {"name": "Checking that there is a script that has 'when 2 key is pressed' that draws an "
-                      "equilateral triangle. (" + str(p_points) + " points)<br>",
-              "pass": False,
-              "pass_message": "<h5 style=\"color:green;\">Pass!</h5>  "
-                              "There is a script that has 'when 2 key is pressed' that draws an "
-                              "equilateral triangle.<br>",
-              "fail_message": "<h5 style=\"color:red;\">Fail.</h5> "
-                              "There is not a script that has 'when 2 key is pressed' that draws an "
-                              "equilateral triangle.<br>",
-              "points": 0
-              }
-    test_two = match_string(r"'event_whenkeypressed',\s'2'", p_scripts)
-    sprite = brickLayer(0, 0, 0, pendown=False)
-    if test_two['pass'] is False:
-        p_test['fail_message'] += "Did not find a 'when key 2 is pressed' in the code .<br>"
-    move_success = False
-    if test_two['pass']:
-        for key in p_scripts:
-            script = p_scripts[key]
-            if len(script) > 1:
-                if script[0] == ['event_whenkeypressed', '2']:
-                    move_success = do_sprite(sprite, script, True)
-    coords = unique_coordinates(sprite.move_history)
-    if len(coords) != 3:
-        p_test['fail_message'] += "After pressing 2, sprite should land on 3 unique coordinates, but does not.<br>"
-    equilateral = is_equilateral_triangle(coords)
-    if equilateral is False:
-        p_test['fail_message'] += "Failed test for equilateral triangle (all sides equal length) <br>.<br>"
-    if test_two['pass'] and equilateral and move_success:
-        p_test['pass'] = True
-        p_test['points'] += p_points
-    return p_test
-
-
-def press_four(p_scripts, p_points):
-    """
-    :param p_scripts: json data from file, which is the code of the scratch file. (dict)
-    :param p_points: Number of points this test is worth (int)
-    :return: The test dictionary
-    """
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string, unique_coordinates, is_pentagon
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_2 import brickLayer, do_sprite
-
-    p_test = {"name": "Checking that there is a script that has 'when 4 key is pressed' that draws a pentagon"
-                      " (" + str(p_points) + " points)<br>",
-              "pass": False,
-              "pass_message": "<h5 style=\"color:green;\">Pass!</h5>  "
-                              "There is a script that has 'when 4 key is pressed' that draws a "
-                              "pentagon.<br>",
-              "fail_message": "<h5 style=\"color:red;\">Fail.</h5> "
-                              "There is not a script that has 'when 4 key is pressed' that draws a "
-                              "pentagon<br>",
-              "points": 0
-              }
-    test_four = match_string(r"'event_whenkeypressed',\s'4'", p_scripts)
-    sprite = brickLayer(0, 0, 0, pendown=False)
-    if test_four['pass'] is False:
-        p_test['fail_message'] += "Did not find a 'when key 4 is pressed' in the code .<br>"
-    move_success = False
-    if test_four['pass']:
-        for key in p_scripts:
-            script = p_scripts[key]
-            print(script)
-            if len(script) > 1:
-                if script[0] == ['event_whenkeypressed', '4']:
-                    move_success = do_sprite(sprite, script, True)
-    coords = unique_coordinates(sprite.move_history)
-    print(coords)
-    if len(coords) != 4:
-        p_test['fail_message'] += "After pressing 1, sprite should land on 4 unique coordinates plus start, but does not.<br>"
-    pentagon = is_pentagon(coords)
-    if pentagon is False:
-        p_test['fail_message'] += "Failed test for pentagon <br>.<br>"
-    if test_four['pass'] and pentagon and move_success:
-        p_test['pass'] = True
-        p_test['points'] += p_points
-    return p_test
-
-
-def press_five(p_scripts, p_points):
-    """
-    :param p_scripts: json data from file, which is the code of the scratch file. (dict)
-    :param p_points: Number of points this test is worth (int)
-    :return: The test dictionary
-    """
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch import match_string, unique_coordinates, is_parallelogram
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_2 import brickLayer, do_sprite
-
-    p_test = {"name": "Checking that there is a script that has 'when 5 key is pressed' that draws a parallelogram"
-                      " (" + str(p_points) + " points)<br>",
-              "pass": False,
-              "pass_message": "<h5 style=\"color:green;\">Pass!</h5>  "
-                              "There is a script that has 'when 5 key is pressed' that draws a "
-                              "parallelogram.<br>",
-              "fail_message": "<h5 style=\"color:red;\">Fail.</h5> "
-                              "There is not a script that has 'when 5 key is pressed' that draws a "
-                              "parallelogram<br>",
-              "points": 0
-              }
-    test_two = match_string(r"'event_whenkeypressed',\s'5'", p_scripts)
-    sprite = brickLayer(0, 0, 0, pendown=False)
-    if test_two['pass'] is False:
-        p_test['fail_message'] += "Did not find a 'when key 5 is pressed' in the code .<br>"
-    move_success = False
-    if test_two['pass']:
-        for key in p_scripts:
-            script = p_scripts[key]
-            if len(script) > 1:
-                if script[0] == ['event_whenkeypressed', '5']:
-                    move_success = do_sprite(sprite, script, True)
-    coords = unique_coordinates(sprite.move_history)
-    if len(coords) != 4:
-        p_test['fail_message'] += "After pressing 1, sprite should land on 4 unique coordinates, but does not.<br>"
-    parallelogram = is_parallelogram(coords)
-    if parallelogram is False:
-        p_test['fail_message'] += "Failed test for parallelogram <br>.<br>"
-    if test_two['pass'] and parallelogram and move_success:
+    drawn_sides = len(re.findall(r'motion_move', str(script), re.X | re.M | re.S))
+    if re.search(r'control_repeat', str(script), re.X | re.M | re.S):
+        drawn_sides = sides_dict[number]  # skip the check if there is a repeat
+    if len(coords) != sides_dict[number] or (drawn_sides != sides_dict[number]):
+        if len(coords) != sides_dict[number]:
+            p_test['fail_message'] += "<h5 style=\"color:purple;\">" \
+                                      "After pressing " + str(number) + ", sprite should land on " +\
+                                      str(sides_dict[number]) + \
+                                      " unique coordinates, but instead lands on this many:<br>" + str(len(coords)) +\
+                                      ".<br></h5>"
+        if drawn_sides != sides_dict[number]:
+            p_test['fail_message'] += "<h5 style=\"color:purple;\">" \
+                                      "Sprite should draw this many sides: " +\
+                                      str(sides_dict[number]) + ", but instead draws this many: " + \
+                                      str(drawn_sides) + ".<br></h5>"
+    if number == 1:
+        correct_shape = is_equilateral_triangle(coords)
+    elif number == 2:
+        correct_shape = is_square(coords)
+    elif number == 3:
+        correct_shape = is_pentagon(coords)
+    elif number == 4:
+        correct_shape = is_parallelogram(coords)
+    else:
+        correct_shape = False
+    if correct_shape is False:
+        p_test['fail_message'] += "<h5 style=\"color:purple;\">" \
+                                  "Tested the shape drawn by sprite.  Shape failed test for " +\
+                                  str(shape_dict[number]) + ".</h5>"
+    if correct_shape is False or (drawn_sides != sides_dict[number]):
+        p_test['fail_message'] += "<h5 style=\"color:purple;\">" \
+                                  "See example of press 1 for equilateral triangle here: " \
+                                  '<a href="https://docs.google.com/presentation/d/18HDDCHckIsuphA91LbFHyS272PIiG4f' \
+                                  '5wxRQE3KRc2g/edit#slide=id.g74c3b39ec7_0_8" target="_blank">' \
+                                  'link to page in presentation </a> <br><br>' \
+                                  'See example of press 9 for rectangle (similar to parallelogram) here: ' \
+                                  '<a href="https://docs.google.com/presentation/d/18HDDCHckIsuphA91LbFHy' \
+                                  'S272PIiG4f5wxR' \
+                                  'QE3KRc2g/edit#slide=id.g74c3b39ec7_0_15" target="_blank">' \
+                                  'link to page in presentation </a></h5>'
+    if test_one_press['pass'] and correct_shape and move_success and drawn_sides == sides_dict[number]:
         p_test['pass'] = True
         p_test['points'] += p_points
     return p_test

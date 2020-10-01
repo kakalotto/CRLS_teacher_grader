@@ -5,6 +5,8 @@ from CRLS_APCSP_autograder.app.hw07 import route_docs_hw07
 
 fulltext_search = 'HW 7, Logical_operators'
 person = ''
+name_search = 'HW07'
+
 if len(sys.argv) > 1:
     person = sys.argv[1]
 
@@ -22,7 +24,7 @@ match_cells = ['D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11']
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=route_docs_hw07, match_cells=match_cells)
+                  scorer=route_docs_hw07, match_cells=match_cells, lab_name=name_search)
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=route_docs_hw07, person=person, match_cells=match_cells)
+                  scorer=route_docs_hw07, person=person, match_cells=match_cells, lab_name=name_search)

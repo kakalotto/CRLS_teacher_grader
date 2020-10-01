@@ -1,31 +1,28 @@
-def scratch_feedback_13(filename):
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, unzip_sb3, read_json_file, find_help, arrange_blocks_v2
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch_1_3 import press_zero, press_one, press_two, press_four, press_five
+def route_scratch_1_3(filename):
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, find_help, check_num_sprites, press_zero
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch_1_3 import press_number
+    from CRLS_APCSP_autograder.app.routes import initialize_scoring, get_scripts_wrapper, sum_score
 
-    tests = list()
-
-    # Test file name
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scratch Scholar', score_max=70, score_manual=10)
     test_filename = scratch_filename_test(filename, '1.3')
     tests.append(test_filename)
     if test_filename['pass'] is False:
-        return tests
+        return [user, tests, score_info]
     else:
-        unzip_sb3(filename)
-        json_data = read_json_file()
-        scripts = arrange_blocks_v2(json_data)
-        test_zero = press_zero(scripts, 10)
-        tests.append(test_zero)
-        test_one = press_one(scripts, 10)
-        tests.append(test_one)
-        test_two = press_two(scripts, 10)
-        tests.append(test_two)
-        test_four = press_four(scripts, 15)
-        tests.append(test_four)
-        test_five = press_five(scripts, 15)
-        tests.append(test_five)
-        test_help = find_help(json_data, 5)
-        tests.append(test_help)
-        return tests
+        [json_data, scripts] = get_scripts_wrapper(filename)
+        test_one_sprite = check_num_sprites(json_data, 1)
+        tests.append(test_one_sprite)
+        if test_one_sprite['pass'] is False:
+            return [user, tests, score_info]
+        else:
+            tests.append(press_zero(scripts, 15))
+            tests.append(press_number(scripts, 1, 15))
+            tests.append(press_number(scripts, 2, 15))
+            tests.append(press_number(scripts, 3, 10))
+            tests.append(press_number(scripts, 4, 10))
+            tests.append(find_help(json_data, 5))
+            score_info = sum_score(tests, score_info)
+            return [user, tests, score_info]
 
 
 
