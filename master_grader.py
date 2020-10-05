@@ -233,8 +233,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             skipped_tests = 0
             # print("xxx tests: {}".format(tests))
             for i, test in enumerate(tests):
-                # print("test here")
-                # print('xxx test : {}'.format(test))
+                print("test here")
+                print('xxx test : {}'.format(test))
 
                 if 'name' in test:
                     # print("NAME IS")
@@ -242,11 +242,11 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         print("SKIP THIS")
                         skipped_tests += 1
                         continue
-                    if re.search(r'Checking \s the  \s number \s of \s \(non-background\) \s sprite',
-                                 test['name'], re.X | re.S | re.M):
-                        print("SKIP THIS")
-                        skipped_tests += 1
-                        continue
+                    # if re.search(r'Checking \s the  \s number \s of \s \(non-background\) \s sprite',
+                    #              test['name'], re.X | re.S | re.M):
+                    #     print("SKIP THIS")
+                    #     skipped_tests += 1
+                    #     continue
                 if 'username' in test:
                     continue
                 print(test)
