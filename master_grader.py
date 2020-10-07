@@ -242,6 +242,14 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         print("SKIP THIS")
                         skipped_tests += 1
                         continue
+                    if re.search(r'that \s Scratch \s variables \s have \s no \s spaces', test['name'], re.X | re.S | re.M):
+                        print("SKIP THIS")
+                        skipped_tests += 1
+                        continue
+                    if re.search(r'\s the \s number \s of \s \(non-background\) \s sprite \s is \s equal', test['name'], re.X | re.S | re.M):
+                        print("SKIP THIS")
+                        skipped_tests += 1
+                        continue
                     # if re.search(r'Checking \s the  \s number \s of \s \(non-background\) \s sprite',
                     #              test['name'], re.X | re.S | re.M):
                     #     print("SKIP THIS")

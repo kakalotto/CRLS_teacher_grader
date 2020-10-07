@@ -1230,9 +1230,6 @@ def find_string_in_script(p_scripts, this_test, p_points):
                              '22_1_1': [['draws a rectangle (using correct number of repeats)',
                                          " \['control_repeat', \s '2' .*? motion_movesteps .*? motion_turn .*? "
                                          ".*? motion_movesteps "],
-                                        # ['draws a rectangle, turning the correct way if starting in bottom left corner',
-                                        #  " ('motion_turnleft', \s '[0-9]+'|'motion_turnright', \s '-[0-9]+')"],
-
                                         ],
                              '22_1_2': [['draws a rectangle but turns the wrong way ',
                                          " ('motion_turnright', \s '[0-9]+'|'motion_turnleft', \s '-[0-9]+')"],
@@ -1241,8 +1238,6 @@ def find_string_in_script(p_scripts, this_test, p_points):
                              '22_2_1': [['draws a rectangle (using correct number of repeats)',
                                          " \['control_repeat', \s '2' .*? motion_movesteps .*? motion_turn .*? "
                                          ".*? motion_movesteps "],
-                                        # ['draws a rectangle, turning the correct way if starting in bottom left corner',
-                                        #  " ('motion_turnleft', \s '[0-9]+'|'motion_turnright', \s '-[0-9]+')"],
                                         ],
                              '22_2_2': [['draws a rectangle but turns the wrong way ',
                                          " ('motion_turnright', \s '[0-9]+'|'motion_turnleft', \s '-[0-9]+')"],
@@ -2377,9 +2372,12 @@ def run_script_check_say(p_scripts, this_test, p_points):
     """
     import re
     import copy
-    from app.scratch_labs.scratch_2_2 import brickLayer, do_sprite
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_2  import brickLayer, do_sprite
     script_test_description = {'23a_name_reply': 'If I reply to the first question with a name, program '
-                                                 'replies back with something that includes the name',
+                                                 'replies back with something that includes the name.  For example,'
+                                                 '<br>Program asks "what is your name".  <br>You reply "Mr. Murphy".  '
+                                                 '<br>Program should reply "Hello Mr. Murphy" with the space '
+                                                 'after Hello.<br><br>',
                                '23a_feel_reply': 'If I reply to the third question with how I feel", program '
                                                  'replies back with something that includes that feeling',
                                '24_correct': "If I guess the number correctly, program says " 
@@ -3831,7 +3829,7 @@ def run_custom_block_check_say(testname, p_scripts, p_points):
     """
     import re
     import copy
-    from app.scratch_labs.scratch_2_2 import brickLayer, do_sprite
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_2  import brickLayer, do_sprite
     test_info = {
         '32_1': {'name': 'happy_birthday',
                  'block_params': 1,
