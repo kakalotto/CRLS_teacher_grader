@@ -1,6 +1,6 @@
 # Pass these in as parameters
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.python_2032 import docs_feedback_python_2032
+from CRLS_APCSP_autograder.app.python_2032 import route_docs_python_2032 as power
 import sys
 
 fulltext_search = '2.032'
@@ -12,8 +12,8 @@ if len(sys.argv) > 1:
 def doc_name_to_rubric_name(doc_name):
     import re
     p_rubric_name = doc_name
-    p_rubric_name = re.sub(r'2.032_DC_Superhero_girls_4_Buckets_KFC_lab',
-                           r'2.032_DC_Superhero_girls_KFC_rubric',
+    p_rubric_name = re.sub(r'lab',
+                           r'rubric',
                            p_rubric_name)
     return p_rubric_name
 
@@ -27,8 +27,8 @@ rubric_sheet_name = ''
 if not person:
 
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_python_2032,)
+                  scorer=power,)
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_python_2032, person=person)
+                  scorer=power, person=person)
     

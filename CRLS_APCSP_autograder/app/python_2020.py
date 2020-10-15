@@ -1,27 +1,43 @@
-def docs_feedback_python_2020(link):
-    from CRLS_APCSP_autograder.app.docs_labs.docs import get_text, exact_answer, keyword_and_length
-
+# noinspection SpellCheckingInspection
+def route_docs_python_2021(link):
+    from app.docs_labs.docs import get_text, check_answer
+    from app.routes import initialize_scoring, sum_score
+    expected = 'https://docs.google.com/presentation/d/12hooQ6UZPh7P2TgoLw-Rj_UJaFrP0q4Qe88lIyLHHL0/' \
+               'edit#slide=id.g5304dafeb6_0_0'
+    to_float = 'https://docs.google.com/presentation/d/1YhZ7u37vRQHPMnx_XJgV_BDvBocQL9Y5VLWOQ2Zeleo/' \
+               'edit#slide=id.g8c6e751a19_0_0'
+    no_float_string = 'https://docs.google.com/presentation/d/1WM9dqehCsNLaOKVI7XkMqHymR1R6Lijx0ZvJC4NKjPE/' \
+                      'edit#slide=id.g1ccdc42220236e58_89'
+    errors = 'https://docs.google.com/presentation/d/1YhZ7u37vRQHPMnx_XJgV_BDvBocQL9Y5VLWOQ2Zeleo/' \
+             'edit#slide=id.g8c6e751a19_1_0'
+    double_cast = 'https://docs.google.com/presentation/d/1YhZ7u37vRQHPMnx_XJgV_BDvBocQL9Y5VLWOQ2Zeleo/' \
+                  'edit#slide=id.g20957deb5ef4f55d_27'
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scholar', score_max=14, score_manual=0)
     text = get_text(link)
-     
-    tests = list()
-    test1a = exact_answer('1a expected', [r'1a\. .+? tabledata \s* [0-9a-zA-Z] .+? 1b\.'], text, points=1)
-    test1b = exact_answer('1b expected', [r'1b\. .+? tabledata \s* 1\.0 \s* tabledata .+? 2a\.'], text, points=1)
-    test2a = exact_answer('2a expected', [r'2a\. .+? tabledata \s* [0-9a-zA-Z] .+? 2b\.'], text, points=1)
-    test2b = exact_answer('2b expected', [r'2b\. .+? tabledata \s* error \s* tabledata .+? 3a\.'], text, points=1)
-    test3a = exact_answer('3a expected', [r'3a\. .+? tabledata \s* [0-9a-zA-Z] .+? 3b\.'], text, points=1)
-    test3b = exact_answer('3b expected', [r'2b\. .+? tabledata \s* 2 \s* tabledata .+? 4a\.'], text, points=1)
-    test4a = exact_answer('4a expected', [r'4a\. .+? tabledata \s* [0-9a-zA-Z] .+? 4b\.'], text, points=1)
-    test4b = exact_answer('4b expected', [r'4b\. .+? tabledata \s* error \s* tabledata .+? 5a\.'], text, points=1)
-    test5a = exact_answer('5a expected', [r'5a\. .+? tabledata \s* [0-9a-zA-Z] .+? 5b\.'], text, points=1)
-    test5b = exact_answer('5b expected', [r'5b\. .+? tabledata \s* 1 \s* tabledata .+? 6a\.'], text, points=1)
-    test6a = exact_answer('6a expected', [r'6a\. .+? tabledata \s* [0-9a-zA-Z] .+? 6b\.'], text, points=1)
-    test6b = exact_answer('6b expected', [r'6b\. .+? tabledata \s* 1\.0 \s* tabledata .+? 7a\.'], text, points=1)
-    test7a = exact_answer('7a expected', [r'7a\. .+? tabledata \s* [0-9a-zA-Z] .+? 7b\.'], text, points=1)
-    test7b = exact_answer('7b expected', [r'7b\. .+? tabledata \s* 1\.0 \s* .+? $'], text, points=1)
+    tests.append(check_answer('1a', 'expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=1))
+    tests.append(check_answer('1b', 'actual', text, {'answers': r'1\.0', 'help_link': to_float}, points=1))
+    tests.append(check_answer('2a', 'expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=1))
+    tests.append(check_answer('2b', 'actual', text, {'answers': r'error', 'help_link': no_float_string}, points=1))
+    tests.append(check_answer('3a', 'expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=1))
+    tests.append(check_answer('3b', 'actual', text, {'answers': r'2', 'help_link': no_float_string}, points=1))
+    tests.append(check_answer('4a', 'expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=1))
+    tests.append(check_answer('4b', 'actual', text, {'answers': r'error', 'help_link': errors}, points=1))
+    tests.append(check_answer('5a', 'expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=1))
+    tests.append(check_answer('5b', 'actual', text, {'answers': r'1', 'help_link': double_cast}, points=1))
+    tests.append(check_answer('6a', 'expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=1))
+    tests.append(check_answer('6b', 'actual', text, {'answers': r'1\.0', 'help_link': double_cast}, points=1))
+    tests.append(check_answer('7a', 'expected', text, {'answers': r'[a-zA-Z0-9]+', 'help_link': expected},
+                              points=1))
+    tests.append(check_answer('7b', 'actual', text, {'answers': r'1\.0', 'help_link': double_cast}, points=1))
+    score_info = sum_score(tests, score_info)
+    return [user, tests, score_info]
 
-    tests.extend([test1a, test1b, test2a, test2b, test3a, test3b, test4a, test4b, test5a, test5b, test6a, test6b,
-                  test7a, test7b,])
-    return tests 
 
 def feedback_2020(filename):
 

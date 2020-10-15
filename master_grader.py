@@ -218,7 +218,7 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             #            tests = docs_feedback_hardware_esd_formfactors_cards(doc_id)
             if python_lab_num:  # python file
                 print("python file. filename is {}".format(python_filename))
-                tests = scorer(python_filename)
+                [_, tests, _] = scorer(python_filename)
             elif scratch_lab_num:
                 print("scratch file. filename is {}".format(scratch_filename))
                 [_, tests, _] = scorer(scratch_filename)
@@ -285,4 +285,4 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             # print(body)
             result = service_sheets.spreadsheets().values().batchUpdate(spreadsheetId=rubric_id, body=body).execute()
             # print("match_counter" + str(match_counter))
-            time.sleep(1.5)
+            time.sleep(2.5)

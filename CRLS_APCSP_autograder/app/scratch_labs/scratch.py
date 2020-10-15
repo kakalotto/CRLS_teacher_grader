@@ -1333,8 +1333,8 @@ def find_string_in_script(p_scripts, this_test, p_points):
                                                        'event_whenflagclicked .+? (control_repeat|control_forever)'],
                                                       ],
                              '26_test_fall': [['green flag followed by sprite forever falling (with a changey)',
-                                               "event_whenflagclicked .+? (control_repeat|control_forever) .+?"
-                                               " motion_changeyby', \s '-[0-9] .*? ]", ]
+                                               r"event_whenflagclicked .+? (control_repeat|control_forever) .+?"
+                                               r" motion_changeyby', \s '(-[0-9]|VARIABLE) .*? ]", ]
                                               ],
                              '26_top_1': [['green flag IMMEDIATELY followed by sety to higher than 125 ',
                                            "'event_whenflagclicked' .+? 'motion_sety', \s+ '(-?[0-9]+)'", ]
@@ -2169,6 +2169,7 @@ def find_string_in_script(p_scripts, this_test, p_points):
     else:
         all_passed = True
         for test in this_test_description[this_test]:
+            print("test! {} script {}".format(test, script))
             temp_test = match_string(test[1], script)
             if temp_test['pass'] is False:
                 p_test['fail_message'] += '<h5 style=\"color:purple;\">There needs to be a(n) ' + \

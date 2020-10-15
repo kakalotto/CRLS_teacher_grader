@@ -232,7 +232,7 @@ def check_answer(question, label, fulltext, query, *, points=0):
                 p_test['fail_message'] += "<h5 style=\"color:purple;\">Autograder programming bug for this question" \
                                           "</h5>  " + str(label) + " min_words needs to be an integer"
             else:
-                result = re.findall(r'[a-zA-Z0-9]+ [\s+ | \. | : | \? | ! | \n]',
+                result = re.findall(r'[a-zA-Z0-9\(\)\"\']+ [\s+ | \. | : | \? | ! | \n]',
                                     str(question_text), re.X | re.M | re.S)
                 words = len(result)
                 print("result" + str(result))

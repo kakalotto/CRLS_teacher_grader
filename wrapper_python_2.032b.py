@@ -1,7 +1,7 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.python_2032b import feedback_2032b
+from CRLS_APCSP_autograder.app.python_2032b import route_python_2_032b as power
 
 person = ''
 if len(sys.argv) > 1:
@@ -26,9 +26,9 @@ rubric_sheet_name = ''
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-              scorer=feedback_2032b, python_lab_num='2.032b', python_rubric_suffix=' - Python 2.032 DC Superhero girls KFC- Rubric')
+              scorer=power, python_lab_num='2.032b', python_rubric_suffix=' - Python 2.032 DC Superhero girls KFC- Rubric')
 
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_2032b, python_lab_num='2.032b', python_rubric_suffix=' - Python 2.032 DC Superhero girls KFC- Rubric',
+                  scorer=power, python_lab_num='2.032b', python_rubric_suffix=' - Python 2.032 DC Superhero girls KFC- Rubric',
                   person=person)

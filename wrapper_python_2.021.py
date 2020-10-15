@@ -3,7 +3,7 @@ import sys
 from master_grader import master_grader
 from CRLS_APCSP_autograder.app.python_2021 import route_python_2_021
 
-from CRLS_APCSP_autograder.app.python_2020 import docs_feedback_python_2020
+from CRLS_APCSP_autograder.app.python_2021 import route_docs_python_2021
 
 
 fulltext_search = '.py'
@@ -44,10 +44,10 @@ rubric_sheet_name = ''
 fulltext_search = 'Casting'
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_python_2020, python_lab_num='2.021',)
+                  scorer= route_docs_python_2021, python_lab_num='2.021',)
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_python_2020,
+                  scorer= route_docs_python_2021,
                   person=person)
 
 

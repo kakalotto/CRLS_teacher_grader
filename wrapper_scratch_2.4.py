@@ -1,10 +1,10 @@
 # Pass these in as parameters
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.scratch_24 import scratch_feedback_24
+from CRLS_APCSP_autograder.app.scratch_24 import route_scratch_2_4 as power
 import sys
 
 fulltext_search = ''
-person= ''
+person = ''
 if len(sys.argv) > 1:
     person = sys.argv[1]
 
@@ -23,9 +23,9 @@ rubric_sheet_name = 'Sheet1'
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=scratch_feedback_24, scratch_file=True, scratch_lab_num='2.4',
+                  scorer=power, scratch_file=True, scratch_lab_num='2.4',
                   scratch_rubric_suffix='2.4')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,\
-                  scorer=scratch_feedback_24, scratch_file=True, scratch_lab_num='2.4',
+                  scorer=power, scratch_file=True, scratch_lab_num='2.4',
                   scratch_rubric_suffix=' - Lab_2.2_Yellow_Brick_Road_rubric', person=person)

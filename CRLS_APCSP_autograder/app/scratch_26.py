@@ -1,37 +1,28 @@
-def scratch_feedback_26(filename):
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, unzip_sb3, read_json_file, find_help, \
-         arrange_blocks_v2, variable_check_no_space
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_6 import green_flag, test_top_1, test_fall, test_hit_ground, test_random_x, \
+def route_scratch_2_6(filename):
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, find_help, variable_check_no_space, \
+        find_string_in_script
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_6 import test_top,  test_hit_ground, test_random_x, \
         platform_or_ground
-    tests = list()
+    from CRLS_APCSP_autograder.app.routes import initialize_scoring, get_scripts_wrapper, sum_score
 
-    # Test file name
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scratch Scholar', score_max=70, score_manual=10)
     test_filename = scratch_filename_test(filename, '2.6')
     tests.append(test_filename)
     if test_filename['pass'] is False:
-        return tests
+        return [user, tests, score_info]
     else:
-        unzip_sb3(filename)
-        json_data = read_json_file()
-        scripts = arrange_blocks_v2(json_data)
-        test_flag = green_flag(scripts, 15)
-        tests.append(test_flag)
-        test_top_1 = test_top_1(scripts, 10)
-        tests.append(test_top_1)
-        if test_top_1['pass'] is False:
-            return tests
+        [json_data, scripts] = get_scripts_wrapper(filename)
+        test_spaces = variable_check_no_space(json_data['monitors'])
+        tests.append(test_spaces)
+        if test_spaces['pass'] is False:
+            return [user, tests, score_info]
         else:
-            test_falling = test_fall(scripts, 10)
-            tests.append(test_falling)
-            test_ground = test_hit_ground(scripts, 20)
-            tests.append(test_ground)
-            test_x = test_random_x(scripts, 5)
-            tests.append(test_x)
-            test_both = platform_or_ground(scripts, 5)
-            tests.append(test_both)
-            test_help = find_help(json_data, 5)
-            tests.append(test_help)
-            
-            return tests
-        
-
+            tests.append(find_string_in_script(scripts, '26_greenflag_forever', 15))
+            tests.append(find_string_in_script(scripts, '26_test_fall', 10))
+            tests.append(test_top(scripts, 10))
+            tests.append(test_random_x(scripts, 5))
+            tests.append(test_hit_ground(scripts, 20))
+            tests.append(platform_or_ground(scripts, 5))
+            tests.append(find_help(json_data, 5))
+            score_info = sum_score(tests, score_info)
+            return [user, tests, score_info]

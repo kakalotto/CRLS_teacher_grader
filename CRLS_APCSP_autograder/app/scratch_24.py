@@ -1,49 +1,32 @@
-def scratch_feedback_24(filename):
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, unzip_sb3, read_json_file, find_help,\
-        find_variable, find_question, find_set_variable, arrange_blocks_v2, variable_check_no_space
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_3 import green_flag23b, test_color_change23b, test_school_change23b
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_4 import find_random_one_to_ten, find_ifelse, find_set_name_to_variable, \
-        check_correct_number, check_wrong_number
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_4_alternate import green_flag
+def route_scratch_2_4(filename):
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, check_num_sprites, find_help, find_string_in_script,\
+        find_variable, find_question, variable_check_no_space, run_script_check_say
+    from CRLS_APCSP_autograder.app.routes import initialize_scoring, get_scripts_wrapper, sum_score
 
-    tests = list()
- 
-    # Test file name
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scratch Scholar', score_max=60, score_manual=10)
     test_filename = scratch_filename_test(filename, '2.4')
     tests.append(test_filename)
     if test_filename['pass'] is False:
-        return render_template('feedback.html', user=user, tests=tests, filename=filename, score_info=score_info)
+        return [user, tests, score_info]
     else:
-        unzip_sb3(filename)
-        json_data = read_json_file()
+        [json_data, scripts] = get_scripts_wrapper(filename)
         test_spaces = variable_check_no_space(json_data['monitors'])
         tests.append(test_spaces)
-        scripts = arrange_blocks_v2(json_data)
-        print("scripts {}".format(scripts))
-        test_flag = green_flag(scripts, 2.5)
-        tests.append(test_flag)
-        test_name = find_variable(json_data, 'name', 2.5)
-        tests.append(test_name)
-        test_question = find_question(json_data, r'(name|Name)', 2.5)
-        tests.append(test_question)
-        test_name_to_variable = find_set_name_to_variable(scripts, 2.5)
-        tests.append(test_name_to_variable)
-        test_number = find_variable(json_data, 'number', 5)
-        tests.append(test_number)
-        test_random = find_random_one_to_ten(scripts, 10)
-        tests.append(test_random)
-        test_question = find_question(json_data, r'(guess|Guess)', 5)
-        tests.append(test_question)
-        test_ifelse = find_ifelse(scripts, 5)
-        tests.append(test_ifelse)
-        test_check_correct = check_correct_number(scripts, 10)
-        tests.append(test_check_correct)
-        test_check_wrong = check_wrong_number(scripts, 10)
-        tests.append(test_check_wrong)
-        
-        test_help = find_help(json_data, 5)
-        tests.append(test_help)
-        score_info['finished_scoring'] = True
-        return tests
-        
-            
+        test_one_sprite = check_num_sprites(json_data, 1)
+        tests.append(test_one_sprite)
+        if test_spaces['pass'] is False or test_one_sprite['pass'] is False:
+            return [user, tests, score_info]
+        else:
+            tests.append(find_string_in_script(scripts, '24_green_flag', 2.5))
+            tests.append(find_variable(json_data, 'name', 2.5))
+            tests.append(find_question(json_data, r'(name|Name)', 2.5))
+            tests.append(find_string_in_script(scripts, '24_name_variable_to_answer', 2.5))
+            tests.append(find_variable(json_data, 'number', 5))
+            tests.append(find_string_in_script(scripts, '24_set_random', 10))
+            tests.append(find_question(json_data, r'(guess|Guess)', 5))
+            tests.append(find_string_in_script(scripts, '24_ifelse', 5))
+            tests.append(run_script_check_say(scripts, '24_correct', 10))
+            tests.append(run_script_check_say(scripts, '24_wrong', 10))
+            tests.append(find_help(json_data, 5))
+            score_info = sum_score(tests, score_info)
+            return [user, tests, score_info]

@@ -1,13 +1,12 @@
 # Pass these in as parameters
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.scratch_23b import scratch_feedback_23b
+from CRLS_APCSP_autograder.app.scratch_23b import route_scratch_2_3b as power
 import sys
 
 fulltext_search = ''
 person= ''
 if len(sys.argv) > 1:
     person = sys.argv[1]
-
 
 def doc_name_to_rubric_name(doc_name):
     import re
@@ -17,15 +16,15 @@ def doc_name_to_rubric_name(doc_name):
     return p_rubric_name
 
 
-value_cells = ['B7', 'F3', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'B3']
+value_cells = ['B7', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'B3']
 rubric_sheet_name = 'Sheet1'
 
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=scratch_feedback_23b, scratch_file=True, scratch_lab_num='2.3b',
-                  scratch_rubric_suffix=' - Lab_2.3b_inputs_rubric')
+                  scorer=power, scratch_file=True, scratch_lab_num='2.3b',
+                  scratch_rubric_suffix=' - Lab_2.3b_conditionals_rubric')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,\
-                  scorer=scratch_feedback_23b, scratch_file=True, scratch_lab_num='2.3b',
-                  scratch_rubric_suffix=' - Lab_2.3b_inputs_rubric', person=person)
+                  scorer=power, scratch_file=True, scratch_lab_num='2.3b',
+                  scratch_rubric_suffix=' - Lab_2.3b_conditionals_rubric', person=person)
