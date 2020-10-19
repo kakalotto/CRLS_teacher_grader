@@ -36,4 +36,4 @@ def route_python_1_040(filename):
         tests.append(helps(filename, 2.5))
         score_info['finished_scoring'] = True
         score_info = sum_score(tests, score_info)
-        return tests
+        return [score_info, tests, user]

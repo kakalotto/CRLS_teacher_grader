@@ -130,7 +130,7 @@ def io_test(p_filename, p_string, p_test_num, *, points=0, occurrences=1, help_l
     print("WUT WUT WUT \n " + outfile_data)
     print("end outfile data\n ")
 
-    print("p_string")
+    print("p_string, looking for this")
     print(p_string)
     print("outfile_data")
     print(outfile_data)

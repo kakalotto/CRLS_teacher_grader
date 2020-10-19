@@ -2,14 +2,13 @@ def python_2_040(p_filename, p_filename_data):
 
     import re
     from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
-
-    match_obj_prize1 = re.search(r'prize1 \s* = \s* (\'|") ([a-zA-Z0-9!-\.\$\+\s\(\)]+) (\'|")',
+    match_obj_prize1 = re.search(r'prize1 \s* = \s* (\'|") ([\[\]a-zA-Z0-9!-\.\$\+\s\(\)]+) (\'|")',
                                  p_filename_data, re.X | re.M | re.S)
-    match_obj_prize2 = re.search(r'prize2 \s* = \s* (\'|") ([a-zA-Z0-9!-\.\$\+\s\(\)]+) (\'|")',
+    match_obj_prize2 = re.search(r'prize2 \s* = \s* (\'|") ([\[\]a-zA-Z0-9!-\.\$\+\s\(\)]+) (\'|")',
                                  p_filename_data, re.X | re.M | re.S)
-    match_obj_prize3 = re.search(r'prize3 \s* = \s* (\'|") ([a-zA-Z0-9!-\.\$\+\s\(\)]+) (\'|")',
+    match_obj_prize3 = re.search(r'prize3 \s* = \s* (\'|") ([\[\]a-zA-Z0-9!-\.\$\+\s\(\)]+) (\'|")',
                                  p_filename_data, re.X | re.M | re.S)
-    match_obj_prize4 = re.search(r'prize4 \s* = \s* (\'|") ([a-zA-Z0-9!-\.\$\+\s\(\)]+) (\'|")',
+    match_obj_prize4 = re.search(r'prize4 \s* = \s* (\'|") ([\[\]a-zA-Z0-9!-\.\$\+\s\(\)]+) (\'|")',
                                  p_filename_data, re.X | re.M | re.S)
 
     prize1 = ' NOT FOUND '
@@ -30,14 +29,15 @@ def python_2_040(p_filename, p_filename_data):
         prize4 = match_obj_prize4.group(2)
         debug_string += prize4 + "<br>"
 
-    if not match_obj_prize1:
-        raise Exception("Did not find a prize after prize1 variable")
-    if not match_obj_prize2:
-        raise Exception("Did not find a prize after prize2 variable")
-    if not match_obj_prize3:
-        raise Exception("Did not find a prize after prize3 variable")
-    if not match_obj_prize4:
-        raise Exception("Did not find a prize after prize4 variable")
+    # quit = True
+    # if not match_obj_prize1:
+    #     raise Exception("Did not find a prize after prize1 variable")
+    # if not match_obj_prize2:
+    #     raise Exception("Did not find a prize after prize2 variable")
+    # if not match_obj_prize3:
+    #     raise Exception("Did not find a prize after prize3 variable")
+    # if not match_obj_prize4:
+    #     raise Exception("Did not find a prize after prize4 variable")
 
     p_pass_tests = {"name": "4 test cases for 2.040 work (12 points) <br>",
                     "pass": True,
@@ -50,6 +50,25 @@ def python_2_040(p_filename, p_filename_data):
                                     "that",
                     "points": 0,
                     }
+    if not match_obj_prize1 or not match_obj_prize2 or not match_obj_prize3 or not match_obj_prize4:
+        p_pass_tests['pass'] = False
+        p_pass_tests['fail_message'] += '<h5 style=\"color:purple;\">You did not have 4 prizes. ' \
+                                        'Test aborted early.<br>' \
+                                        'Set 4 prizes and try again please.<br> </h5> '
+        if not match_obj_prize1:
+            p_pass_tests['fail_message'] += '<h5 style=\"color:purple;\"> ' \
+                                            'Did not find a prize after prize1 variable</h5>'
+        if not match_obj_prize2:
+            p_pass_tests['fail_message'] += '<h5 style=\"color:purple;\"> ' \
+                                            'Did not find a prize after prize2 variable</h5>'
+        if not match_obj_prize3:
+            p_pass_tests['fail_message'] += '<h5 style=\"color:purple;\"> ' \
+                                            'Did not find a prize after prize3 variable</h5>'
+        if not match_obj_prize4:
+            p_pass_tests['fail_message'] += '<h5 style=\"color:purple;\"> ' \
+                                            'Did not find a prize after prize4 variable</h5>'
+
+        return p_pass_tests
     prize1 = prize1.replace(' ', r'\s')
     prize2 = prize2.replace(' ', r'\s')
     prize3 = prize3.replace(' ', r'\s')
@@ -66,7 +85,14 @@ def python_2_040(p_filename, p_filename_data):
     prize2 = prize2.replace(r')', r'\)')
     prize3 = prize3.replace(r')', r'\)')
     prize4 = prize4.replace(r')', r'\)')
-
+    prize1 = prize1.replace(r'[', r'\[')
+    prize2 = prize2.replace(r'[', r'\[')
+    prize3 = prize3.replace(r'[', r'\[')
+    prize4 = prize4.replace(r'[', r'\[')
+    prize1 = prize1.replace(r']', r'\]')
+    prize2 = prize2.replace(r']', r'\]')
+    prize3 = prize3.replace(r']', r'\]')
+    prize4 = prize4.replace(r']', r'\]')
 
     print("here are prizes {} {} {} {}".format(prize1, prize2, prize3, prize4))
     test_1 = io_test(p_filename, prize1, 1)
@@ -89,6 +115,13 @@ def python_2_040(p_filename, p_filename_data):
     if p_pass_tests['points'] != 12:
         p_pass_tests['pass'] = False
         p_pass_tests['debug'] = debug_string
+        p_pass_tests['fail_message'] += debug_string
+
+        help_link = 'https://docs.google.com/presentation/d/1Uh_zlH-FUgYJaEW1fA3YOxQNfWver55g_EncWLVJ3-0/' \
+                    'edit#slide=id.g8dcab25422_1_0'
+        p_pass_tests['fail_message'] += '<h5 style=\"color:purple;\">' \
+                                        '<br>See this link for help answering this question: ' \
+                                        ' <a href="' + help_link + '" target="_blank">link</a></h5>'
     return p_pass_tests
 
 
