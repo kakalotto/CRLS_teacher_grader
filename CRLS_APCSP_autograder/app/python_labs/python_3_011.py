@@ -27,6 +27,11 @@ def python_3_011_1(p_filename_data, p_points):
             }
     if not test_if['pass'] or not test_elif['pass']:
         test['pass'] = False
+        help_link = 'https://docs.google.com/presentation/d/115yqVHY0APEvQFTQ0fGNbw81pX4gv4kflTUfco1E_Q8/edit' \
+                    '#slide=id.g8c7a63841e_2_0'
+        test['fail_message'] += '<h5 style=\"color:purple;\">' \
+                                '<br>See this link for help answering this question: ' \
+                                '<a href="' + help_link + '" target="_blank">link</a>'
     else:
         test['points'] += p_points
     return test
@@ -42,37 +47,47 @@ def python_3_011_2(p_filename, p_filename_data, p_points):
     var_dir = _var_dir()
     var_filename = _var_filename(p_filename, 1)
     cmd = 'python3 ' + p_filename + ' < ' + var_dir + '/' + var_filename
-    c = delegator.run(cmd)
-    if c.err:
-        raise Exception('Failed, trying to run ' + cmd)
 
     p_io_test = {"name": "Run the code 300 times.  Through 120 runs, should get at least one of each house "
                          "(10 points) <br>",
                  "pass": True,
                  "pass_message": "<h5 style=\"color:green;\">Pass!</h5> After 120 runs, got at least one of each house",
-                 "fail_message": "<h5 style=\"color:red;\">Fail.</h5> Didn't get all of the houses. <br>"
+                 "fail_message": "<h5 style=\"color:red;\">Fail.</h5> Autograder ran the code 120 times "
+                                 "and expects to see each of the houses at least once.<br>"
                                  "For example, if you have 7 houses in your list, after 120 runs, every house should "
-                                 "come up at least once. <br>",
+                                 "print at least once. <br>",
                  "points": 0,
                  }
 
     houses = find_list_items(p_filename_data, 'houses')
 
     answers = []
+    # print("STARTING")
     for x in range(110):
+
         c = delegator.run(cmd)
+        print("run " + c.out)
         if c.err:
-            raise Exception('Failed, trying to run ' + cmd + " with error " + c.err)
+            p_io_test["fail_message"] += "<h5 style=\"color:purple;\">A run crashed." \
+                                         "<br>Error given was this: " + str(c.err) + "</h5>"
+            break
+
         for house in houses:
             if re.search(house, c.out):
                 answers.append(house)
 
-    print("houses "  + str(houses))
-    print("answers" + str(answers))
+    #  print("houses " + str(houses))
+    #  print("answers" + str(answers))
     for house in houses:
         if house not in answers:
             p_io_test['pass'] = False
-            p_io_test['fail_message'] += "Did not find this house in 120 runs of answers: " + house + ". <br>"
+            if not c.err:
+                p_io_test['fail_message'] += "Did not find this house in 120 runs of answers: " + house + ". <br>"
     if p_io_test['pass']:
         p_io_test['points'] += p_points
+    help_link = 'https://docs.google.com/presentation/d/18ubdbsuqCXeJLhD-CrW-AzjJ-5sNT9TMHs1NUqQhXZ4/' \
+                'edit#slide=id.g8c389caccd_3_0'
+    p_io_test['fail_message'] += '<h5 style=\"color:purple;\">' \
+                                 '<br>See this link for help answering this question: ' \
+                                 ' <a href="' + help_link + '" target="_blank">link</a>'
     return p_io_test

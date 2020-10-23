@@ -1,6 +1,9 @@
 # Pass these in as parameters
 from master_grader import master_grader
 from CRLS_APCSP_autograder.app.python_2032 import route_docs_python_2032 as power
+from CRLS_APCSP_autograder.app.python_2032a import route_python_2_032a as power2
+from CRLS_APCSP_autograder.app.python_2032b import route_python_2_032b as power3
+
 import sys
 
 fulltext_search = '2.032'
@@ -8,6 +11,7 @@ fulltext_search = '2.032'
 person = ''
 if len(sys.argv) > 1:
     person = sys.argv[1]
+
 
 def doc_name_to_rubric_name(doc_name):
     import re
@@ -31,4 +35,31 @@ if not person:
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
                   scorer=power, person=person)
-    
+
+
+
+fulltext_search = '.py'
+value_cells = ['F12', 'F13', 'B10', 'B4',]
+rubric_sheet_name = ''
+if not person:
+    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
+                  scorer=power2, python_lab_num='2.032a',
+                  python_rubric_suffix=' - Python_2.032_DC_Superhero_girls_4_Buckets_KFC_rubric')
+else:
+    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
+                  scorer=power2, python_lab_num='2.032a',
+                  python_rubric_suffix=' - Python_2.032_DC_Superhero_girls_4_Buckets_KFC_rubric', person=person)
+
+
+
+fulltext_search = '.py'
+value_cells = ['F22', 'F23', 'B11', 'B5', ]
+rubric_sheet_name = ''
+if not person:
+    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
+                  scorer=power3, python_lab_num='2.032b',
+                  python_rubric_suffix=' - Python_2.032_DC_Superhero_girls_4_Buckets_KFC_rubric')
+else:
+    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
+                  scorer=power3, python_lab_num='2.032b',
+                  python_rubric_suffix=' - Python_2.032_DC_Superhero_girls_4_Buckets_KFC_rubric', person=person)

@@ -1,8 +1,7 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.ip_addressing_dns import docs_feedback_ip_addressing_dns
-
+from CRLS_APCSP_autograder.app.ip_addressing_dns import route_docs_ip_addressing_dns as power
 fulltext_search = 'IP address'
 lab_extra_fulltext = 'Cerf'
 person = ''
@@ -23,10 +22,10 @@ rubric_sheet_name = 'Sheet1'
 match_cells = ['D9', 'D5', 'D7', 'D9', 'D9', 'D11', 'H4', 'H6', 'H8', 'H10']
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_ip_addressing_dns, match_cells=match_cells,
+                  scorer=power, match_cells=match_cells,
                   lab_extra_fulltext=lab_extra_fulltext)
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_ip_addressing_dns, person=person, match_cells=match_cells,
+                  scorer=power, person=person, match_cells=match_cells,
                   lab_extra_fulltext=lab_extra_fulltext)
 

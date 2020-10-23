@@ -1,7 +1,7 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.python_3011 import feedback_3011
+from CRLS_APCSP_autograder.app.python_3011 import route_python_3_011 as power
 
 person = ''
 if len(sys.argv) > 1:
@@ -24,12 +24,12 @@ rubric_sheet_name = ''
 
 if not person:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_3011, python_lab_num='3.011',
-                  python_rubric_suffix=' - Python 3.011 The Sorting Hat - Rubric')
+                  scorer=power, python_lab_num='3.011',
+                  python_rubric_suffix=' - Python_3.011_The_Sorting_Hat_rubric')
 else:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_3011, python_lab_num='3.011',
-                  python_rubric_suffix=' Python 3.011 The Sorting Hat - Rubric', person=person)
+                  scorer=power, python_lab_num='3.011',
+                  python_rubric_suffix=' - Python_3.011_The_Sorting_Hat_rubric', person=person)
 
 fulltext_search = 'Sorting'
 

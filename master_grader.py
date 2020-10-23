@@ -2,6 +2,7 @@ import os
 import time
 
 from name_dictionary import names
+from scratch_names import scratch_names
 
 
 def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_nottext='',
@@ -110,9 +111,13 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 # from python lab, get rubric name
                 #                print("columns[1] " + str(columns[1]))
                 #                print("lab " + str(python_lab_num))
+
+
                 print("found python file")
                 python_filename = columns[1]
                 if re.search(r'extra', python_filename) or re.search(r'startercode', python_filename):
+                    continue
+                if re.search(r'jones', python_filename):
                     continue
                 found_lab = re.search(python_lab_num, python_filename)
                 if found_lab:
