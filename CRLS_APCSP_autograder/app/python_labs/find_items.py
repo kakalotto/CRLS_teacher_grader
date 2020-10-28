@@ -559,7 +559,7 @@ def find_class(p_filename, p_class_name, p_parent, *, points=0):
     :return: dictionary of test info
     """
     import delegator
-    from app.python_labs.read_file_contents import read_file_contents
+    from CRLS_APCSP_autograder.app.python_labs.read_file_contents import read_file_contents
 
     filename_data = read_file_contents(p_filename)
 
@@ -594,7 +594,7 @@ def find_class(p_filename, p_class_name, p_parent, *, points=0):
 
 
 def object_created(p_filename, p_class_name, p_times, *, points=0):
-    from app.python_labs.read_file_contents import read_file_contents
+    from CRLS_APCSP_autograder.app.python_labs.read_file_contents import read_file_contents
     import re
     p_test_function_called = {"name": "Testing that there are objects of type  " + p_class_name +
                                       " that gets created in the main program at least " +
@@ -634,7 +634,7 @@ def function_called(p_filename, p_function_name, p_times, *, points=0):
     :param points:  points it is worth
     :return:
     """
-    from app.python_labs.read_file_contents import read_file_contents
+    from CRLS_APCSP_autograder.app.python_labs.read_file_contents import read_file_contents
     import re
     p_test = {"name": "Testing that there is a function " + p_function_name +
                       " that gets called in the main program at least " +

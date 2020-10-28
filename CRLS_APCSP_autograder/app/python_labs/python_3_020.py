@@ -1,5 +1,5 @@
 def check_random(p_filename, p_points):
-    from app.python_labs.io_test import io_test
+    from CRLS_APCSP_autograder.app.python_labs.io_test import io_test
 
     p_test = {"name": "The code should draw a random card each time."
                       "(4 points) <br>",

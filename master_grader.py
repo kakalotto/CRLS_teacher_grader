@@ -20,7 +20,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_
          #          '  \'me\' in owners  '
     print("LAB NAME IS " + str(lab_name))
     if lab_name:
-        gdrive_query += ' and name contains \'' + lab_name + '\'  '
+        gdrive_query += ' and name contains \'' + lab_name + '\'  and fullText contains \'py\' '
     elif fulltext_search:
         gdrive_query += ' and fullText contains \'' + fulltext_search + '\'  '
     else:
@@ -88,9 +88,11 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                                     scratch_lab=True)
         gdrive_cmd += ' | grep ' + scratch_lab_num
     elif scratch_file and person:
+        print("Scratch and person")
+
         gdrive_cmd = get_gdrive_cmd(fulltext_search=fulltext_search_term,
                                     scratch_lab=True, person=person)
-        gdrive_cmd += ' | grep ' + scratch_lab_num
+        gdrive_cmd += ' | grep ' + "_" + scratch_lab_num
 
     print(gdrive_cmd)
     c = delegator.run(gdrive_cmd)
@@ -117,8 +119,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 python_filename = columns[1]
                 if re.search(r'extra', python_filename) or re.search(r'startercode', python_filename):
                     continue
-                if re.search(r'jones', python_filename):
-                    continue
+                # if re.search(r'jones', python_filename):
+                #     continue
                 found_lab = re.search(python_lab_num, python_filename)
                 if found_lab:
                     print("do this: " + str(columns[1]))
@@ -290,4 +292,4 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             # print(body)
             result = service_sheets.spreadsheets().values().batchUpdate(spreadsheetId=rubric_id, body=body).execute()
             # print("match_counter" + str(match_counter))
-            time.sleep(2.5)
+            time.sleep(4.5)

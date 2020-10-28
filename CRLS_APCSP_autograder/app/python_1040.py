@@ -11,7 +11,7 @@ def route_python_1_040(filename):
     tests.append(test_filename)
     print("one")
     if test_filename['pass'] is False:
-        return tests
+        return [score_info, tests, user]
     else:
         filename_data = read_file_contents(filename)
         tests.append(find_questions(filename_data, 3, 5))
