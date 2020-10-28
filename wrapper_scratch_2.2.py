@@ -6,9 +6,9 @@ import sys
 fulltext_search = ''
 person = ''
 people = []
-if len(sys.argv) == 1:
+if len(sys.argv) == 2:
     person = sys.argv[1]
-elif len(sys.argv) > 1:
+elif len(sys.argv) > 3:
     people = sys.argv[1:]
 
 print("people are " + str(people))

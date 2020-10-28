@@ -292,4 +292,4 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
             # print(body)
             result = service_sheets.spreadsheets().values().batchUpdate(spreadsheetId=rubric_id, body=body).execute()
             # print("match_counter" + str(match_counter))
-            time.sleep(4.5)
+            time.sleep(6.5)

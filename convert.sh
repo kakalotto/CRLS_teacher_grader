@@ -23,45 +23,29 @@ sed -i  's/^@app.*//' CRLS_APCSP_autograder/app/routes.py
 
 declare -a DocsArray=("binary_practice_v5" "encoding_black_and_white_v3" "encoding_color" "encoding_text_v1" "encryption_1a"  \
                       "encryption_3" "encryption_4" "hw01" "hw02" "hw03" "hw04" "hw05" "hw06" "hw07" "hw08" "hw09" "hw10" "hw11"\
-                   "hw12" "hw13" "hw16" "hw17" "hw18" "hw19a" "how_unique_are_you" "internet_2_v3" "ip_addressing_dns" "privacy_policies" "python_2050" \
-                   "research_yourself" "routers_and_redundancy" "tcp_worksheet")
+                   "hw12" "hw13" "hw16" "hw17" "hw18" "hw19a" "how_unique_are_you" "internet_2_v3" "ip_addressing_dns" \
+                   "lossless_compression_v2" "lossy_compression_v2" "privacy_policies" "python_1020" "python_1030"\
+                    "python_2021" "python_2032" "python_2040" "python_2050" \
+                   "research_yourself" "routers_and_redundancy" "scratch_12" "tcp_worksheet")
+for val in ${DocsArray[@]}; do
+   sed -i  's/from app.docs_labs.docs /from CRLS_APCSP_autograder.app.docs_labs.docs /' CRLS_APCSP_autograder/app/$val.py
+   sed -i  's/from app.routes /from CRLS_APCSP_autograder.app.routes /' CRLS_APCSP_autograder/app/$val.py
+done
+
+# IT2
+declare -a DocsArray=("anonymity_and_privacy" "multimedia" "passive_recon" "proxies" "tor_1" "vpn_1")
 for val in ${DocsArray[@]}; do
    sed -i  's/from app.docs_labs.docs /from CRLS_APCSP_autograder.app.docs_labs.docs /' CRLS_APCSP_autograder/app/$val.py
    sed -i  's/from app.routes /from CRLS_APCSP_autograder.app.routes /' CRLS_APCSP_autograder/app/$val.py
 done
 
 
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/lossy_compression_v2.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/lossy_compression_v2.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/lossless_compression_v2.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/lossless_compression_v2.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/python_1020.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/python_1020.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/python_1030.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/python_1030.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/python_2021.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/python_2021.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/python_2032.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/python_2032.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/python_2040_doc.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/python_2040_doc.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/scratch_12.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/scratch_12.py
+
 
 sed -i  's/from app.python_labs /from CRLS_APCSP_autograder.app.python_labs /' CRLS_APCSP_autograder/app/python_labs/python.py
 sed -i  's/from app.python_labs /from CRLS_APCSP_autograder.app.python_labs /' CRLS_APCSP_autograder/app/python_labs/io_test.py
 
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/anonymity_and_privacy.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/anonymity_and_privacy.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/multimedia.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/multimedia.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/proxies.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/proxies.py
 
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/tor_1.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/tor_1.py
-sed -i  's/from app.docs_labs.docs/from CRLS_APCSP_autograder.app.docs_labs.docs/' CRLS_APCSP_autograder/app/vpn_1.py
-sed -i  's/from app.routes/from CRLS_APCSP_autograder.app.routes/' CRLS_APCSP_autograder/app/vpn_1.py
 
 # python and routes
 
