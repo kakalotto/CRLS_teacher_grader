@@ -23,7 +23,7 @@ sed -i  's/^@app.*//' CRLS_APCSP_autograder/app/routes.py
 
 declare -a DocsArray=("binary_practice_v5" "encoding_black_and_white_v3" "encoding_color" "encoding_text_v1" "encryption_1a"  \
                       "encryption_3" "encryption_4" "hw01" "hw02" "hw03" "hw04" "hw05" "hw06" "hw07" "hw08" "hw09" "hw10" "hw11"\
-                   "hw12" "hw13" "hw16" "hw17" "hw18" "hw19a" "how_unique_are_you" "internet_2_v3" "ip_addressing_dns" \
+                   "hw12" "hw13" "hw16" "hw17" "hw18" "hw19a" "hw20" "hw21" "how_unique_are_you" "internet_2_v3" "ip_addressing_dns" \
                    "lossless_compression_v2" "lossy_compression_v2" "privacy_policies" "python_1020" "python_1030"\
                     "python_2021" "python_2032" "python_2040" "python_2050" \
                    "research_yourself" "routers_and_redundancy" "scratch_12" "tcp_worksheet")

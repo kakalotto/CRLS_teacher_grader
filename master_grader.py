@@ -20,7 +20,7 @@ def get_gdrive_cmd(*, fulltext_search='', mimetype='', extra_fulltext='', extra_
          #          '  \'me\' in owners  '
     print("LAB NAME IS " + str(lab_name))
     if lab_name:
-        gdrive_query += ' and name contains \'' + lab_name + '\'  and fullText contains \'py\' '
+        gdrive_query += ' and name contains \'' + lab_name + '\' '
     elif fulltext_search:
         gdrive_query += ' and fullText contains \'' + fulltext_search + '\'  '
     else:
