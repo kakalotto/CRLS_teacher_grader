@@ -1,62 +1,51 @@
-def feedback_4021(filename):
+def route_python_4_021(filename):
     from CRLS_APCSP_autograder.app.python_labs.find_items import find_function, function_called, find_loop
-    from CRLS_APCSP_autograder.app.python_labs.filename_test import filename_test
     from CRLS_APCSP_autograder.app.python_labs.function_test import run_unit_test, extract_all_functions, extract_single_function, \
         create_testing_file
-    from CRLS_APCSP_autograder.app.python_labs.helps import helps
-    from CRLS_APCSP_autograder.app.python_labs.pep8 import pep8
+    from CRLS_APCSP_autograder.app.python_labs.python import filename_test, helps, pep8
+    from CRLS_APCSP_autograder.app.routes import initialize_scoring, sum_score
 
-    tests = list()
-
-    # Test 1: file name
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scholar', score_max=37, score_manual=11)
     test_filename = filename_test(filename, '4.021')
     tests.append(test_filename)
     if test_filename['pass'] is False:
-        return tests
+        return [user, tests, score_info]
     else:
-        # Check for function the_rock_says
         test_find_function = find_function(filename, 'the_rock_says', 1, points=5)
         tests.append(test_find_function)
-        if test_find_function['pass'] is False:
-            return tests
-        else:
-            # extract functions and create python test file
-            extract_all_functions(filename)
-            create_testing_file(filename)
-            function_data = extract_single_function(filename, 'the_rock_says')
-
-            # Check for a loop of some sort (for or while)
-            test_loop = find_loop(function_data, 2.5)
-            test_loop['name'] += "Testing there is a loop in the the_rock_says function.<br>"
-            tests.append(test_loop)
-
-            # Check that function is called 3x
-            test_function_run = function_called(filename, 'the_rock_says', 3, points=5)
-            
-            tests.append(test_function_run)
-            
-            # test1 for the_rock_says
-            test_function_1 = run_unit_test('4.021', 1, 5)
-            test_function_1['name'] += " (Testing calling the_rock_says with list ['eggs', 'apple'] returns a " \
-                                       "list ['The Rock says eggs', 'The Rock says apple']) (caps unimportant)"
-            tests.append(test_function_1)
-            
-            # test2 for the_rock_says
-            test_function_2 = run_unit_test('4.021', 2, 5)
-            test_function_2['name'] += " (Testing calling the_rock_says with list ['eggs', 'smell'] returns " \
-                                       "['The Rock says eggs', 'Do you smell what The Rock is cooking'] (caps unimportant) <br>"
-            tests.append(test_function_2)
-            
-            # test3 for the_rock_says
-            test_function_3 = run_unit_test('4.021', 3, 5)
-            test_function_3['name'] += " (Testing calling the_rock_says with list " \
-                                       "['eggs', 'what should I think'] returns ['The Rock says eggs', 'It doesn't matter what you think' (caps unimportant) "
-            tests.append(test_function_3)
-            
-            # Find number of PEP8 errors and helps
-            test_pep8 = pep8(filename, 7)
-            tests.append(test_pep8)
-            test_help = helps(filename, 2.5)
-            tests.append(test_help)
-            return tests
-            
+        extract_all_functions(filename)
+        create_testing_file(filename)
+        function_data = extract_single_function(filename, 'the_rock_says')
+        loop_link = 'https://docs.google.com/presentation/d/1j2hs8-LijkXe6E-9idSnbbsr3l6ql0SzbWlhDMzCGUU/' \
+                    'edit#slide=id.g40e52091b3_0_38'
+        tests.append(find_loop(function_data, 2.5,
+                               description='There is a loop in the function',
+                               help_link=loop_link))
+        tests.append(function_called(filename, 'the_rock_says', 3, points=5))
+        run_link = 'https://docs.google.com/presentation/d/1w2XmELIdscPcIk1ddPEg6gAtBUcwn_5ocLV2PSsGB_E/' \
+                   'edit#slide=id.g8cf0cdf918_0_0'
+        tests.append(run_unit_test('4.021', 1, 2.5,
+                                   description="Calling the_rock_says with list ['eggs', 'apple'] returns a "
+                                               "list ['The Rock says eggs', 'The Rock says apple']) "
+                                               "(caps unimportant, spacing unimportant)",
+                                   help_link=run_link))
+        tests.append(run_unit_test('4.021', 2, 2.5,
+                                   description="Calling the_rock_says with list ['eggs', 'apple'] returns a "
+                                               "list ['The Rock says eggs', 'The Rock says apple']) "
+                                               "(caps unimportant, but spacing counts!!)",
+                                   help_link=run_link))
+        tests.append(run_unit_test('4.021', 3, 5,
+                                   description="Calling the_rock_says with list ['eggs', 'smell'] returns "
+                                               "['The Rock says eggs', 'Do you smell what The Rock is cooking'] "
+                                               "(caps unimportant) <br>",
+                                   help_link=run_link))
+        tests.append(run_unit_test('4.021', 4, 5,
+                                   description="Calling the_rock_says with list ['eggs', 'what should I think'] "
+                                               "returns ['The Rock says eggs', 'It doesn't matter what you think' ]"
+                                               "(caps unimportant) ",
+                                   help_link=run_link))
+        tests.append(pep8(filename, 7))
+        tests.append(helps(filename, 2.5))
+        score_info['finished_scoring'] = True
+        score_info = sum_score(tests, score_info)
+        return [user, tests, score_info]
