@@ -1,72 +1,51 @@
-def scratch_feedback_35(filename):
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, unzip_sb3, read_json_file, find_help,\
-        arrange_blocks_v2, variable_check_no_space, every_sprite_green_flag, find_variable, find_change_variable
-    from CRLS_APCSP_autograder.app.scratch_labs.scratch_3_5 import turn_right, turn_left, animated_walk, jumps, find_scenery, find_enemy, \
-        check_layers, scenery_moves, scenery_moves_different_rate, enemy_moves, enemy_rollover, enemy_animated,\
-        scenery1_scenery2_rollover, touch_stop, find_hero
-
-    tests = list()
+def route_scratch_3_5(filename):
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch import scratch_filename_test, find_help, variable_check_no_space, \
+        check_straggler_variable_no_space, find_block_in_sprite, find_variable, find_change_variable, \
+        find_string_in_script
+    from CRLS_APCSP_autograder.app.routes import initialize_scoring, get_scripts_wrapper, sum_score
+    from CRLS_APCSP_autograder.app.scratch_labs.scratch_3_5 import find_hero, turn_right, turn_left, animated_walk, jumps, find_scenery, \
+        sprite2_moves, rollover_check, find_enemy, touch_stop, scenery_moves_different_rate, layers
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scratch Scholar', score_max=100, score_manual=100)
     test_filename = scratch_filename_test(filename, '3.5')
     tests.append(test_filename)
     if test_filename['pass'] is False:
-        return tests
+        return [user, tests, score_info]
     else:
-        unzip_sb3(filename)
-        json_data = read_json_file()
+        [json_data, scripts] = get_scripts_wrapper(filename)
         test_spaces = variable_check_no_space(json_data['monitors'])
         tests.append(test_spaces)
-        test_find_hero = find_hero(json_data, 0)
-        tests.append(test_find_hero)
-        if test_spaces['pass'] is False or test_find_hero['pass'] is False:
-            return tests
+        if test_spaces['pass'] is False:
+            return [user, tests, score_info]
         else:
-            scripts = arrange_blocks_v2(json_data)
-            print('scripts')
-            for key in scripts:
-                    print("key {}  script {} ".format(key, scripts[key]))
-
-            print("DONE WITH SCRIPTS")
-            test_every_sprite_green_flag = every_sprite_green_flag(json_data, 5)
-            tests.append(test_every_sprite_green_flag)
-            test_find_variable = find_variable(json_data, 'score', 5)
-            tests.append(test_find_variable)
-            test_change_variable = find_change_variable(json_data, 'score', points=5)
-            tests.append(test_change_variable)
-            test_turn_right = turn_right(json_data, 10)
-            tests.append(test_turn_right)
-            test_turn_left = turn_left(json_data, 10)
-            tests.append(test_turn_left)
-            test_animate_walk = animated_walk(json_data, 10)
-            tests.append(test_animate_walk)
-            test_jumps = jumps(json_data, 10)
-            tests.append(test_jumps)
-
-            test_find_scenery = find_scenery(json_data, 10)
+            test_straggler_spaces = check_straggler_variable_no_space(scripts)
+            tests.append(test_straggler_spaces)
+            [test_find_hero, scripts_hero] = find_hero(json_data, 0)
+            tests.append(test_find_hero)
+            tests.append(find_block_in_sprite(json_data, 'green_flag', 5))
+            tests.append(find_variable(json_data, 'score', 5))
+            tests.append(find_change_variable(json_data, 'score', points=5))
+            tests.append(turn_right(scripts_hero, 5))
+            tests.append(turn_left(scripts_hero, 5))
+            tests.append(animated_walk(scripts_hero, 'hero', 5))
+            tests.append(jumps(scripts_hero, 5))
+            tests.append(layers(scripts_hero, 5))
+            [test_find_scenery, scripts_scenery1, scripts_scenery2] = find_scenery(json_data, 10)
             tests.append(test_find_scenery)
-            if test_find_scenery['pass'] is False:
-                return tests
-            else:
-                test_check_layer = check_layers(scripts, 10)
-                tests.append(test_check_layer)
-                test_scenery_moves = scenery_moves(json_data, 10)
-                tests.append(test_scenery_moves)
-                test_scenery_moves_rate = scenery_moves_different_rate(json_data, 10)
-                tests.append(test_scenery_moves_rate)
-                test_scenery_rollover = scenery1_scenery2_rollover(json_data, 10)
-                tests.append(test_scenery_rollover)
-                test_find_enemy = find_enemy(json_data, 5)
-                tests.append(test_find_enemy)
-                if test_find_enemy['pass'] is False:
-                    return tests
-                else:
-                    test_enemy_moves = enemy_moves(json_data, 10)
-                    tests.append(test_enemy_moves)
-                    test_enemy_rollover = enemy_rollover(json_data, 10)
-                    tests.append(test_enemy_rollover)
-                    test_enemy_animated = enemy_animated(json_data, 5)
-                    tests.append(test_enemy_animated)
-                    test_touch_stop = touch_stop(json_data, 10)
-                    tests.append(test_touch_stop)
-                    test_help = find_help(json_data, 10)
-                    tests.append(test_help)
-                    return tests
+            tests.append(sprite2_moves(scripts_scenery1, '35_scenery1_1', 2.5))
+            tests.append(sprite2_moves(scripts_scenery1, '35_scenery1_2', 2.5))
+            tests.append(sprite2_moves(scripts_scenery1, '35_scenery2_1', 2.5))
+            tests.append(sprite2_moves(scripts_scenery1, '35_scenery2_2', 2.5))
+            tests.append(rollover_check(scripts_scenery1, '35_scenery1_rollover_left', 2.5))
+            tests.append(rollover_check(scripts_scenery1, '35_scenery1_rollover_right', 2.5))
+            tests.append(rollover_check(scripts_scenery2, '35_scenery2_rollover_left', 2.5))
+            tests.append(rollover_check(scripts_scenery2, '35_scenery2_rollover_right', 2.5))
+            tests.append(scenery_moves_different_rate(scripts_scenery1, scripts_scenery2, 5))
+            [test_find_enemy, scripts_enemy] = find_enemy(json_data, 5)
+            tests.append(test_find_enemy)
+            tests.append(animated_walk(scripts_enemy, 'enemy', 5))
+            tests.append(find_string_in_script(scripts_enemy, '35_enemy_move', 5))
+            tests.append(rollover_check(scripts_enemy, '35_enemy_rollover_left', 5))
+            tests.append(touch_stop(scripts_hero, scripts_enemy, 5))
+            tests.append(find_help(json_data, 5))
+            score_info = sum_score(tests, score_info)
+            return [user, tests, score_info]

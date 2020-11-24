@@ -115,8 +115,9 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 #                print("lab " + str(python_lab_num))
 
 
-                print("found python file")
                 python_filename = columns[1]
+                print("Trying file {} looking for this python number {}".format(python_filename, python_lab_num))
+
                 if re.search(r'extra', python_filename) or re.search(r'startercode', python_filename):
                     continue
                 # if re.search(r'jones', python_filename):
@@ -151,12 +152,14 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                     continue
                 print("doc id")
                 print(doc_id)
-
                 # from scratch lab, get rubric name
                 print("columns[1] " + str(columns[1]))
                 print("lab " + str(python_lab_num))
 
                 scratch_filename = columns[1]
+                if re.search(r'finn', scratch_filename):
+                     continue
+
 #                if re.search(r'justin', scratch_filename):
 #                    continue
 

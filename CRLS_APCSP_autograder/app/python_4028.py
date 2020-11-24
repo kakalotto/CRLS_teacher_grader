@@ -5,7 +5,7 @@ def route_python_4_028(filename):
     # from app.python_labs.python_4_025 import win_all, win_most
     from CRLS_APCSP_autograder.app.python_labs.python import filename_test, helps, pep8
     from CRLS_APCSP_autograder.app.routes import initialize_scoring, sum_score
-    from app.python_labs.python_4_028 import full_run
+    from CRLS_APCSP_autograder.app.python_labs.python_4_028 import full_run
 
     [user, tests, score_info] = initialize_scoring(username='CRLS Scholar', score_max=84, score_manual=11)
     test_filename = filename_test(filename, '4.028')

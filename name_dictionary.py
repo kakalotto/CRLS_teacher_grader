@@ -24,10 +24,14 @@ names = {
     'tmulug': 'TASHI MULUG-LABRANG',
     'hnasser123': 'HURMANN NASSER',
     'micaormeno': 'Micaela Ormeno',
+    'micaormen': 'Micaela Ormeno',
     'aliciaareyy': 'Alicia Rey Garcia',
     'ploutzenhiser': 'PETER LOUTZENHISER',
     'katrl': 'Katherine Rodrigues-Larios',
-    'ktrl': 'Katherine Rodrigues-Larios',
+    'ktrl': 'Katherine Rodriguez-Larios',
+    'katherinelarios': 'Katherine Rodriguez-Larios',
+    'klarios': 'Katherine Rodriguez-Larios',
+
     'jtarkegn': 'JOSEF TARKEGN',
     'jtoner': 'JOHN TONER',
     'alevh': 'ALEJANDRO VALENCIA HERSHEY',
@@ -49,6 +53,8 @@ names = {
     'heyioan': 'IOAN PEREIRA',
     'dpokharel': 'Dilasha Pokharel',
     'srobinsonsimmons': 'SHEAVARI ROBINSON-SIMMONS',
+    'srobinson-simmons': 'SHEAVARI ROBINSON-SIMMONS',
+    'agallagher': 'Adrian Gallagher',
     'erufus': 'Oluwabukunmi Rufus',
     'dskenderian': 'Dylan Skenderian',
     'thetomboftheforgottenking': 'SEAN SULKOW',
@@ -92,15 +98,18 @@ names = {
     'sprice': 'SOPHIA PRICE',
     'milosw': 'MILO SONG-WEISS',
     'yeetuscleetus': 'WILLIAM SPEIGHT',
+
+    'wspeight': 'WILLIAM SPEIGHT',
     'alex': 'Alexander Thearling',
     'rivzick': 'RIVKA ZICKLER',
     'ewu': 'Eric wu',
     'joey': 'JOSEPH BETANCOURT',
     'Joey': 'JOSEPH BETANCOURT',
-
+    'isaac': 'ISAAC WEDAMAN',
     'laraartigas': 'LARA ARTIGAS',
     'paul': 'PAUL COLOMBO',
-
-
+    'wspeight': 'WILLIAM SPEIGHT',
+    'acutler': 'ALISTER CUTLER',
+    'samuel': 'SAMUEL KIM',
 
 }

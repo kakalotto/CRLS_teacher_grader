@@ -3831,6 +3831,7 @@ def run_custom_block_check_say(testname, p_scripts, p_points):
     import re
     import copy
     from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_2  import brickLayer, do_sprite
+    #  'sensing_answer': ['Kann', '5', '5', '5', '5', '5', ]}
     test_info = {
         '32_1': {'name': 'happy_birthday',
                  'block_params': 1,
@@ -3839,7 +3840,8 @@ def run_custom_block_check_say(testname, p_scripts, p_points):
                               'edit#slide=id.g85a5e95574_0_0',
                  'run_info': [
                      [1,
-                      brickLayer(0, 0, 0, pendown=False, variables={"name": 'McGlathery'}),
+                      brickLayer(0, 0, 0, pendown=False, variables={"name": 'McGlathery',
+                                                                    'sensing_answer': 'dont use an answer here'}),
                       [[1, '(McGlathery|Mcglathery|mcglathery)',
                         'Ran happy_birthday with argument "McGlathery".  Expected sprite to say McGlathery, Mcglathery,'
                         'or mcglathery, but sprite does not say it.'],

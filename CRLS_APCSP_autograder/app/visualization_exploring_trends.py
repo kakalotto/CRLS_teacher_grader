@@ -1,29 +1,30 @@
-def docs_feedback_visualization_exploring_trends(link):
-    from CRLS_APCSP_autograder.app.docs_labs.docs import get_text, exact_answer, keyword_and_length
-
-    tests = list()
+def route_docs_visualization_exploring_trends(link):
+    from CRLS_APCSP_autograder.app.docs_labs.docs import get_text, check_answer
+    from CRLS_APCSP_autograder.app.routes import initialize_scoring, sum_score
+    [user, tests, score_info] = initialize_scoring(username='CRLS Scholar', score_max=13, score_manual=37)
     text = get_text(link)
-
-    print(text)
-    test1a = keyword_and_length('1a. Where data comes from', [r'[a-zA-Z]+'], text,
-                                search_string=r'1a\. .+? tabledata (.+) 2a\.', min_length=7, points=1)
-    test2a = keyword_and_length('2a. How data adjusted', [r'[a-zA-Z]+'], text,
-                                search_string=r'2a\. .+? tabledata (.+) 2b\.', min_length=7, points=1)
-    test2b = keyword_and_length('2b. Value of 100?', [r'[a-zA-Z]+'], text,
-                                search_string=r'2b\. .+? tabledata (.+) 3a\.', min_length=7, points=1)
-    test3a = keyword_and_length('3a. Digital divide?', [r'[a-zA-Z]+'], text,
-                                search_string=r'3a\. .+? tabledata (.+?) 3b\.', min_length=10, points=1)
-    test3b = keyword_and_length('3b. Digital divide affect result?', [r'[a-zA-Z]+'], text,
-                                search_string=r'3b\. .+? tabledata (.+?) exploring', min_length=10, points=1)
-    test4a = exact_answer('4a. screenshot', [r'4a\. .+? tabledata \s* aaa \s* inlineobject \s*  5a\.'], text, points=5)
-    test5a = keyword_and_length('5a. Describe terms?', [r'[a-zA-Z]+'], text,
-                               search_string=r'5a\. .+? tabledata (.+)  6a\.', min_length=10, points=1)
-    test6a = keyword_and_length('6a. Describe charts?', [r'[a-zA-Z]+'], text,
-                               search_string=r'6a\. .+? tabledata (.+)  7a\.', min_length=10, points=1)
-    test7a = keyword_and_length('7a. Plausible story?', [r'[a-zA-Z]+'], text,
-                                search_string=r'7a\. .+? tabledata (.+)  $', min_length=15, points=1)
-
-    tests.extend([test1a, test2a, test2b, test3a, test3b, test4a, test5a, test6a, test7a, ])
-    return tests
-    
-
+    google_help = 'https://support.google.com/trends/answer/' \
+                  '4365533?hl=en&ref_topic=4365599&visit_id=637325474152657857-2432839014&rd=1'
+    # dd_help = 'https://apcentral.collegeboard.org/pdf/ap-computer-science-principles-' \
+    #          'conceptual-framework-2020-21.pdf#page=38'
+    tests.append(check_answer('1a', 'Where data comes from', text,
+                              {'min_words': 7, 'help_link': google_help}, points=1))
+    tests.append(check_answer('2a', 'How data adjusted', text,
+                              {'min_words': 7, 'help_link': google_help}, points=1))
+    tests.append(check_answer('2b', 'Value of 100', text,
+                              {'min_words': 7, 'help_link': google_help}, points=1))
+    tests.append(check_answer('3a', 'Digital divide?', text,
+                              {'min_words': 10, 'help_link': google_help}, points=1))
+    tests.append(check_answer('3b', 'Digital divide affect result?', text,
+                              {'min_words': 10, 'help_link': google_help}, points=1))
+    help_link = 'https://docs.google.com/document/d/1DMWiEW-bCBr2_Per1pK74193x5kSiqPPvBxdNai9FWc/edit'
+    tests.append(check_answer('4a', 'Screenshot', text,
+                              {'screenshot': True, 'help_link': help_link}, points=5))
+    tests.append(check_answer('5a', 'Describe terms?', text,
+                              {'min_words': 10, 'help_link': help_link}, points=1))
+    tests.append(check_answer('6a', 'Describe charts?', text,
+                              {'min_words': 10, 'help_link': help_link}, points=1))
+    tests.append(check_answer('7a', 'Plausible story?', text,
+                              {'min_words': 10, 'help_link': help_link}, points=1))
+    score_info = sum_score(tests, score_info)
+    return [user, tests, score_info]
