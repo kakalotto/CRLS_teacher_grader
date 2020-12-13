@@ -872,7 +872,7 @@ def arrange_blocks_v2(p_json, *, no_background=False, only_this_sprite=''):
             blocks = sprite['blocks']
             for block_id in blocks:
                 block = blocks[block_id]
-                print("uuu this is the block_id in arrange {}".format(block_id))
+                # print("uuu this is the block_id in arrange {}".format(block_id))
                 if 'opcode' not in block:
                     continue
                 if block['opcode'] == "control_repeat" or \
@@ -1824,57 +1824,62 @@ def find_string_in_script(p_scripts, this_test, p_points):
                                        ],
                                       ],
                              '44_8': [['when "5" pressed looks approximately correct (loop)',
-                                       "event_whenkeypressed', \s '5' .+?  control_repeat"
+                                       r"event_whenkeypressed', \s '5' .+?  control_repeat"
                                        ],
                                       ['when "5" pressed looks approximately correct (needs set variable).'
                                        '<br>One set for a counter',
-                                       "event_whenkeypressed', \s '5' .*?  data_setvariableto "
+                                       r"event_whenkeypressed', \s '5' .*?  data_setvariableto "
                                        ],
                                       ['when "5" pressed looks approximately correct (needs a say)',
-                                       "event_whenkeypressed', \s '5' .+?  looks_sayforsecs"
+                                       r"event_whenkeypressed', \s '5' .+?  looks_sayforsecs"
                                        ],
                                       ['when "5" pressed looks approximately correct (needs a change variable)'
                                        '<br>One change for the counter in loop',
-                                       "event_whenkeypressed', \s '5' .+?  data_changevariableby"
+                                       r"event_whenkeypressed', \s '5' .+?  data_changevariableby"
                                        ],
-                                      ['when "5" pressed looks approximately correct (needs an if inside the loop)'
+                                      ['when "5" pressed looks approximately correct '
+                                       '(needs an if inside the loop or else'
+                                       'a mathop operation of absolute value)'
                                        '<br>To check if you want to put it in a new list',
-                                       "event_whenkeypressed', \s '5' .*? control_repeat .*? control_if"
+                                       r"(event_whenkeypressed', \s '5' .*? control_repeat .*? control_if|"
+                                       r"event_whenkeypressed', \s '5' .*? control_repeat .*? operator_mathop)"
                                        ],
                                       ['when "5" pressed looks approximately correct (needs to delete items in list)'
                                        '<br>To clear the list at the beginning',
-                                       "event_whenkeypressed', \s '5' .+? data_deletealloflist"
+                                       r"(event_whenkeypressed', \s '5' .+? data_deletealloflist|"
+                                       r"event_whenkeypressed', \s '5' .+? control_repeat .+? data_deleteoflist)"
                                        ],
                                       ['when "5" pressed looks approximately correct (needs to add items to list)'
                                        '<br>To add item to list',
-                                       "event_whenkeypressed', \s '5' .+? data_addtolist"
+                                       r"event_whenkeypressed', \s '5' .+? data_addtolist"
                                        ],
                                       ],
                              '44_10': [['when "6" pressed looks approximately correct (loop)',
-                                        "event_whenkeypressed', \s '6' .+?  control_repeat"
+                                        r"event_whenkeypressed', \s '6' .+?  control_repeat"
                                         ],
                                        ['when "6" pressed looks approximately correct (needs set variable).'
                                         '<br>One set for a counter',
-                                        "event_whenkeypressed', \s '6' .*?  data_setvariableto "
+                                        r"event_whenkeypressed', \s '6' .*?  data_setvariableto "
                                         ],
                                        ['when "6" pressed looks approximately correct (needs a say)',
-                                        "event_whenkeypressed', \s '6' .+?  looks_sayforsecs"
+                                        r"event_whenkeypressed', \s '6' .+?  looks_sayforsecs"
                                         ],
                                        ['when "6" pressed looks approximately correct (needs a change variable)'
                                         '<br>One change for the counter in loop',
-                                        "event_whenkeypressed', \s '6' .+?  data_changevariableby"
+                                        r"event_whenkeypressed', \s '6' .+?  data_changevariableby"
                                         ],
                                        ['when "6" pressed looks approximately correct (needs an if inside the loop)'
                                         '<br>To check if you want to put it in a new list',
-                                        "event_whenkeypressed', \s '6' .*? control_repeat .*? control_if"
+                                        r"event_whenkeypressed', \s '6' .*? control_repeat .*? control_if"
                                         ],
                                        ['when "6" pressed looks approximately correct (needs to delete items in list)'
                                         '<br>To clear the list at the beginning',
-                                        "event_whenkeypressed', \s '6' .+? data_deletealloflist"
+                                        r"(event_whenkeypressed', \s '6' .+? data_deletealloflist|"
+                                        r"event_whenkeypressed', \s '6' .+? control_repeat .+? data_deleteoflist)"
                                         ],
                                        ['when "6" pressed looks approximately correct (needs to add items to list)'
                                         '<br>To add item to list',
-                                        "event_whenkeypressed', \s '6' .+? data_addtolist"
+                                        r"event_whenkeypressed', \s '6' .+? data_addtolist"
                                         ],
                                        ],
                              }
@@ -3198,7 +3203,7 @@ def run_script_check_say(p_scripts, this_test, p_points):
              ],
         ],
         '44_9': [
-            [brickLayer(0, 0, 0, variables={"numbers": [5, 2, -4, 0, ]}),
+            [brickLayer(0, 0, 0, variables={"numbers": [5, 2, -4, 0, ], 'new_list': [3, 5, 2, 1]}),
              [[1, "\['5', \s '2', \s '4', \s '0']",
                "Pressed '5'.  Numbers list is [5, 2, -4, 0, ]. New list should be [5, 2, 4, 0] "
                " and sprite should say this."],
@@ -3211,7 +3216,7 @@ def run_script_check_say(p_scripts, this_test, p_points):
                ],
               ],
              ],
-            [brickLayer(0, 0, 0, variables={"numbers": [999]}),
+            [brickLayer(0, 0, 0, variables={"numbers": [999], 'new_list': [3, 5, 2, 1]}),
              [[1, '999',
                "Pressed '5'.  Numbers list is [999].  New list should be [999] and sprite should say this."],
               [2, '5',
@@ -3223,7 +3228,8 @@ def run_script_check_say(p_scripts, this_test, p_points):
                ],
               ],
              ],
-            [brickLayer(0, 0, 0, variables={"numbers": [1, 2, 3, 4, 5, -1, -2, -3, -4, -5, 666, ]}),
+            [brickLayer(0, 0, 0, variables={"numbers": [1, 2, 3, 4, 5, -1, -2, -3, -4, -5, 666, ],
+                                            'new_list': [3, 5, 2, 1]}),
              [[1, "\['1', \s '2', \s '3', \s '4', \s '5', \s '1', \s '2', \s '3', \s '4', \s '5',  \s '666']",
                "Pressed '5'.  Numbers list is [1, 2, 3, 4, 5, -1, -2, -3, -4, -5, 666]. New list should be"
                " [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 666] and sprite should  say this"],
@@ -3239,7 +3245,7 @@ def run_script_check_say(p_scripts, this_test, p_points):
              ],
         ],
         '44_11': [
-            [brickLayer(0, 0, 0, variables={"numbers": [5, 2, -4, 0, ]}),
+            [brickLayer(0, 0, 0, variables={"numbers": [5, 2, -4, 0, ], 'new_list': [3, 5, 2, 1]}),
              [[1, "\['2', \s '-4', \s '0']",
                "Pressed '6'.  Numbers list is [5, 2, -4, 0, ]. New list should be [2, -4, 0] "
                " and sprite should say this."],
@@ -3252,7 +3258,7 @@ def run_script_check_say(p_scripts, this_test, p_points):
                ],
               ],
              ],
-            [brickLayer(0, 0, 0, variables={"numbers": [999]}),
+            [brickLayer(0, 0, 0, variables={"numbers": [999], 'new_list': [3, 5, 2, 1]}),
              [[1, '\[]',
                "Pressed '6'.  Numbers list is [999].  New list should be [] and sprite should say this."],
               [2, "\['2', \s '-4', \s '0']",
@@ -3263,7 +3269,8 @@ def run_script_check_say(p_scripts, this_test, p_points):
                ],
               ],
              ],
-            [brickLayer(0, 0, 0, variables={"numbers": [1, 2, 3, 4, 5, -1, -2, -3, -4, -5, 666, ]}),
+            [brickLayer(0, 0, 0, variables={"numbers": [1, 2, 3, 4, 5, -1, -2, -3, -4, -5, 666, ],
+                                            'new_list': [3, 5, 2, 1]}),
              [[1, "\['2', \s '4', \s '-2', \s '-4', \s '666'] ",
                "Pressed '6'.  Numbers list is [1, 2, 3, 4, 5, -1, -2, -3, -4, -5, 666]. New list should be"
                "[2, 4, 2, 4, 666] and sprite should  say this"],

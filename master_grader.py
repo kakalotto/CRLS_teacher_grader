@@ -157,8 +157,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                 print("lab " + str(python_lab_num))
 
                 scratch_filename = columns[1]
-                if re.search(r'finn', scratch_filename):
-                     continue
+                #if re.search(r'finn', scratch_filename):
+                #     continue
 
 #                if re.search(r'justin', scratch_filename):
 #                    continue
@@ -260,6 +260,10 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                         print("SKIP THIS")
                         skipped_tests += 1
                         continue
+                    if re.search(r'different \s names \s than \s regular \s variables', test['name'], re.X | re.S | re.M):
+                        print("SKIP THIS")
+                        skipped_tests += 1
+                        continue
                     # if re.search(r'Checking \s the  \s number \s of \s \(non-background\) \s sprite',
                     #              test['name'], re.X | re.S | re.M):
                     #     print("SKIP THIS")
@@ -276,7 +280,8 @@ def master_grader(fulltext_search_term, doc_name_to_rubric_name, value_cells, *,
                     if match:
                         value = str(-1 * float(match.group(1)))
                     else:
-                        raise Exception("No match couldn't find value of problem ")
+                        value = 0
+#                        raise Exception("No match couldn't find value of problem ")
                 if match_cells:
                     if 'match' in test:
                         # print("MaTCH in this test " + str(match_cells[match_counter]))

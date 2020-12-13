@@ -36,7 +36,8 @@ for val in ${DocsArray[@]}; do
 done
 
 # IT2
-declare -a DocsArray=("anonymity_and_privacy" "multimedia" "network_protocols_revisited" "nmap_1" "nmap_2" "passive_recon" "proxies" "tor_1" "vpn_1")
+declare -a DocsArray=("anonymity_and_privacy" "multimedia" "network_protocols_revisited" "nmap_1" "nmap_2" "nmap_3_vs_firewall"\
+                      "passive_recon" "proxies" "stealing_password_from_unsecured_system" "tor_1" "vpn_1")
 for val in ${DocsArray[@]}; do
    sed -i  's/from app.docs_labs.docs /from CRLS_APCSP_autograder.app.docs_labs.docs /' CRLS_APCSP_autograder/app/$val.py
    sed -i  's/from app.routes /from CRLS_APCSP_autograder.app.routes /' CRLS_APCSP_autograder/app/$val.py
@@ -54,7 +55,7 @@ sed -i  's/from app.python_labs /from CRLS_APCSP_autograder.app.python_labs /' C
 
 declare -a PythonArray=("python_1040" "python_1060" "python_2021" "python_2032a" "python_2032b" "python_2040" \
                         "python_2051a" "python_2051b" "python_3011" "python_3020" "python_3027" "python_4013" \
-                        "python_4021" "python_4028" "python_4031")
+                        "python_4021" "python_4028" "python_4031" "python_6022" "python_6032" "python_6042")
 for val in ${PythonArray[@]}; do
    sed -i  's/from app.python_labs.python /from CRLS_APCSP_autograder.app.python_labs.python /' CRLS_APCSP_autograder/app/$val.py
    sed -i  's/from app.routes /from CRLS_APCSP_autograder.app.routes /' CRLS_APCSP_autograder/app/$val.py
@@ -64,7 +65,7 @@ done
 declare -a PythonArray=("python_1040" "python_1060" "python_2021" "python_2032a" "python_2032b" "python_2040" \
                         "python_2051a" "python_2051b" "python_labs/python_2_05x" "python_3011"
                         "python_labs/python_3_011" "python_3020" "python_3027" "python_4013" "python_4021" \
-                        "python_4028")
+                        "python_4028" "python_6022" "python_6032" "python_6042")
 for val in ${PythonArray[@]}; do
    sed -i  's/from app.python_labs.find_items /from CRLS_APCSP_autograder.app.python_labs.find_items /' CRLS_APCSP_autograder/app/$val.py
 done
@@ -79,9 +80,15 @@ done
 
 # function_test
 declare -a PythonArray=("python_3020" "python_3027" "python_4013" "python_4021" "python_4028" \
-                        "python_4031" "python_labs/python_4_03x")
+                        "python_4031" "python_labs/python_4_03x" "python_6022" "python_6032" "python_6042")
 for val in ${PythonArray[@]}; do
    sed -i  's/from app.python_labs.function_test /from CRLS_APCSP_autograder.app.python_labs.function_test /' CRLS_APCSP_autograder/app/$val.py
+done
+
+# read_file_contents
+declare -a PythonArray=( "python_6032"  "python_6042")
+for val in ${PythonArray[@]}; do
+   sed -i  's/from app.python_labs.read_file_contents /from CRLS_APCSP_autograder.app.python_labs.read_file_contents /' CRLS_APCSP_autograder/app/$val.py
 done
 
 sed -i  's/from app.python_labs.name_dictionary /from CRLS_APCSP_autograder.app.python_labs.name_dictionary /' CRLS_APCSP_autograder/app/python_labs/python.py
@@ -101,9 +108,13 @@ sed -i  's/from app.python_labs.io_test /from CRLS_APCSP_autograder.app.python_l
 
 cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch_1_3.py CRLS_APCSP_autograder/app/scratch_labs
 cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch.py CRLS_APCSP_autograder/app/scratch_labs
+cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch_2_2.py CRLS_APCSP_autograder/app/scratch_labs
 cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch_2_6.py CRLS_APCSP_autograder/app/scratch_labs
 cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch_3_5.py CRLS_APCSP_autograder/app/scratch_labs
 cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch_3_2.py CRLS_APCSP_autograder/app/scratch_labs
+cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch_3_4.py CRLS_APCSP_autograder/app/scratch_labs
+cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch_4_2.py CRLS_APCSP_autograder/app/scratch_labs
+cp ../CRLS_APCSP_autograder/app/scratch_labs/scratch_4_3.py CRLS_APCSP_autograder/app/scratch_labs
 
 
 sed -i  's/from app.scratch_labs.scratch /from CRLS_APCSP_autograder.app.scratch_labs.scratch /' CRLS_APCSP_autograder/app/scratch_labs/scratch_2_6.py
@@ -117,7 +128,9 @@ sed -i  's/from app.scratch_labs.scratch_2_2 /from CRLS_APCSP_autograder.app.scr
 
 
 declare -a StringArray=("scratch_13" "scratch_15" "scratch_1x" "scratch_22" "scratch_23a" "scratch_23b" "scratch_24"\
-                        "scratch_26" "scratch_35" "scratch_32" "scratch_labs/scratch_3_2" "scratch_labs/scratch_3_5")
+                        "scratch_26" "scratch_35" "scratch_32" "scratch_labs/scratch_3_2" "scratch_34" \
+                        "scratch_labs/scratch_3_4" "scratch_labs/scratch_3_5" "scratch_42" "scratch_labs/scratch_4_2"\
+                        "scratch_43a" "scratch_labs/scratch_4_3" "scratch_43b" )
 
 for val in ${StringArray[@]}; do
    sed -i  's/from app.scratch_labs.scratch /from CRLS_APCSP_autograder.app.scratch_labs.scratch /' CRLS_APCSP_autograder/app/$val.py
@@ -127,3 +140,7 @@ done
 sed -i  's/from app.scratch_labs.scratch_2_2 /from CRLS_APCSP_autograder.app.scratch_labs.scratch_2_2 /' CRLS_APCSP_autograder/app/scratch_22.py
 sed -i  's/from app.scratch_labs.scratch_3_5 /from CRLS_APCSP_autograder.app.scratch_labs.scratch_3_5 /' CRLS_APCSP_autograder/app/scratch_35.py
 sed -i  's/from app.scratch_labs.scratch_3_2 /from CRLS_APCSP_autograder.app.scratch_labs.scratch_3_2  /' CRLS_APCSP_autograder/app/scratch_32.py
+sed -i  's/from app.scratch_labs.scratch_3_4 /from CRLS_APCSP_autograder.app.scratch_labs.scratch_3_4  /' CRLS_APCSP_autograder/app/scratch_34.py
+sed -i  's/from app.scratch_labs.scratch_4_2 /from CRLS_APCSP_autograder.app.scratch_labs.scratch_4_2  /' CRLS_APCSP_autograder/app/scratch_42.py
+sed -i  's/from app.scratch_labs.scratch_4_3 /from CRLS_APCSP_autograder.app.scratch_labs.scratch_4_3  /' CRLS_APCSP_autograder/app/scratch_43a.py
+sed -i  's/from app.scratch_labs.scratch_4_3 /from CRLS_APCSP_autograder.app.scratch_labs.scratch_4_3  /' CRLS_APCSP_autograder/app/scratch_43b.py
