@@ -1,11 +1,15 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.python_6022 import feedback_6022
+from CRLS_APCSP_autograder.app.python_6022 import route_python_6_022 as power
 
 person = ''
-if len(sys.argv) > 1:
+people = []
+if len(sys.argv) == 2:
     person = sys.argv[1]
+elif len(sys.argv) >= 3:
+    people = sys.argv[1:]
+
 
 
 def doc_name_to_rubric_name(doc_name):
@@ -19,18 +23,23 @@ def doc_name_to_rubric_name(doc_name):
 
 
 fulltext_search = '.py'
-value_cells = [ 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'B4', 'B9', ]
+value_cells = [ 'F4', 'F5', 'F6', 'F7', 'F8', 'B9', 'B4', ]
 rubric_sheet_name = ''
 
-if not person:
+if not person and not people:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_6022, python_lab_num='6.022',
-                  python_rubric_suffix=' - Python 6.011 Bob Kraft Simulator - Rubric')
+                  scorer=power, python_lab_num='6.022',
+                  python_rubric_suffix=' - Python_6.022_Dr_Lam_Follows_the_Dream_rubric')
 else:
-    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=feedback_6022, python_lab_num='6.022',
-                  python_rubric_suffix=' - Python 6.011 Bob Kraft Simulator - Rubric', person=person)
-
+    if person:
+        master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
+                      scorer=power, python_lab_num='6.022',
+                      python_rubric_suffix=' - Python_6.022_Dr_Lam_Follows_the_Dream_rubric', person=person)
+    elif people:
+        for scholar in people:
+            master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
+                          scorer=power, python_lab_num='6.022',
+                          python_rubric_suffix=' - Python_6.022_Dr_Lam_Follows_the_Dream_rubric', person=scholar)
 #fulltext_search = 'Sorting'
 
 #value_cells = ['F4', ]

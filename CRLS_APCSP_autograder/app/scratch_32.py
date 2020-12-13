@@ -17,18 +17,15 @@ def route_scratch_3_2(filename):
         tests.append(test_spaces)
         test_one_sprite = one_sprite(json_data)
         tests.append(test_one_sprite)
-        if test_spaces['pass'] is False or test_one_sprite['pass'] is False:
-            return [user, tests, score_info]
-        else:
-            tests.append(press_zero(scripts, 5))
-            tests.append(press_one(scripts, 5))
-            tests.append(press_two(scripts, 5))
-            tests.append(find_draw_triangle(scripts, 5))
-            tests.append(draw_triangle_works(scripts, 5))
-            tests.append(press_three(scripts, 5))
-            tests.append(find_happy_birthday(scripts, 5))
-            tests.append(run_custom_block_check_say('32_1', scripts, 5))
-            tests.append(press_four(scripts, 5))
-            tests.append(find_help(json_data, 5))
-            score_info = sum_score(tests, score_info)
-            return [user, tests, score_info]
+        tests.append(press_zero(scripts, 5))
+        tests.append(press_one(scripts, 5))
+        tests.append(press_two(scripts, 5))
+        tests.append(find_draw_triangle(scripts, 5))
+        tests.append(draw_triangle_works(scripts, 5))
+        tests.append(press_three(scripts, 5))
+        tests.append(find_happy_birthday(scripts, 5))
+        tests.append(run_custom_block_check_say('32_1', scripts, 5))
+        tests.append(press_four(scripts, 5))
+        tests.append(find_help(json_data, 5))
+        score_info = sum_score(tests, score_info)
+        return [user, tests, score_info]

@@ -13,3 +13,9 @@ def route_docs_hw19a(link):
     tests.append(check_answer('1c', 'Iteration', text, {'answers': r'(for|while)', 'help_link': site, }, points=2))
     score_info = sum_score(tests, score_info)
     return [user, tests, score_info]
+
+
+a = '5'
+print(int(a))
+print(float(a))
+print(isinstance(a, int))

@@ -15,7 +15,7 @@ def doc_name_to_rubric_name(doc_name):
     return p_rubric_name
 
 
-value_cells = ['B5', 'B7', 'B9', 'B11', 'B12', 'F3', 'F5', 'F7', 'F8', 'F9', 'F10',]
+value_cells = ['B5', 'B7', 'B9', 'B11', 'B12', 'F3', 'F5',  'F8', 'F9', 'F10',]
 rubric_sheet_name = 'Sheet1'
 
 match_cells = [ 'D6', 'D8', 'D10', 'D11', 'D13', 'H4', 'H6', 'H8', 'H9', 'H10', 'H11', ]
