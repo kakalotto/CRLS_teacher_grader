@@ -1,7 +1,7 @@
 # Pass these in as parameters
 import sys
 from master_grader import master_grader
-from CRLS_APCSP_autograder.app.passwords_revisited import docs_feedback_passwords_passwords_revisited
+from CRLS_APCSP_autograder.app.passwords_revisited import route_docs_passwords_revisited as power
 
 
 def doc_name_to_rubric_name(doc_name):
@@ -11,22 +11,28 @@ def doc_name_to_rubric_name(doc_name):
     return p_rubric_name
 
 
-fulltext_search = 'script kiddies always'
+fulltext_search = 'In your own words, what is the difference between online and offline cracking'
+
 person = ''
-if len(sys.argv) > 1:
+people = []
+if len(sys.argv) == 2:
     person = sys.argv[1]
+elif len(sys.argv) >= 3:
+    people = sys.argv[1:]
 
-
-value_cells = ['B3', 'B5', 'B6', 'B6', 'B7', 'B9', 'B10', 'B12', 'B13', 'B15', 'B16', 'B17', 'B19', 'B21', 'B23', 'F3',
-               'F5', 'F7', 'F9', 'F11', 'F13', 'F15', 'F17']
+value_cells = ['B3', 'B5', 'B6', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B13', 'B15', 'B17', 'B19', 'B21', 'B22',]
 rubric_sheet_name = 'Sheet1'
 
-match_cells = ['D4', 'D8', 'D11', 'D14', 'D18', 'D20', 'D22', 'D24', 'G4', 'G6', 'G8', 'G10', 'G12', 'G14', 'G16',
-               'G18', 'G19']
-if not person:
+match_cells = ['D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'D14', 'D16', 'D18', 'D20', 'D21', 'D23', ]
+if not person and not people:
     master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_passwords_passwords_revisited, match_cells=match_cells)
+                  scorer=power, match_cells=match_cells)
 else:
-    master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
-                  scorer=docs_feedback_passwords_passwords_revisited, person=person, match_cells=match_cells)
+    if person:
+        master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
+                      scorer=power, person=person, match_cells=match_cells)
+    elif people:
+        for scholar in people:
+            master_grader(fulltext_search, doc_name_to_rubric_name, value_cells, sheet_name=rubric_sheet_name,
+                  scorer=power, person=scholar, match_cells=match_cells)
 

@@ -91,7 +91,7 @@ def sub_variables(p_words, p_sprite):
     :return:
     """
     import re
-    print("WORDS!!! " + str(p_words))
+    print("WORDS!!! Subbing in for this" + str(p_words))
     p_words = str(p_words)
     p_words = re.sub("'", '', p_words)
     p_words = re.sub(r"\[", '', p_words)
@@ -129,7 +129,7 @@ def sub_variables(p_words, p_sprite):
                 p_words = re.sub(match_string, answer, p_words, 1)
             else:
                 sensing_answers = False
-    # print("aaa after all variable substitutios  pre: {} post: {}".format(pre_sub, p_words))
+    print("FFF after all variable substitutios  pre: {} post: {}".format(pre_sub, p_words))
     return p_words
 
 
@@ -267,7 +267,7 @@ def do_sprite(p_sprite, moves, success):
 
                 break
             elif move == 'data_setvariableto':
-                # print("ccc beginning of set variable to.   variable: {} value: {}".format(moves[i+1], moves[i+2]))
+                print("ccc beginning of set variable to.   variable: {} value: {}".format(moves[i+1], moves[i+2]))
                 key = moves[i + 1]
                 value = moves[i + 2]
                 if isinstance(value, list):
@@ -287,7 +287,7 @@ def do_sprite(p_sprite, moves, success):
                                             ".<br><br>"
                 p_sprite.variables[key] = value
 
-                # print('ccc variables after data_setvariableto after data set {}  '.format(p_sprite.variables))
+                print('ccc variables after data_setvariableto after data set {}  '.format(p_sprite.variables))
 
                 break
             elif move == 'data_changevariableby':
@@ -310,7 +310,10 @@ def do_sprite(p_sprite, moves, success):
                 elif re.search("\. \d", str(delta_value), re.X | re.M | re.S):
                     delta_value = float(delta_value)
                 else:
-                    delta_value = int(delta_value)
+                    try:
+                        delta_value = int(delta_value)
+                    except ValueError:
+                        delta_value = 0
                 variable = re.sub('VARIABLE_', '', variable_plus_variable)
                 if variable in p_sprite.variables.keys():
                     print("vava " + str(p_sprite.variables[variable]))
@@ -374,16 +377,19 @@ def do_sprite(p_sprite, moves, success):
                 if index - 1 < 0:
                     if p_sprite.num_errors < 5:
                         p_sprite.num_errors += 1
-                        return "Error: Index is too low "\
-                               "  Did you try to 'say' 0th item of list or something like that?<br> "
-                    else:
-                        return False
+                        print("index too low in item of list")
+                        p_sprite.say_history += "Error: Index is too low " \
+                                                "  Did you try to 'say' 0th item of list something like that?<br> "
+                        return ''
+                    # else:
+                    #     return ''
                 try:
                     item = p_sprite.variables[list_name][index - 1]
                 except IndexError:
-                    return "Error: Index out of range.  " \
-                           "You are trying to access the {} item in a list, " \
-                           "but list only has {} items. <br>".format(index, list_length)
+                    p_sprite.say_history += "Error: Index out of range.  " \
+                                            "You are trying to access the {} item in a list, " \
+                                            "but list only has {} items. <br>".format(index, list_length)
+                    return ''
                 return item
             elif move == 'data_deletealloflist':
                 list_name = moves[i + 1]
@@ -728,13 +734,19 @@ def do_sprite(p_sprite, moves, success):
                 try:
                     temp = float(num1)
                 except ValueError:
-                    raise Exception("First number of mod can't be converted to float.  Number is: {}"
-                                    .format(num1))
+                    num1 = 9999999
+                    p_sprite.say_history += "First number of mod can't be converted to float.  Number is: {}"\
+                        .format(num1)
+                    #raise Exception("First number of mod can't be converted to float.  Number is: {}"
+                    #                .format(num1))
                 try:
                     temp = float(num2)
                 except ValueError:
-                    raise Exception("Second number of mod can't be converted to int.  Number is: {}"
-                                    .format(num2))
+                    num2 = 9999999
+                    p_sprite.say_history += "First number of mod can't be converted to float.  Number is: {}" \
+                        .format(num2)
+                    #raise Exception("Second number of mod can't be converted to int.  Number is: {}"
+                    #                .format(num2))
                 tol = 0.01
                 if abs(round(float(num1)) - float(num1)) < tol:
                     num1 = int(num1)
@@ -886,13 +898,15 @@ def do_sprite(p_sprite, moves, success):
                 try:
                     temp = float(num1)
                 except ValueError:
-                    raise Exception("First number of addition can't be converted to int.  Number is: {}"
-                                    .format(num1))
+                    p_sprite.say_history += "First number of addition can't be converted to int.  Number is: {}"\
+                        .format(num1)
+                    num1 = 9999999
                 try:
                     temp = float(num2)
                 except ValueError:
-                    raise Exception("Second number of addition can't be converted to int.  Number is: {}"
-                                    .format(num2))
+                    p_sprite.say_history += "First number of addition can't be converted to int.  Number is: {}" \
+                        .format(num2)
+                    num2 = 999999
                 tol = 0.01
                 if abs(round(float(num1)) - float(num1)) < tol:
                     num1 = float(num1)
